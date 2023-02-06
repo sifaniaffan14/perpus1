@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Peminjaman;
 use App\Models\PeminjamanDetail;
+use App\Models\DetailBuku;
+use App\Models\Buku;
 use App\Models\Anggota;
 
 
@@ -57,4 +59,37 @@ class PeminjamanController extends Controller
         return response()->json(['success' => true, 'anggota'=>$anggota]);
     }
 
+    public function findNoInduk(Request $request){
+        $data = $request->no_induk;
+        $anggota=Anggota::where('no_induk', '=', $data)->first();
+        $success = "false";
+
+        if($anggota){
+            $success = "true";
+        }
+
+        return response()->json([
+            'success'=>$success,
+            'data'=>$anggota
+        ]);
+    }
+
+    public function findBukuEksemplar(Request $request){
+        $DetailBuku = DetailBuku::where('KodeBuku','=', $request->kode)->where('status','!=', 0)->first();
+
+        if($DetailBuku){
+            $Buku = Buku::select('judul')->where('id','=', $DetailBuku['buku_id'])->first();
+            $DetailBuku['judul'] = $Buku['judul'];
+            $operation = array(
+                'success'=>true,
+                'data'=>$DetailBuku
+            );
+        } else{
+            $operation = array(
+                'success'=>false
+            );
+        }
+
+        return $operation;
+    }
 }

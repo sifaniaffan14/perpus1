@@ -64,6 +64,8 @@ Route::middleware([loginCheck::class])->group(function () {
     Route::get('/detailPeminjaman/{id}',[App\Http\Controllers\PeminjamanController::class, 'detailPeminjaman'])->name('detailPeminjaman.view');
     Route::get('/peminjamanForm',[App\Http\Controllers\PeminjamanController::class, 'form'])->name('peminjaman.form');
     Route::get('/addPeminjaman',[App\Http\Controllers\PeminjamanController::class, 'add'])->name('detailPeminjaman.view');
+    Route::get('/findNoInduk',[App\Http\Controllers\PeminjamanController::class, 'findNoInduk'])->name('findNoInduk');
+    Route::get('/findBukuEksemplar',[App\Http\Controllers\PeminjamanController::class, 'findBukuEksemplar'])->name('findBukuEksemplar');
 
     Route::get('/anggotamanagement',[App\Http\Controllers\AnggotaController::class, 'list'])->name('anggotamanagement');
     Route::get('/anggotaForm',[App\Http\Controllers\AnggotaController::class, 'form'])->name('anggota.form');
