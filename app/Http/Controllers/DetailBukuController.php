@@ -47,6 +47,7 @@ class DetailBukuController extends Controller
             $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, Str::random());
             $uuidString = md5($uuid->toString());
             $data['eksemplar_id'] = substr($uuidString, 0, 16);
+            
             $operation = DetailBuku::create($data);
            
             return $this->responseCreate($operation);
