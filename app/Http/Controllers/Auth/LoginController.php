@@ -47,7 +47,7 @@ class LoginController extends Controller
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required',
-            'g-recaptcha-response' => 'recaptcha'
+            // 'g-recaptcha-response' => 'recaptcha'
         ]);
   
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';

@@ -17,13 +17,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->string('no_induk')->nullable()->unique();
-            $table->string('nama')->nullable();
+            $table->string('nama_anggota')->nullable();
             $table->string('jenis_kelamin')->nullable();
-            $table->string('TTL')->nullable();
+            $table->string('tempat_lahir')->nullable();
+            $table->string('tanggal_lahir')->nullable();
             $table->string('jenis_anggota')->nullable();
             $table->string('alamat')->nullable();
             $table->string('email')->nullable();
             $table->string('no_telp')->nullable();
+            $table->integer('is_active')->default('1');
             $table->timestamps();
         });
     }

@@ -1,6 +1,4 @@
-@extends('master.Landing')
 
-@section('content')
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
