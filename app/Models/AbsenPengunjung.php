@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class AbsenPengunjung extends Model
 {
-    protected $fillable = ['waktu'];
+    protected $fillable = [
+        'anggota_id',
+        'waktu'
+    ];
 }

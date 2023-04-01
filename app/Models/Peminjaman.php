@@ -7,7 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Peminjaman extends Model
 {
-    protected $fillable = ['anggota_id'];
+    protected $table = 'peminjamen';
+
+    protected $fillable = [
+        'peminjaman_id',
+        'anggota_id',
+        'jumlah_peminjaman'
+    ];
 
     public function Anggota()
     {

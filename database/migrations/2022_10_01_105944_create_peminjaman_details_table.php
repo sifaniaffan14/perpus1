@@ -14,12 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('peminjaman_details', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('peminjaman_id')->references('id')->on('peminjamen');
-            $table->foreignId('detail_buku_id')->references('id')->on('detail_bukus');
+            $table->string('peminjaman_detail_id',32)->primary();
+            $table->string('peminjaman_detail_peminjaman_id',32)->nullable();
+            $table->foreign('peminjaman_detail_peminjaman_id')->references('peminjaman_id')->on('peminjamen');
+            $table->string('detail_buku_id',32)->nullable();
+            $table->foreign('detail_buku_id')->references('eksemplar_id')->on('detail_bukus');
+            $table->string('status_peminjaman')->nullable();
             $table->date('tgl_pinjam')->nullable();
             $table->date('tgl_kembali')->nullable();
-            $table->string('jumlah')->nullable();
             $table->timestamps();
         });
     }

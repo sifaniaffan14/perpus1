@@ -7,7 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class PeminjamanDetail extends Model
 {
-    protected $fillable = ['peminjaman_id','detail_buku_id','tgl_pinjam', 'tgl_kembali'];
+    protected $table = 'peminjaman_details';
+    protected $fillable = [
+        'peminjaman_detail_id',
+        'peminjaman_detail_peminjaman_id',
+        'detail_buku_id',
+        'tgl_pinjam', 
+        'tgl_kembali',
+        'status_peminjaman',
+    ];
 
     public function DetailBuku()
     {
