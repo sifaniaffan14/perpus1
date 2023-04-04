@@ -48,9 +48,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="text-content" id="identitas_peminjam">
-                            <p class="fs-5 fw-bolder" id="nama_anggota_detail"></p>
-                            <p class="fs-5 fw-bolder" id="jenis_anggota_detail"></p>
+                        <div class="text-content mx-auto" style="width:85%" id="identitas_peminjam">
+                            <!-- <p class="fs-5 fw-bolder" id="nama_anggota_detail"></p>
+                            <p class="fs-5 fw-bolder" id="jenis_anggota_detail"></p> -->
                         </div>
                         <div class="text-header">
                             <h2 class="text-center">
