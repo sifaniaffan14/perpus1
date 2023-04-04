@@ -13,10 +13,10 @@
                         </h2>
                         <div class="form-action-wrapper d-flex gap-4 align-items-center mt-5 w-50 justify-content-end">
                             <button type="button"
-                                class="btn p-5 text-body m-0 fw-bolder w-25 actCreate" style="border:1px solid #264A8A"
+                                class="btn p-4 text-body m-0 fw-bolder w-25 actCreate" style="border:1px solid #264A8A"
                                 onclick="onClear()"> <span style="color:#264A8A">Batal</span> </button>
                             <button type="submit"
-                                class="btn p-5 m-0 d-flex flex-center gap-2 fw-bolder w-25 text-light actCreate" style="background-color:#264A8A">
+                                class="btn p-4 m-0 d-flex flex-center gap-2 fw-bolder w-25 text-light actCreate" style="background-color:#264A8A">
                                 <span class="material-icons-outlined fs-2">save</span> Simpan
                             </button>
                             <button type="button" onclick="onDisplayEdit(this)"
@@ -77,10 +77,10 @@
                             <table class="table" id="tablePinjaman">
                                 <thead>
                                     <tr>
-                                        <th class="fw-bolder" style="max-width: 20px"> No </th>
-                                        <th class="fw-bolder">Kode Eksemplar</th>
-                                        <th class="fw-bolder">Judul Buku</th>
-                                        <th class="fw-bolder">Action</th>
+                                        <th class="fw-bolder text-center" style="max-width: 20px"> No </th>
+                                        <th class="fw-bolder text-center">Kode Eksemplar</th>
+                                        <th class="fw-bolder text-center">Judul Buku</th>
+                                        <th class="fw-bolder text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="list_pinjaman"></tbody>

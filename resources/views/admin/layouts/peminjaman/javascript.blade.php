@@ -320,14 +320,14 @@
                         $("#kode_eksemplar").val('');
                         $('#list_pinjaman').append(`
                             <tr id="${data.eksemplar_id}">
-                                <td>${1}</td>
-                                <td>${data.no_panggil}</td>
-                                <td>${data.judul}</td>
+                                <td class="text-center">${1}</td>
+                                <td class="text-center">${data.no_panggil}</td>
+                                <td class="text-center">${data.judul}</td>
                                 <td class="d-none">
                                     <input type="hidden" name="eksemplar_id[]" value="${data.eksemplar_id}">
                                 </td>
-                                <td>
-                                    <a onclick="hapusEksemplar('${data.eksemplar_id}')" methode="post" class="btn btn-danger"> <i class="bi bi-trash"></i></a>
+                                <td class="text-center">
+                                    <a onclick="hapusEksemplar('${data.eksemplar_id}')" methode="post" class="btn btn-danger" style="padding:5px 2.5px 6px 6px"> <i class="bi bi-trash fs-4"></i></a>
                                 </td>
                             </tr>
                         `)
