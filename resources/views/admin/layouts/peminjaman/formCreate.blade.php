@@ -16,7 +16,7 @@
                                 class="btn p-4 text-body m-0 fw-bolder w-25 actCreate" style="border:1px solid #264A8A"
                                 onclick="onClear()"> <span style="color:#264A8A">Batal</span> </button>
                             <button type="submit"
-                                class="btn p-4 m-0 d-flex flex-center gap-2 fw-bolder w-25 text-light actCreate" style="background-color:#264A8A">
+                                class="btn p-4 m-0 d-flex flex-center gap-2 fs-5 fw-bolder w-25 text-light actCreate" style="background-color:#264A8A">
                                 <span class="material-icons-outlined fs-2">save</span> Simpan
                             </button>
                             <button type="button" onclick="onDisplayEdit(this)"
@@ -36,24 +36,21 @@
                                 Data Peminjam
                             </h2>
                         </div>
-                        <div class="d-flex flex-column flex-lg-row flex-stack py-5 "
+                        <div
                             style="border-bottom: 1px solid #eff2f5">
-                            <div class="gap-5 align-items-lg-center w-100">
+                            <div class="gap-5 mb-3 align-items-lg-center w-100">
                                 <label for="anggota_id" class="fs-4 fw-bolder">No. Induk</label>
                                 <div class="position-relative w-lg-25">
                                     <select name="anggota_id" id="anggota_id" style="width: 100%">
+                                        <option value="#" selected disabled>Silahkan Pilih No. Induk</option>
                                     </select>
-                                    <!-- <span class="material-icons position-absolute top-50 translate-middle-y text-light-gray"
-                                        style="left: 10px"> search </span> -->
                                 </div>
                             </div>
-                        </div>
-                        <div class="text-content mx-auto" style="width:85%" id="identitas_peminjam">
-                            <!-- <p class="fs-5 fw-bolder" id="nama_anggota_detail"></p>
-                            <p class="fs-5 fw-bolder" id="jenis_anggota_detail"></p> -->
+                            <div class="text-content mx-auto" id="identitas_peminjam">
+                            </div>
                         </div>
                         <div class="text-header">
-                            <h2 class="text-center">
+                            <h2 class="text-center mt-2">
                                 Data Buku
                             </h2>
                         </div>

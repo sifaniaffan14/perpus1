@@ -10,6 +10,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
 
 <script>
+    var index = 0
     var table = 'tablePeminjaman'
     var form = 'formPeminjaman'
     var list_table = 'list_table'
@@ -274,8 +275,25 @@
                 },
                 success: function(response){
                 if(response.status == true){
+                    document.getElementById("identitas_peminjam").innerHTML = "";
                     $.each(response.data[0], function( k, v ){
-                        $('#'+k+"_detail").html(v)
+                        if (k == 'nama_anggota'){
+                            $(`#identitas_peminjam`).append(`
+                            <div class="d-flex mt-5">
+                                <p class="m-0 fs-5 fw-bolder" style="width:105px">Nama</p>
+                                <p class="m-0 fs-5 fw-bolder">&nbsp;:&nbsp;${v}</p>
+                            </div>
+                            `)
+                        }
+                        if (k == 'jenis_anggota'){
+                            $(`#identitas_peminjam`).append(`
+                            <div class="d-flex mt-2 mb-5">
+                                <p class="m-0 fs-5 fw-bolder">Jenis Anggota </p>
+                                <p class="m-0 fs-5 fw-bolder">&nbsp;:&nbsp;${v}</p>
+                            </div>
+                            `)
+                        }
+                        // $('#'+k+"_detail").html(v)
                     });
                 } 
             }
@@ -317,10 +335,11 @@
                     // $('#list_pinjaman').html('')
                 var data=response.data[0]
                     if($('#'+data.eksemplar_id).length != 1){
+                        index = index + 1;
                         $("#kode_eksemplar").val('');
                         $('#list_pinjaman').append(`
                             <tr id="${data.eksemplar_id}">
-                                <td class="text-center">${1}</td>
+                                <td class="text-center">${index}</td>
                                 <td class="text-center">${data.no_panggil}</td>
                                 <td class="text-center">${data.judul}</td>
                                 <td class="d-none">
