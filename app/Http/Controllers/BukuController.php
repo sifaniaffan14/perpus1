@@ -69,27 +69,21 @@ class BukuController extends Controller
                 'judul' => 'required',
                 'pengarang' => 'required',
                 'halaman' => 'required',
+                'no_isbn' => 'required'
             ]);
+
+            $image = $request->file('image');
+            if (!empty($image)) {
+                $request->image = $request->judul . '-cover.' . $image->getClientOriginalExtension();
+                $image->move(storage_path('app/public/buku/') , $request->image);
+            }
 
             $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, Str::random());
             $data['id'] = md5($uuid->toString());
-            // print_r($data);exit;
+            $data['image'] = $request->image;
+            
             $operation = Buku::create($data);
-            // print_r($operation);exit;
-            $image = $request->file('image');
-            if (!empty($image)) {
-                $time = request()->input('carbon');
-                $originalFilename = $image->getClientOriginalName();
-                $newFilename = $request->judul . '-cover.' . $image->getClientOriginalExtension();
-                $image->move(storage_path('app/public/buku/' . $newFilename));
-                // $operation->update(['image' => $newFilename],['updated_at' => Carbon::now()]);
-                // $oldpic = get_setting('image');
-                // Storage::delete('app/public/buku/'. $oldpic);
-
-                // DB::table('bukus')->where('id',0)->update([
-                //     'image' => $newFilename,               
-                //     ]);
-            }
+        
             return $this->responseCreate($operation);
         } catch (\Exception $e) {
             return $this->responseCreate($e->getMessage(), true);
