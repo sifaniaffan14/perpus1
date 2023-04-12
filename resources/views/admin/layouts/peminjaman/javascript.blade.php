@@ -31,90 +31,80 @@
     inittable()
     loadData()
 
-    function inittable() {
-        
+    function inittable() {  
         $.ajax({
             url: urlPath.select,
             type: 'GET',
             success: function (response) {
                 if (response.status == true) {
                     $('#list_table').html('')
+                    var num = 0;
                     $.each(response.data, function (k, v) {
+                        let jsonString = JSON.stringify(v);
+                        let encode = btoa(jsonString)
+                        console.log(encode)
+
+                        num++;
+                        let peminjaman_status = (v.peminjaman_jumlah==v.peminjaman_sudah_kembali?`<span class="badge bg-success">Sudah Kembali</span>`:`<span class="badge bg-danger">Belum Kembali</span>`)
                         $('#list_table').append(`
-                                    <tr onclick=onDetail('${v.peminjaman_id}') style="cursor:pointer">
-                                        <td>${k + 1}</td>
-                                        <td>${v.nama_anggota}</td>
-                                        <td>${v.peminjaman_jumlah}</td>
-                                        <td>${v.peminjaman_belum_kembali}</td>
-                                        <td>${v.peminjaman_sudah_kembali}</td>
-                                        <td>${v.peminjaman_status}</td>     
-                                    </tr>
-                                `)
+                            <tr onclick=onDetail('${encode}') style="cursor:pointer">
+                                <td>${num}</td>
+                                <td>${v.anggota.nama_anggota}</td>
+                                <td>${v.peminjaman_jumlah}</td>
+                                <td>${v.peminjaman_belum_kembali}</td>
+                                <td>${v.peminjaman_sudah_kembali}</td>
+                                <td>${peminjaman_status}</td>     
+                            </tr>
+                        `)
                     });
                 }
             }
         })
     }
 
-    function onDetail(peminjaman_id){
-        $.ajax({
-            url: urlPath.select,
-            type: 'GET',
-            data: {
-                peminjaman_id: peminjaman_id
-            },
-            success: function(response){
-                if(response.status == true){
-                    onDisplayDetail()
-                    tableBukuPinjaman();
-                    $.each(response.data[0], function( k, v ){
-                        $('#detail_'+k).html(v)
-                        // if(k!='COUNT(peminjaman_details.peminjaman_detail_peminjaman_id)'){
+    var num = 0;
+    function onDetail(encode){
+        let decode = atob(encode)
+        let data = JSON.parse(decode);
+        $('[name=peminjaman_id]').val(data.peminjaman_id)
+        onDisplayDetail()
+        $.each(data.anggota, function( ka, va ){
+            $('#detail_'+ka).html(va)
+        });
+        
+        $.each(data.peminjaman_detail, function( k, v ){
+            var eksemplar_id = v.detail_buku.eksemplar_id;
+            let no_panggil = v.detail_buku.no_panggil;
+            let judul = v.detail_buku.buku.judul
+            let html = `<a onclick="hapusEksemplar('list_buku_${eksemplar_id}')" methode="post" class="btn btn-danger"> <i class="bi bi-trash"></i></a>`
+           
+            $('[name=tgl_pinjam]').val(v.tgl_pinjam)
+            $('[name=tgl_kembali]').val(v.tgl_kembali)
+            
+            num++
+            let array = [num,no_panggil,judul,v.tgl_pinjam,v.tgl_kembali,html]
+            $('#list_pinjaman').append(`<tr id="list_buku_${eksemplar_id}"></tr>`)
+            $('#list_detail').append(`<tr id="detail_${eksemplar_id}"></tr>`)
+            $.each(array, function( key, value ){
+                if(key != 3 && key != 4){
+                    $('#list_buku_'+ eksemplar_id).append(`<td>${value}</td>`)
+                }
 
-                        //                         }
-                    });
-                } 
-            }
-        })
+                if(key != 5){
+                    $('#detail_'+ eksemplar_id).append(`<td>${value}</td>`)
+                }  
+            })
+
+            $('#list_buku_'+ eksemplar_id).append(`<td class="d-none">
+                <input type="hidden" name="eksemplar_id[]" value="${eksemplar_id}">
+            </td>`)
+        });
     }
 
     onDisplayDetail = () => {
         $('.datail_data').removeClass('d-none');
         $('.main_data').addClass('d-none');
 	}
-
-    function tableBukuPinjaman(){
-        // alert(detail_buku_id)
-        $.ajax({
-            url: urlPath.select,
-            type: 'GET',
-            
-            success: function(response){
-                if(response.status == true){
-                    $('#listTable').html('')
-                    data = response.data[0];
-                    console.log(data)
-                    $.each(data.eksemplar, function( k, v ){
-                       
-                        $('#listTable').append(`
-                            <tr>
-                                <td>${k+1}</td>
-                                <td>${v.no_panggil}</td>
-                                <td>${v.judul}</td>
-                                <td>${v.tgl_pinjam}</td>
-                                <td>${v.tgl_kembali}</td>
-                                <td> 
-                                    <button onclick="hapusEksemplar('${v.peminjaman_detail_id}')" methode="post" class="btn btn-danger btn-hapus" name="btn-hapus" id="btn-hapus" disabled><i class="bi bi-trash"></i></button>
-                                </td>
-                            </tr>
-                        `) 
-                    // });
-                });
-                } 
-            }
-        })
-    }
-
    
     function onDelete(){
         swal({
@@ -153,7 +143,6 @@
             type: 'GET',
             success: function(response){
                 if(response.status == true){
-                    console.log(response)
                     var data=response.data
                     if($('#'+data.detail_buku_id).length != 1){
                     $('#list_pinjaman').html('')
@@ -179,55 +168,6 @@
             }
         })
     }
-    
-    function onEdit(peminjaman_id,peminjaman_detail_id){
-        $.ajax({
-            url: urlPath.select,
-            type: 'GET',
-            data: {
-                peminjaman_id: peminjaman_id
-            },
-            success: function(response){
-                if(response.status == true){
-                    $.each(response.data[0], function( k, v ){
-                        $('[name='+k+']').html(v)
-                        $('[name='+k+']').val(v)
-                    });
-                } 
-            }
-        })
-        $.ajax({
-            url: urlPath.detailPeminjaman,
-            type: 'GET',
-            data: {
-                peminjaman_detail_id: peminjaman_detail_id
-            },
-            success: function(response){
-                if(response.status == true){
-                    $('#list_pinjaman').html('')
-                    var data = response.data[0];
-                    var nomer = 0;
-                    $.each(data, function(index, item){
-                        // console.log(item)
-                        $('[name='+index+']').val(item)
-                        tableEditBukuPinjaman()
-                        // nomer++;
-                        // $('#list_pinjaman').append(`
-                        //     <tr>
-                        //         <td>${nomer}</td>
-                        //         <td name="no_panggil">${item}</td>
-                        //         <td name="judul">${item}</td>
-                        //         <td> 
-                        //             <a onclick="hapusEksemplar('${item.peminjaman_detail_id}')" methode="post" class="btn btn-danger"><i class="bi bi-trash"></i></a>
-                        //         </td>
-                        //     </tr>
-                        // `) 
-                        // $('[name='+index+'').text(item);
-                    });
-                } 
-            }
-        })
-    }
 
     onDisplayEdit = () => {
 		$('.actEdit').addClass('d-none');
@@ -235,7 +175,6 @@
         $(`#${form} input`).removeAttr('disabled', 'disabled')
         $('.datail_data').addClass('d-none');
         $('.form_data').removeClass('d-none');
-        onEdit();
         loadData();
 	}
 
@@ -244,21 +183,6 @@
         $('.detail_data').addClass('d-none');
         inittable()
     }
-    // $(document).ready(function () {
-    //     $("#search_no_induk").select2({
-    //         ajax: {
-    //             url: urlPath.getAnggota,
-    //             dataType: 'json',
-    //             delay: 250,
-    //             processResults: function (data) {
-    //                 console.log(data)
-    //                 return {
-    //                     results: data.data
-    //                 };
-    //             },
-    //         }
-    //     });
-    // });
 
     $(document).ready(function () {
         $('#anggota_id').select2({
@@ -319,15 +243,15 @@
                     if($('#'+data.eksemplar_id).length != 1){
                         $("#kode_eksemplar").val('');
                         $('#list_pinjaman').append(`
-                            <tr id="${data.eksemplar_id}">
-                                <td>${1}</td>
+                            <tr id="list_buku_${data.eksemplar_id}">
+                                <td>${num}</td>
                                 <td>${data.no_panggil}</td>
                                 <td>${data.judul}</td>
                                 <td class="d-none">
                                     <input type="hidden" name="eksemplar_id[]" value="${data.eksemplar_id}">
                                 </td>
                                 <td>
-                                    <a onclick="hapusEksemplar('${data.eksemplar_id}')" methode="post" class="btn btn-danger"> <i class="bi bi-trash"></i></a>
+                                    <a onclick="hapusEksemplar('list_buku_${data.eksemplar_id}')" methode="post" class="btn btn-danger"> <i class="bi bi-trash"></i></a>
                                 </td>
                             </tr>
                         `)

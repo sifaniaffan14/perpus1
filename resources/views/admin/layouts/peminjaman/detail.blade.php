@@ -87,10 +87,9 @@
                                 <th class="fw-bolder">Judul Buku</th>
                                 <th class="fw-bolder">Tgl Pinjam</th>
                                 <th class="fw-bolder">Tgl Kembali</th>
-                                <th class="fw-bolder">Action</th>
                             </tr>
                         </thead>
-                        <tbody id="listTable" name="listTable"></tbody>
+                        <tbody id="list_detail"></tbody>
                     </table>
                 </div>
         </div>

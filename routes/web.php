@@ -9,10 +9,12 @@ use App\Http\Controllers\KategoriBukuController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PeminjamanCreateController;
 use App\Http\Controllers\PeminjamanDetailController;
+use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViewController;
 use App\Http\Middleware\loginCheck;
+use App\Http\Middleware\RoleAnggota;
 use App\Models\PeminjamanDetail;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,17 +45,9 @@ Auth::routes();
 // });
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::middleware([loginCheck::class])->group(function () {
-    Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
+Route::group(['middleware' => ['auth','role:1']], function () {
     Route::get('/admin-dashboard',[DashboardController::class, 'admin'])->name('admin-dashboard');
     
-    Route::get('/bukumanagement',[App\Http\Controllers\BukuController::class, 'list'])->name('bukumanagement');
-    Route::get('/bukuForm',[App\Http\Controllers\BukuController::class, 'form'])->name('buku.form');
-    Route::post('/bukuForm',[App\Http\Controllers\BukuController::class, 'formEdit'])->name('buku.formedit');
-    Route::post('/bukuAdd',[App\Http\Controllers\BukuController::class, 'add'])->name('buku.add');
-    Route::post("deleteBuku/{id}",[App\Http\Controllers\BukuController::class, 'delete'])->name('buku.delete');
-    Route::post('/editBuku/{id}', [App\Http\Controllers\BukuController::class, 'update']);
-
     Route::controller(BukuController::class)->name('buku.')->prefix('buku')->group(function () {
         $route = array('index', 'insert', 'update','select', 'delete', 'getData');  
         foreach ($route as $route) {
@@ -123,39 +117,16 @@ Auth::routes();
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
     });
-    //peminjaman start
-    Route::get('/bukupeminjaman',[App\Http\Controllers\PeminjamanController::class, 'list'])->name('bukupeminjaman');
-    //peminjaman end
 
-    // Route::post('/add-update-book', [App\Http\Controllers\BukuController::class, 'add']);
-    Route::get('/listKategori', [App\Http\Controllers\KategoriBukuController::class, 'list']);
-    Route::post('/addKategori', [App\Http\Controllers\KategoriBukuController::class, 'add']);
-    Route::post('/deleteKategori/{id}', [App\Http\Controllers\KategoriBukuController::class, 'delete']);
-    Route::post('/editKategori/{id}', [App\Http\Controllers\KategoriBukuController::class, 'update']);
+    Route::controller(PengembalianController::class)->name('pengembalian.')->prefix('pengembalian')->group(function () {
+        $route = array('index', 'update','select','select_eksemplar');  
+        foreach ($route as $route) {
+            Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+        }
+    });
+   
+});
 
-    Route::get('/detailBuku/{id}',[BukuController::class, 'detailBuku'])->name('detailbuku.view');
-
-    Route::post('/listEksemplar/{id}', [App\Http\Controllers\DetailBukuController::class, 'listEksemplar']);
-    Route::post('/addEksemplar', [App\Http\Controllers\DetailBukuController::class, 'add']);
-    Route::post('/editEksemplar/{id}', [App\Http\Controllers\DetailBukuController::class, 'update']);
-    Route::get('/deleteEksemplar/{id}', [App\Http\Controllers\DetailBukuController::class, 'delete']);
-
-    Route::get('/barcodeBuku',[App\Http\Controllers\BarcodeController::class, 'getBarcode'])->name('barcodeBuku.view');
-    Route::post('tes/barcodeBuku',[App\Http\Controllers\BarcodeController::class, 'getBarcode'])->name('barcodeBuku.post');
-    Route::get('/PrintBarcode',[App\Http\Controllers\BarcodeController::class, 'printBarcode'])->name('barcodeBuku.print');
-
-    Route::get('/detailPeminjaman/{id}',[App\Http\Controllers\PeminjamanController::class, 'detailPeminjaman'])->name('detailPeminjaman.view');
-    Route::get('/peminjamanForm',[App\Http\Controllers\PeminjamanController::class, 'form'])->name('peminjaman.form');
-    Route::get('/addPeminjaman',[App\Http\Controllers\PeminjamanController::class, 'add'])->name('detailPeminjaman.view');
-    Route::get('/findNoInduk',[App\Http\Controllers\PeminjamanController::class, 'findNoInduk'])->name('findNoInduk');
-    Route::get('/findBukuEksemplar',[App\Http\Controllers\PeminjamanController::class, 'findBukuEksemplar'])->name('findBukuEksemplar');
-
-    Route::get('/anggotamanagement',[App\Http\Controllers\AnggotaController::class, 'list'])->name('anggotamanagement');
-    Route::get('/anggotaForm',[App\Http\Controllers\AnggotaController::class, 'form'])->name('anggota.form');
-    Route::post('/anggotaForm',[App\Http\Controllers\AnggotaController::class, 'formEdit'])->name('anggota.formedit');
-    Route::post('/anggotaAdd',[App\Http\Controllers\AnggotaController::class, 'insert'])->name('anggota.insert');
-    Route::post('/editAnggota/{id}', [App\Http\Controllers\AnggotaController::class, 'update']);
-    Route::post("deleteAnggota/{id}",[App\Http\Controllers\AnggotaController::class, 'delete'])->name('anggota.delete');
-    Route::get('/detailAnggota/{id}',[App\Http\Controllers\AnggotaController::class, 'detailAnggota'])->name('detailanggota.view');
-    Route::post('/search/{id}',[App\Http\Controllers\PeminjamanController::class, 'search'])->name('anggota.search');
-// });
+Route::group(['middleware' => ['auth','role:2']], function () {
+    Route::get('/dashboard',[DashboardController::class, 'anggota'])->name('dashboard');
+});

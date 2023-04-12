@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('peminjamen', function (Blueprint $table) {
             $table->string('peminjaman_id',32)->primary();
             $table->foreignId('anggota_id')->references('id')->on('anggotas')->nullable();
+            $table->string('kode_peminjaman',8)->nullable()->unique();
             $table->string('jumlah_peminjaman')->nullable();
             $table->timestamps();
         });

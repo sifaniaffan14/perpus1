@@ -40,7 +40,7 @@
                                 <th class="fw-bolder">Jumlah Buku</th>
                                 <th class="fw-bolder">Belum Kembali</th>
                                 <th class="fw-bolder">Sudah Kembali</th>
-                                <th class="fw-bolder">status</th>
+                                <th class="fw-bolder">Status</th>
                             </tr>
                         </thead>
                         <tbody id="list_table"></tbody>

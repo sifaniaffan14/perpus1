@@ -11,6 +11,9 @@ class buku extends Model
     use HasFactory;
 
     protected $table        = 'bukus';
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'string';
     public $timestamps = true;
     protected $dateFormat = 'Y-m-d H:i:s';
 
@@ -35,10 +38,10 @@ class buku extends Model
     // 	return $this->belongsTo(KategoriBuku::class);
     // }
 
-    // public function DetailBuku()
-    // {
-    // 	return $this->hashMany(DetailBuku::class);
-    // }
+    public function detail_buku()
+    {
+    	return $this->hashMany(DetailBuku::class,'buku_id');
+    }
 
     // public function scopeJoinKategoriBuku($q)
 	// {

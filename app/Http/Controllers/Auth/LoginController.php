@@ -42,29 +42,33 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {   
-        $input = $request->all();
-  
-        $this->validate($request, [
-            'username' => 'required',
-            'password' => 'required',
-            // 'g-recaptcha-response' => 'recaptcha'
-        ]);
-  
-        $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password'])))
-        {
-            $admin=User::where('username','=',$input['username'])->first();
-            // return $admin;
-            // exit();
-            if($admin->role_id=='2'){
-            return redirect()->route('dashboard');
-            }
-            else{
-                return redirect()->route('admin-dashboard');
-            }
-        }else{
-            return "gagal";
+        try{
+            $input = $request->all();
+    
+            $this->validate($request, [
+                'username' => 'required',
+                'password' => 'required',
+                'g-recaptcha-response' => 'recaptcha'
+            ]);
+    
+            $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+                if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password'])))
+                {
+                    $admin=User::where('username','=',$input['username'])->first();
+                    // return $admin;
+                    // exit();
+                    if($admin->role_id=='1'){
+                    return redirect()->route('admin-dashboard');
+                    }
+                    else{
+                        return redirect()->route('dashboard');
+                    }
+                }else{
+                    return back()->withInput();
+                }
+        } 
+        catch (\Exception $e) {
+            return $this->response($e->getMessage(),true);
         }
-          
     }
 }
