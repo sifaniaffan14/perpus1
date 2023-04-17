@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -35,10 +36,23 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function showLoginForm()
     {
-        $this->middleware('guest')->except('logout');
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user && $user->isAdmin(Auth::id())) {
+                return redirect('/dashboard'); 
+            } else {
+                return redirect('/'); 
+            }
+        }
+        return view('auth.login');
     }
+    
+    //  public function __construct()
+    // {
+    //     $this->middleware('guest')->except('logout');
+    // }
 
     public function login(Request $request)
     {   
