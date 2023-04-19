@@ -334,26 +334,31 @@
                 if (response.status == true) {
                     // $('#list_pinjaman').html('')
                 var data=response.data[0]
-                    if($('#'+data.eksemplar_id).length != 1){
-                        index = index + 1;
-                        $("#kode_eksemplar").val('');
-                        $('#list_pinjaman').append(`
-                            <tr id="${data.eksemplar_id}">
-                                <td class="text-center">${index}</td>
-                                <td class="text-center">${data.no_panggil}</td>
-                                <td class="text-center">${data.judul}</td>
-                                <td class="d-none">
-                                    <input type="hidden" name="eksemplar_id[]" value="${data.eksemplar_id}">
-                                </td>
-                                <td class="text-center">
-                                    <a onclick="hapusEksemplar('${data.eksemplar_id}')" methode="post" class="btn btn-danger" style="padding:5px 2.5px 6px 6px"> <i class="bi bi-trash fs-4"></i></a>
-                                </td>
-                            </tr>
-                        `)
-                    } else{
-                        swal("Warning", 'data sudah ada', "warning");
+                    if (data.peminjaman_detail_id){
+                        swal("Warning", 'Buku dalam proses peminjaman', "warning");
+                    } else {
+                        if($('#'+data.eksemplar_id).length != 1){
+                            index = index + 1;
+                            $("#kode_eksemplar").val('');
+                            $('#list_pinjaman').append(`
+                                <tr id="${data.eksemplar_id}">
+                                    <td class="text-center">${index}</td>
+                                    <td class="text-center">${data.no_panggil}</td>
+                                    <td class="text-center">${data.judul}</td>
+                                    <td class="d-none">
+                                        <input type="hidden" name="eksemplar_id[]" value="${data.eksemplar_id}">
+                                    </td>
+                                    <td class="text-center">
+                                        <a onclick="hapusEksemplar('${data.eksemplar_id}')" methode="post" class="btn btn-danger" style="padding:5px 2.5px 6px 6px"> <i class="bi bi-trash fs-4"></i></a>
+                                    </td>
+                                </tr>
+                            `)
+                        } else{
+                            swal("Warning", 'Data sudah ada', "warning");
 
+                        }
                     }
+                    
                 } else{
                     swal("Warning", response.message, "warning");
                 }

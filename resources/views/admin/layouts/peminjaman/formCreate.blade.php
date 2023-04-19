@@ -9,7 +9,7 @@
                 <form action="javascript:onSave()" name="formPeminjaman" id="formPeminjaman">
                     <div class="card-header pb-5">
                         <h2 class="text-dark-gray fw-bolder fs-3 d-flex align-items-center gap-5 mb-0">
-                            <span class="material-icons text-primary"> text_snippet </span> Peminjaman Buku
+                            <span class="material-icons" style="color:#264A8A"> text_snippet </span> Peminjaman Buku
                         </h2>
                         <div class="form-action-wrapper d-flex gap-4 align-items-center mt-5 w-50 justify-content-end">
                             <button type="button"

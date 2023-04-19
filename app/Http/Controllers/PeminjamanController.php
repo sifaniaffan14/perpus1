@@ -234,10 +234,18 @@ class PeminjamanController extends Controller
     {
         try {
             if (isset($_GET['no_panggil'])) {
-                $operation = db::select('SELECT detail_bukus.*,bukus.judul FROM `detail_bukus`
-                LEFT JOIN bukus
-                ON detail_bukus.buku_id = bukus.id
-                WHERE detail_bukus.no_panggil = "' . $_GET['no_panggil'] . '" AND detail_bukus.is_active = 1');
+                $detail_buku = DetailBuku::where('no_panggil', $_GET['no_panggil'])->get()->toArray();
+                $peminjaman_detail = PeminjamanDetail::where('detail_buku_id', $detail_buku[0]['eksemplar_id'])
+                                    ->whereNotIn('status_peminjaman', ['2'])
+                                    ->get()->toArray();
+                if ($peminjaman_detail){
+                    $operation = $peminjaman_detail;
+                } else {
+                    $operation = db::select('SELECT detail_bukus.*,bukus.judul FROM `detail_bukus`
+                    LEFT JOIN bukus
+                    ON detail_bukus.buku_id = bukus.id
+                    WHERE detail_bukus.no_panggil = "' . $_GET['no_panggil'] . '" AND detail_bukus.is_active = 1');
+                }
             }
             // $generator = new BarcodeGeneratorPNG();
             // $generator->getBarcode($code, $generator::TYPE_CODE_128), 200, ['Content-Type' => 'image/png'];

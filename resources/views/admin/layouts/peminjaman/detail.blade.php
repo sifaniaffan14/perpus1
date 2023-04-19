@@ -3,7 +3,7 @@
         <div class="data-card card pb-6 mb-5 mb-xl-8">
             <div class="card-header">
                 <h2 class="text-dark-gray fw-bolder fs-3 d-flex align-items-center gap-5 mb-0">
-                    <span class="material-icons text-primary"> text_snippet </span> Data Peminjaman
+                    <span class="material-icons" style="color:#264A8A"> text_snippet </span> Data Peminjaman
                 </h2>
                 <div class="form-action-wrapper d-flex gap-4 align-items-center mt-5 w-50">
                     <button type="button" class="btn btn-outline-primary btn-outline border-2 text-body m-0 fw-bolder w-100 actCreate d-none" onclick="closeForm()"> Batal </button>
