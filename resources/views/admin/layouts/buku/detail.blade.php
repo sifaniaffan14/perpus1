@@ -1,120 +1,138 @@
+<style>
+    input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        }
+</style>
 <div class="datail_data row gy-5 g-xl-8 d-none">
     <div class="col-12">
         <div class="data-card card pb-6 mb-5 mb-xl-8">
             <div class="card-header">
                 <h2 class="text-dark-gray fw-bolder fs-3 d-flex align-items-center gap-5 mb-0">
-                    <span class="material-icons text-primary"> text_snippet </span> Data Buku
+                    <span class="material-icons" style="color:#264A8A"> text_snippet </span> Detail Buku
                 </h2>
             </div>
             <div class="col-8 d-flex">
-                <div class="col-lg-5" style="padding: 10vh;">
-                    <img src="{{ asset('images/undraw_posting_photo.svg') }}" alt="" style="width: 100%; ">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, itaque?</p>
+                <div class="col-lg-5" style="padding: 10vh; margin-left:45px">
+                    <img src="" id="img" alt="" style="width:28vh; height:34vh">
                 </div>
                 <svg id="barcode"></svg>
 
-                <div class="col-lg-12" style="padding: 10vh;">
+                <div class="col-lg-7" style="padding: 10vh;">
                     <p id="detail_id" style="display:none;"></p>
                     <table style="width: 100%">
-                        <tbody style="color: #000000; font-weight:bold">
+                        <tbody style="color: #000000;">
                             <tr>
-                                <td>
-                                    <h5> Kode Buku </h5>
+                                <td width="37%">
+                                    <p class="fs-4"> Kode Buku </p>
                                 </td>
                                 <td>
-                                    <h5> : </h5>
+                                    <p class="fs-4"> : </p>
                                 </td>
                                 <td>
-                                    <h5 id="detail_kode_buku"></h5>
+                                    <p class="fs-4" id="detail_kode_buku"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <h5>Kategori Buku</h5>
+                                    <p class="fs-4">Kategori Buku</p>
                                 </td>
                                 <td>
-                                    <h5> : </h5>
+                                    <p class="fs-4"> : </p>
                                 </td>
                                 <td>
-                                    <h5 id="detail_nama_kategori"></h5>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <h5>Judul Buku</h5>
-                                </td>
-                                <td>
-                                    <h5> : </h5>
-                                </td>
-                                <td>
-                                    <h5 id="detail_judul"></h5>
+                                    <p class="fs-4" id="detail_nama_kategori"></p>
                                 </td>
                             </tr>
-
                             <tr>
                                 <td>
-                                    <h5>Penerbit</h5>
+                                    <p class="fs-4">Judul Buku</p>
                                 </td>
                                 <td>
-                                    <h5> : <h5>
+                                    <p class="fs-4"> : </p>
                                 </td>
                                 <td>
-                                    <h5 id="detail_penerbit"></h5>
+                                    <p class="fs-4" id="detail_judul"></p>
                                 </td>
                             </tr>
 
                             <tr>
                                 <td>
-                                    <h5>Pengarang</h5>
+                                    <p class="fs-4">No. ISBN</p>
                                 </td>
                                 <td>
-                                    <h5> : </h5>
+                                    <p class="fs-4"> : </p>
                                 </td>
                                 <td>
-                                    <h5 id="detail_pengarang"></h5>
+                                    <p class="fs-4" id="detail_no_isbn"></p>
                                 </td>
                             </tr>
 
                             <tr>
                                 <td>
-                                    <h5>Jumlah Halaman Buku</h5>
+                                    <p class="fs-4">Penerbit</p>
                                 </td>
                                 <td>
-                                    <h5> : </h5>
+                                    <p class="fs-4"> : </p>
                                 </td>
                                 <td>
-                                    <h5 id="detail_halaman"></h5>
+                                    <p class="fs-4" id="detail_penerbit"></p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <p class="fs-4">Pengarang</p>
+                                </td>
+                                <td>
+                                    <p class="fs-4"> : </p>
+                                </td>
+                                <td>
+                                    <p class="fs-4" id="detail_pengarang"></p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <p class="fs-4">Jumlah Halaman</p>
+                                </td>
+                                <td>
+                                    <p class="fs-4"> : </p>
+                                </td>
+                                <td>
+                                    <p class="fs-4" id="detail_halaman"></p>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="bottom" style=" margin-left:5vh">
-                    <button type="button" onclick="closeDisplayDetail()" class="btn btn-primary">kembali</button>
-                    <button type="button" onclick="onEdit(this)" class="btn btn-warning">Edit <i class="bi bi-pencil-square"></i></button>
-                    <button onclick="onDelete(this)" class="btn btn-danger">Hapus <i class="bi bi-trash"></i></button>
+            <div class="bottom" style=" margin-left:8vh; margin-top:-30px; margin-bottom:6vh">
+                    <button type="button" onclick="closeDisplayDetail()" class="btn fw-bolder text-light" style="background-color:#264A8A"><i class="bi bi-arrow-left fs-4"></i> Kembali</button>
+                    <button type="button" onclick="onEdit(this)" class="btn btn-warning ms-3"><i class="bi bi-pencil-square"></i> Edit</button>
+                    <button onclick="onDelete(this)" class="btn btn-danger ms-3"><i class="bi bi-trash"></i> Hapus</button>
             </div>
-            <hr style="width: 80%; margin-top:3vh;text-align: center;  border-top: 2px solid ">
-            <div class="header-eksemplar" style="padding:4vh;">
-                <h2 style="text-align: center; font-weight:bold;">Detail Eksemplar</h2>
-                <form action="" method="POST">
-                    @csrf
-                    <button type="submit" id="btnSelectedRows" style="float:right" class="btn btn-warning">Cetak Barcode</button>
-                    <button type="button" style="float:right" class="btn btn-primary" onclick="showModal()">+ Create New</a></button>
+            <hr style="width: 100%; margin-top:3vh;text-align: center;  border-top: 1px solid ">
+            <div class="header-eksemplar" style="padding:4vh; padding-bottom:0vh">
+                <h2 class="mb-5" style="text-align: center; font-weight:bold;">Detail Eksemplar</h2>
+                <a id="pdfBarcode">
+                    <button style="float:right" class="btn btn-warning"><img src="{{ asset('images/barcode_scanner.png')}}" alt=""> Cetak Barcode</button>
+                </a>
+                <!-- <button type="button" id="btnSelectedRows" style="float:right" class="btn btn-warning"><img src="{{ asset('images/barcode_scanner.png')}}" alt=""> Cetak Barcode</button> -->
+                <button type="button" style="float:right; background-color:#264A8A" class="btn me-3 text-light" onclick="showModal()">+ Create New</a></button>
             </div>
-            <div class="card-body py-0">
-                <table class="table" id="tableEksemplar">
+            <div class="card-body">
+                <table class="table mx-auto text-center" onclick="check()" style="width:90%" id="tableEksemplar">
                     <thead>
                         <tr>
-                            <th class="fw-bolder" style="max-width: 20px"> No </th>
+                            <th class="fw-bolder" style="width: 4%"> No </th>
                             <th class="fw-bolder">Kode Eksemplar</th>
                             <th class="fw-bolder">Status</th>
                             <th class="fw-bolder">kondisi</th>
                             <th class="fw-bolder">Tanggal Pinjam</th>
                             <th class="fw-bolder">Tanggal Kembali</th>
                             <th class="fw-bolder">Barcode</th>
+                            <th class="fw-bolder">Cetak Barcode</th>
                             <th class="fw-bolder">Action</th>
                         </tr>
                     </thead>
@@ -170,15 +188,15 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Data Eksemplar</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
             <form action="javascript:saveEksemplar()" id="formEksemplar" name="formEksemplar" method="POST">
                 @csrf
-                  <input type="text" class="form-control" id="buku_id" name="buku_id">
+                  <input type="text" class="form-control" id="buku_id" name="buku_id" hidden>
                 <div class="form-group">
                     <label for="no_panggil" class="col-form-label">Kode Eksemplar Buku</label>
                     <td><input class="form-control" type="hidden" name="eksemplar_id" id="eksemplar_id"></td>
@@ -202,3 +220,5 @@
       </div>
     </div>
   </div> 
+
+  
