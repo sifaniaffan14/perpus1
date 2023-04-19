@@ -327,6 +327,7 @@
                             onDisplayDetail()
                             onClear()
                             hideModal()
+                            tableEksemplar(id_buku)
                             swal("Success !", response.message, "success");
                         } else{
                             swal("Warning", response.message, "warning");
