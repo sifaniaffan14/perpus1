@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class BukuController extends Controller
@@ -75,7 +76,7 @@ class BukuController extends Controller
             $image = $request->file('image');
             if (!empty($image)) {
                 $request->image = $request->judul . '-cover.' . $image->getClientOriginalExtension();
-                $image->move(storage_path('app/public/buku/') , $request->image);
+                $image->move(public_path('storage/buku/') , $request->image);
             }
 
             $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, Str::random());
@@ -99,9 +100,20 @@ class BukuController extends Controller
                 'kode_buku' => 'required',
                 'judul' => 'required',
                 'pengarang' => 'required',
+                'no_isbn' => 'required',
                 'halaman' => 'required',
             ]);
             unset($data['_token']);
+
+            $image = $request->file('image');
+            if (!empty($image)) {         
+                $buku = Buku::findOrFail($data['id']);
+                $current = public_path('storage/buku/' . $buku->image);
+                File::delete($current);   
+                $request->image = $request->judul . '-cover.' . $image->getClientOriginalExtension();
+                $image->move(public_path('storage/buku/') , $request->image);
+            }
+
             // $myArray = array();
             // foreach ($data as $key=>$value) {
             //     $myArray[$key] = "'".$data['judul'].".";
@@ -115,6 +127,8 @@ class BukuController extends Controller
                 'penerbit' => $data['penerbit'],
                 'pengarang' => $data['pengarang'],
                 'halaman' => $data['halaman'],
+                'no_isbn' => $data['no_isbn'],
+                'image' => $request->image
             ]);
             // $data = buku::find(request()->id);
             // $operation = $data->update($request->post());
