@@ -101,7 +101,7 @@ class DetailBukuController extends Controller
     }
 
     public function PDFBarcode($id){
-        if (isset($_GET['checkedValues'])) {
+        if (isset($_GET['checkedValues']) && $_GET['checkedValues'] != '') {
             $arrayVal = explode(",", $_GET['checkedValues']);
             $operation = DetailBuku::join('bukus','detail_bukus.buku_id','=','bukus.id')
                     ->join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')

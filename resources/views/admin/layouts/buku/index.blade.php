@@ -44,7 +44,7 @@
                                 <th class="fw-bolder">Nama Buku</th>
                                 <th class="fw-bolder">Penerbit</th>
                                 <th class="fw-bolder">Kategori</th>
-                                <!-- <th class="fw-bolder">Detail</th> -->
+                                <th class="fw-bolder">Detail</th>
                             </tr>
                         </thead>
                         <tbody></tbody>

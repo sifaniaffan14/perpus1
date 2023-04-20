@@ -5,8 +5,8 @@
 <script type="text/javascript" src="jquery-barcode.js"></script>
 <script src="assets/js/jquery-barcode.js"></script>
 <script src="assets/js/jquery-barcode.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script> 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> 
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>  -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>  -->
 <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script> 
 <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script> 
 
@@ -51,7 +51,8 @@
                 { "data": "Kode Buku" },
                 { "data": "Nama Buku" },
                 { "data": "Penerbit" },
-                { "data": "Kategori" }
+                { "data": "Kategori" },
+                { "data": "Detail" }
             ]
         } );
         
@@ -63,7 +64,8 @@
                     "Kode Buku": v.kode_buku,
                     "Nama Buku": v.judul,
                     "Penerbit": v.penerbit,
-                    "Kategori": v.nama_kategori
+                    "Kategori": v.nama_kategori,
+                    "Detail": `<button onclick=onDetail('${v.id}') class="btn btn-primary btn-detail p-1 ps-2" name="btn-detail" id="btn-detail"><i class="bi bi-arrow-right fs-2"></i></button>`
                 };
                 data.push(row);
             })
@@ -76,8 +78,6 @@
         }
 
         document.getElementById("search_buku").addEventListener("input", searchFunction);
-
-        // $('#tabelBuku_filter label').addClass('d-none');
     } );        
 
     const checkboxes = document.getElementsByName('pilih[]');
@@ -99,8 +99,11 @@
             }
             if (i == 0){
                 value = checkedValues.join(',');
-                console.log(value);
-                document.getElementById("pdfBarcode").setAttribute('href', "http://127.0.0.1:8000/PDFBarcode/"+id_buku+"?checkedValues="+value);
+                if (value != ''){
+                    document.getElementById("pdfBarcode").setAttribute('href', "http://127.0.0.1:8000/PDFBarcode/"+id_buku+"?checkedValues="+value);
+                } else {
+                    document.getElementById("pdfBarcode").setAttribute('href', "http://127.0.0.1:8000/PDFBarcode/"+id_buku);
+                }
                 i = 1;
             }
             });
