@@ -36,18 +36,18 @@
                     </div>
                 </div>
                 <div class="card-body py-0">
-                    <table class="table" id="tableBuku">
+                    <table id="tabelBuku" class="table">
                         <thead>
                             <tr>
-                                <th class="fw-bolder" style="max-width: 20px"> No </th>
+                                <th class="fw-bolder" style="max-width: 37px"> No </th>
                                 <th class="fw-bolder">Kode Buku</th>
                                 <th class="fw-bolder">Nama Buku</th>
                                 <th class="fw-bolder">Penerbit</th>
                                 <th class="fw-bolder">Kategori</th>
-                                <th class="fw-bolder">Detail</th>
+                                <!-- <th class="fw-bolder">Detail</th> -->
                             </tr>
                         </thead>
-                        <tbody id="list_table"></tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>

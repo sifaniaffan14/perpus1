@@ -95,3 +95,12 @@
   .inputan_peminjaman_buku button{
     width: 15%;
   }
+
+  /* DataTable */
+  .active>.page-link, .page-link.active{
+    background-color: #264A8A;
+  }
+
+  #tabelBuku_filter label{
+    display: none;
+  }

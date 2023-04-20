@@ -5,10 +5,10 @@
 <script type="text/javascript" src="jquery-barcode.js"></script>
 <script src="assets/js/jquery-barcode.js"></script>
 <script src="assets/js/jquery-barcode.min.js"></script>
-{{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
-{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> --}}
-{{-- <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script> --}}
-{{-- <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script> --}}
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> 
+<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script> 
+<script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script> 
 
 <script>
     var table = 'tableBuku'
@@ -32,8 +32,53 @@
 		$(`#${table}`).DataTable();
 		$(`#${list_table}`).DataTable();
 	});
-    inittable()
+    // inittable()
     getData()
+
+    // Konfigurasi DataTable
+    $(document).ready(function() {
+        var dataTable = $('#tabelBuku').DataTable( {
+            "ajax": {
+                "url": urlPath.select,
+                "type": "GET",
+                "dataSrc": function (response) {
+                    var data = processData(response);
+                    return data;
+                }
+            },
+            "columns": [
+                { "data": "No" },
+                { "data": "Kode Buku" },
+                { "data": "Nama Buku" },
+                { "data": "Penerbit" },
+                { "data": "Kategori" }
+            ]
+        } );
+        
+        function processData(response) {
+            var data = [];
+            $.each(response.data, function( k, v ){
+                var row = {
+                    "No": k + 1,
+                    "Kode Buku": v.kode_buku,
+                    "Nama Buku": v.judul,
+                    "Penerbit": v.penerbit,
+                    "Kategori": v.nama_kategori
+                };
+                data.push(row);
+            })
+            return data;
+        }
+
+        function searchFunction() {
+            const input = document.getElementById("search_buku").value;        
+            dataTable.search(input).draw();
+        }
+
+        document.getElementById("search_buku").addEventListener("input", searchFunction);
+
+        // $('#tabelBuku_filter label').addClass('d-none');
+    } );        
 
     const checkboxes = document.getElementsByName('pilih[]');
     const checkedValues = [];
@@ -225,34 +270,6 @@
             }
         }); 
     }
-
-    // function PDFBarcode(){
-    //     swal({
-    //         title: "Peringatan",
-    //         text: "Apakah Anda Yakin Untuk Mencetak Barcode?",
-    //         icon: "warning",
-    //         buttons: true,
-    //         dangerMode: true,
-    //     })
-    //     .then((response) => {
-    //         if (response) {
-    //             $.ajax({
-    //                 url: urlPath.PDFBarcode,
-    //                 type: 'GET',
-    //                 data: {
-    //                     id: id_buku
-    //                 },
-    //                 success: function(response){
-    //                     if(response.status == true){
-    //                         swal("Success !", response.message, "success");
-    //                     } else{
-    //                         swal("Warning", response.message, "warning");
-    //                     }
-    //                 }
-    //             })
-    //         }
-    //     }); 
-    // }
 
     function tableEksemplar(id){
         $.ajax({
