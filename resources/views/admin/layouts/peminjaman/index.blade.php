@@ -8,7 +8,7 @@
             <div class="data-card card pb-6 mb-5 mb-xl-8">
                 <div class="card-header">
                     <h2 class="text-dark-gray fw-bolder fs-3 d-flex align-items-center gap-5 mb-0">
-                        <span class="material-icons" style="color:#264A8A"> text_snippet </span> Data Peminjaman
+                        <span class="material-icons text-primary"> text_snippet </span> Data Peminjaman
                     </h2>
                 </div>
                 <div class="d-flex flex-column flex-lg-row flex-stack py-5 px-9"
@@ -40,7 +40,7 @@
                                 <th class="fw-bolder">Jumlah Buku</th>
                                 <th class="fw-bolder">Belum Kembali</th>
                                 <th class="fw-bolder">Sudah Kembali</th>
-                                <th class="fw-bolder">status</th>
+                                <th class="fw-bolder">Status</th>
                             </tr>
                         </thead>
                         <tbody id="list_table"></tbody>
