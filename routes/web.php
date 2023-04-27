@@ -9,6 +9,7 @@ use App\Http\Controllers\KategoriBukuController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PeminjamanCreateController;
 use App\Http\Controllers\PeminjamanDetailController;
+use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\PerpanjanganController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -133,39 +134,11 @@ Auth::routes();
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
     });
-    //peminjaman start
-    Route::get('/bukupeminjaman',[App\Http\Controllers\PeminjamanController::class, 'list'])->name('bukupeminjaman');
-    //peminjaman end
 
-    // Route::post('/add-update-book', [App\Http\Controllers\BukuController::class, 'add']);
-    Route::get('/listKategori', [App\Http\Controllers\KategoriBukuController::class, 'list']);
-    Route::post('/addKategori', [App\Http\Controllers\KategoriBukuController::class, 'add']);
-    Route::post('/deleteKategori/{id}', [App\Http\Controllers\KategoriBukuController::class, 'delete']);
-    Route::post('/editKategori/{id}', [App\Http\Controllers\KategoriBukuController::class, 'update']);
-
-    Route::get('/detailBuku/{id}',[BukuController::class, 'detailBuku'])->name('detailbuku.view');
-
-    Route::post('/listEksemplar/{id}', [App\Http\Controllers\DetailBukuController::class, 'listEksemplar']);
-    Route::post('/addEksemplar', [App\Http\Controllers\DetailBukuController::class, 'add']);
-    Route::post('/editEksemplar/{id}', [App\Http\Controllers\DetailBukuController::class, 'update']);
-    Route::get('/deleteEksemplar/{id}', [App\Http\Controllers\DetailBukuController::class, 'delete']);
-
-    Route::get('/barcodeBuku',[App\Http\Controllers\BarcodeController::class, 'getBarcode'])->name('barcodeBuku.view');
-    Route::post('tes/barcodeBuku',[App\Http\Controllers\BarcodeController::class, 'getBarcode'])->name('barcodeBuku.post');
-    Route::get('/PrintBarcode',[App\Http\Controllers\BarcodeController::class, 'printBarcode'])->name('barcodeBuku.print');
-
-    Route::get('/detailPeminjaman/{id}',[App\Http\Controllers\PeminjamanController::class, 'detailPeminjaman'])->name('detailPeminjaman.view');
-    Route::get('/peminjamanForm',[App\Http\Controllers\PeminjamanController::class, 'form'])->name('peminjaman.form');
-    Route::get('/addPeminjaman',[App\Http\Controllers\PeminjamanController::class, 'add'])->name('detailPeminjaman.view');
-    Route::get('/findNoInduk',[App\Http\Controllers\PeminjamanController::class, 'findNoInduk'])->name('findNoInduk');
-    Route::get('/findBukuEksemplar',[App\Http\Controllers\PeminjamanController::class, 'findBukuEksemplar'])->name('findBukuEksemplar');
-
-    Route::get('/anggotamanagement',[App\Http\Controllers\AnggotaController::class, 'list'])->name('anggotamanagement');
-    Route::get('/anggotaForm',[App\Http\Controllers\AnggotaController::class, 'form'])->name('anggota.form');
-    Route::post('/anggotaForm',[App\Http\Controllers\AnggotaController::class, 'formEdit'])->name('anggota.formedit');
-    Route::post('/anggotaAdd',[App\Http\Controllers\AnggotaController::class, 'insert'])->name('anggota.insert');
-    Route::post('/editAnggota/{id}', [App\Http\Controllers\AnggotaController::class, 'update']);
-    Route::post("deleteAnggota/{id}",[App\Http\Controllers\AnggotaController::class, 'delete'])->name('anggota.delete');
-    Route::get('/detailAnggota/{id}',[App\Http\Controllers\AnggotaController::class, 'detailAnggota'])->name('detailanggota.view');
-    Route::post('/search/{id}',[App\Http\Controllers\PeminjamanController::class, 'search'])->name('anggota.search');
+    Route::controller(PengembalianController::class)->name('pengembalian.')->prefix('pengembalian')->group(function () {
+        $route = array('index', 'update','select','select_eksemplar');  
+        foreach ($route as $route) {
+            Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+        }
+    });
 // });

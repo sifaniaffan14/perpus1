@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class DetailBuku extends Model
 {
     protected $table = 'detail_bukus';
+    protected $primaryKey = 'eksemplar_id';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'eksemplar_id',
@@ -18,13 +21,13 @@ class DetailBuku extends Model
         'barcode',
     ];
 
-    public function Buku()
+    public function buku()
     {
-    	return $this->belongsTo(Buku::class, 'buku_id');
+    	return $this->belongsTo(Buku::class,'buku_id')->select(['id', 'judul']);
     }
 
-    public function PeminjamanDetail()
+    public function peminjaman_detail()
     {
-    	return $this->hasMany(PeminjamanDetail::class);
+    	return $this->hasMany(PeminjamanDetail::class,'detail_buku_id');
     }
 }
