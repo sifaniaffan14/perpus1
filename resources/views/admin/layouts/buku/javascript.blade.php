@@ -32,54 +32,9 @@
 		$(`#${table}`).DataTable();
 		$(`#${list_table}`).DataTable();
 	});
-    // inittable()
+    inittable()
     getData()
-
-    // Konfigurasi DataTable
-    $(document).ready(function() {
-        var dataTable = $('#tabelBuku').DataTable( {
-            "ajax": {
-                "url": urlPath.select,
-                "type": "GET",
-                "dataSrc": function (response) {
-                    var data = processData(response);
-                    return data;
-                }
-            },
-            "columns": [
-                { "data": "No" },
-                { "data": "Kode Buku" },
-                { "data": "Nama Buku" },
-                { "data": "Penerbit" },
-                { "data": "Kategori" },
-                { "data": "Detail" }
-            ]
-        } );
-        
-        function processData(response) {
-            var data = [];
-            $.each(response.data, function( k, v ){
-                var row = {
-                    "No": k + 1,
-                    "Kode Buku": v.kode_buku,
-                    "Nama Buku": v.judul,
-                    "Penerbit": v.penerbit,
-                    "Kategori": v.nama_kategori,
-                    "Detail": `<button onclick=onDetail('${v.id}') class="btn btn-primary btn-detail p-1 ps-2" name="btn-detail" id="btn-detail"><i class="bi bi-arrow-right fs-2"></i></button>`
-                };
-                data.push(row);
-            })
-            return data;
-        }
-
-        function searchFunction() {
-            const input = document.getElementById("search_buku").value;        
-            dataTable.search(input).draw();
-        }
-
-        document.getElementById("search_buku").addEventListener("input", searchFunction);
-    } );        
-
+  
     const checkboxes = document.getElementsByName('pilih[]');
     const checkedValues = [];
     var value = '';
@@ -157,29 +112,49 @@
     }
 
     function inittable(){
-        $.ajax({
-            url: urlPath.select,
-            type: 'GET',
-            success: function(response){
-                if(response.status == true){
-                    $('#list_table').html('')
-                    $.each(response.data, function( k, v ){
-                        $('#list_table').append(`
-                            <tr>
-                                <td>${k+1}</td>
-                                <td>${v.kode_buku}</td>
-                                <td>${v.judul}</td>
-                                <td>${v.penerbit}</td>
-                                <td>${v.nama_kategori}</td>
-                                <td>
-                                    <button onclick=onDetail('${v.id}') class="btn btn-primary btn-detail p-1 ps-2" name="btn-detail" id="btn-detail"><i class="bi bi-arrow-right fs-2"></i></button>
-                                </td>
-                            </tr>
-                        `)
-                    });
-                } 
+        $(document).ready(function() {
+            var dataTable = $('#tabelBuku').DataTable( {
+                "ajax": {
+                    "url": urlPath.select,
+                    "type": "GET",
+                    "dataSrc": function (response) {
+                        var data = processData(response);
+                        return data;
+                    }
+                },
+                "columns": [
+                    { "data": "No" },
+                    { "data": "Kode Buku" },
+                    { "data": "Nama Buku" },
+                    { "data": "Penerbit" },
+                    { "data": "Kategori" },
+                    { "data": "Detail" }
+                ]
+            } );
+            
+            function processData(response) {
+                var data = [];
+                $.each(response.data, function( k, v ){
+                    var row = {
+                        "No": k + 1,
+                        "Kode Buku": v.kode_buku,
+                        "Nama Buku": v.judul,
+                        "Penerbit": v.penerbit,
+                        "Kategori": v.nama_kategori,
+                        "Detail": `<button onclick=onDetail('${v.id}') class="btn btn-primary btn-detail p-1 ps-2" name="btn-detail" id="btn-detail"><i class="bi bi-arrow-right fs-2"></i></button>`
+                    };
+                    data.push(row);
+                })
+                return data;
             }
-        })
+
+            function searchFunction() {
+                const input = document.getElementById("search_buku").value;        
+                dataTable.search(input).draw();
+            }
+
+            document.getElementById("search_buku").addEventListener("input", searchFunction);
+        } );      
     }
 
     function getData(){
