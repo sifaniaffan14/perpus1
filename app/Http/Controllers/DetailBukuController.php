@@ -8,6 +8,7 @@ use App\Models\KategoriBuku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
+use PDF;
 use Illuminate\Support\Facades\DB;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
@@ -17,9 +18,15 @@ class DetailBukuController extends Controller
     {
         try {
             if (isset($_GET['eksemplar_id'])) {
-                $operation = DetailBuku::where('eksemplar_id', $_GET['eksemplar_id'])->where('is_active', 1)->get();
+                $operation = DetailBuku::leftJoin('peminjaman_details','detail_bukus.eksemplar_id','=','peminjaman_details.detail_buku_id')
+                            ->where('detail_bukus.eksemplar_id', $_GET['eksemplar_id'])
+                            ->where('detail_bukus.is_active', 1)
+                            ->get();
             } else {
-                $operation = DetailBuku::where('is_active', 1)->get();
+                $operation = DetailBuku::leftJoin('peminjaman_details','detail_bukus.eksemplar_id','=','peminjaman_details.detail_buku_id')
+                            ->where('is_active', 1)
+                            ->where('buku_id', $_GET['id'])
+                            ->get();
             }
             // $generator = new BarcodeGeneratorPNG();
             // $generator->getBarcode($code, $generator::TYPE_CODE_128), 200, ['Content-Type' => 'image/png'];
@@ -91,6 +98,38 @@ class DetailBukuController extends Controller
         } catch (\Exception $e) {
             return $this->responseDelete($e->getMessage());
         }
+    }
+
+    public function PDFBarcode($id){
+        if (isset($_GET['checkedValues']) && $_GET['checkedValues'] != '') {
+            $arrayVal = explode(",", $_GET['checkedValues']);
+            $operation = DetailBuku::join('bukus','detail_bukus.buku_id','=','bukus.id')
+                    ->join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')
+                    ->whereIn('detail_bukus.no_panggil', $arrayVal)
+                    ->where('detail_bukus.is_active', 1)
+                    ->where('detail_bukus.buku_id', $id)
+                    ->select(
+                        'detail_bukus.eksemplar_id',
+                        'detail_bukus.no_panggil',
+                        'kategori_bukus.nama_kategori'
+                    )
+                    ->get()->toArray();
+        } else {
+            $operation = DetailBuku::join('bukus','detail_bukus.buku_id','=','bukus.id')
+                    ->join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')
+                    ->where('detail_bukus.is_active', 1)
+                    ->where('detail_bukus.buku_id', $id)
+                    ->select(
+                        'detail_bukus.eksemplar_id',
+                        'detail_bukus.no_panggil',
+                        'kategori_bukus.nama_kategori'
+                    )
+                    ->get()->toArray();    
+        }
+
+        $pdf = PDF::loadView('pdfTemplate.barcode', compact('operation'));
+        $pdf->setPaper('A4','landscape');
+        return $pdf->stream('Barcode');
     }
 
     public function kodeBarcode(){

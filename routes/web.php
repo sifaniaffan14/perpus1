@@ -9,6 +9,7 @@ use App\Http\Controllers\KategoriBukuController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PeminjamanCreateController;
 use App\Http\Controllers\PeminjamanDetailController;
+use App\Http\Controllers\PerpanjanganController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViewController;
@@ -75,6 +76,8 @@ Auth::routes();
         }
     });
 
+    Route::get('PDFBarcode/{id}', [DetailBukuController::class, 'PDFBarcode'])->name('detailBuku.PDFBarcode');
+
     Route::controller(DashboardController::class)->name('dashboard.')->prefix('dashboard')->group(function () {
         $route = array('admin');  
         foreach ($route as $route) {
@@ -112,6 +115,13 @@ Auth::routes();
 
     Route::controller(PeminjamanCreateController::class)->name('createPeminjaman.')->prefix('createPeminjaman')->group(function () {
         $route = array('index');  
+        foreach ($route as $route) {
+            Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+        }
+    });
+
+    Route::controller(PerpanjanganController::class)->name('perpanjangan.')->prefix('perpanjangan')->group(function () {
+        $route = array('index', 'select', 'selectDetail', 'submitPerpanjangan', 'update', 'reset');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
