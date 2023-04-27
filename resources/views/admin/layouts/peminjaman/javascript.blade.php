@@ -443,6 +443,7 @@
         $("#nama_anggota_detail").html('')
         $("#jenis_anggota_detail").html('')
         $('#anggota_id').val(null).trigger('change.select2');
+        $(`#identitas_peminjam`).html('')
     }
 
 </script>
