@@ -240,6 +240,8 @@
                         if(response.status == true){
                             swal("Success !", response.message, "success");
                             onDisplayMain()
+                            $('#table_belumverif').DataTable().destroy();
+                            inittable('belum_verif');
                         } else{
                             swal("Warning", response.message, "warning");
                         }
