@@ -56,7 +56,9 @@
                     data = response.data[0];
                     $('[name=peminjaman_id]').val(data.peminjaman_id)
                     $.each(data.anggota, function( k, v ){
-                        $('#'+k).html(v)
+                        if (k == 'no_induk'){
+                            $('#'+k).html('No. Induk'+v)
+                        }
                     });
 
                     var num = 0;
