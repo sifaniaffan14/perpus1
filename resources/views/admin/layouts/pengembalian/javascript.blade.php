@@ -54,12 +54,32 @@
                     $('.card-body').removeClass('d-none');
 
                     data = response.data[0];
-                    $('[name=peminjaman_id]').val(data.peminjaman_id)
-                    $.each(data.anggota, function( k, v ){
-                        if (k == 'no_induk'){
-                            $('#'+k).html('No. Induk'+v)
+                    $('[name=peminjaman_id]').val(data.peminjaman_id);
+                    document.getElementById("identitas_peminjam").innerHTML = "";
+                    if (data.anggota['no_induk']){
+                            $(`#identitas_peminjam`).append(`
+                                <div class="d-flex mt-5">
+                                    <p class="m-0 fs-5 fw-bolder" style="width:105px">No. Induk</p>
+                                    <p class="m-0 fs-5 fw-bolder">&nbsp;:&nbsp;${data.anggota['no_induk']}</p>
+                                </div>
+                            `)
                         }
-                    });
+                        if (data.anggota['nama_anggota']){
+                            $(`#identitas_peminjam`).append(`
+                                <div class="d-flex mt-2">
+                                    <p class="m-0 fs-5 fw-bolder" style="width:105px">Nama</p>
+                                    <p class="m-0 fs-5 fw-bolder">&nbsp;:&nbsp;${data.anggota['nama_anggota']}</p>
+                                </div>
+                            `)
+                        }
+                        if (data.anggota['jenis_anggota']){
+                            $(`#identitas_peminjam`).append(`
+                                <div class="d-flex mt-2 mb-5">
+                                    <p class="m-0 fs-5 fw-bolder">Jenis Anggota </p>
+                                    <p class="m-0 fs-5 fw-bolder">&nbsp;:&nbsp;${data.anggota['jenis_anggota']}</p>
+                                </div>
+                            `)
+                        }
 
                     var num = 0;
                     $.each(data.peminjaman_detail, function( k, v ){
@@ -67,8 +87,8 @@
                         var eksemplar_id = v.detail_buku.eksemplar_id;
                         let no_panggil = v.detail_buku.no_panggil;
                         let judul = v.detail_buku.buku.judul;
-                        var tgl_pinjam = v.tgl_pinjam;
-                        var tgl_kembali = v.tgl_kembali;
+                        var tgl_pinjam = ' '+moment(v.tgl_pinjam).format('DD/MM/YYYY');
+                        var tgl_kembali = ' '+moment(v.tgl_kembali).format('DD/MM/YYYY');
                         let html = `<div id="status_${eksemplar_id}">${peminjaman_status}</div>`
 
             
