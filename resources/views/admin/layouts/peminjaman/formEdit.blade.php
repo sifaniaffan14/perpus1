@@ -73,13 +73,13 @@
                                 placeholder="Masukkan Kode Eksemplar" />
                         </div>
                         <div class="card-body py-0">
-                            <table class="table w-75 mx-auto" id="tablePinjamanEdit">
+                            <table class="table mx-auto" style="width:60%" id="tablePinjamanEdit">
                                 <thead>
                                     <tr>
                                         <th class="fw-bolder text-center" style="max-width: 20px"> No </th>
                                         <th class="fw-bolder text-center">Kode Eksemplar</th>
                                         <th class="fw-bolder text-center">Judul Buku</th>
-                                        <th class="fw-bolder text-center pe-5">Action</th>
+                                        <th class="fw-bolder text-center pe-5" style="width:10%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="list_pinjaman"></tbody>
