@@ -3,11 +3,9 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
 {{--
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> --}}
-{{--
-<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script> --}}
-{{--
-<script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script> --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script> 
+<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script> 
+<script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script> 
 
 <script>
     var index = 0
@@ -25,42 +23,62 @@
         selectEksemplar: "{{ route('peminjaman.selectEksemplar') }}",
         detailPeminjaman: "{{ route('detailPeminjaman.select') }}",
     }
-    $(document).ready(function () {
-        $(`#${table}`).DataTable();
-        $(`#${list_table}`).DataTable();
-    });
     inittable()
     loadData()
 
     function inittable() {  
-        $.ajax({
-            url: urlPath.select,
-            type: 'GET',
-            success: function (response) {
-                if (response.status == true) {
-                    $('#list_table').html('')
-                    var num = 0;
-                    $.each(response.data, function (k, v) {
-                        let jsonString = JSON.stringify(v);
-                        let encode = btoa(jsonString)
-                        console.log(encode)
+        $(document).ready(function() {
+            var dataTable = $('#tablePeminjaman').DataTable( {
+                "ajax": {
+                    "url": urlPath.select,
+                    "type": "GET",
+                    "dataSrc": function (response) {
+                        var data = processData(response);
+                        return data;
+                    }
+                },
+                "columns": [
+                    { "data": "No" },
+                    { "data": "Nama Peminjam" },
+                    { "data": "Jumlah Buku" },
+                    { "data": "Belum Kembali" },
+                    { "data": "Sudah Kembali" },
+                    { "data": "Status" },
+                    { "data": "Detail" }
+                ]
+            } );
+            
+            function processData(response) {
+                var data = [];
+                var num = 0;
+                $.each(response.data, function( k, v ){
+                    let jsonString = JSON.stringify(v);
+                    let encode = btoa(jsonString)
+                    console.log(encode)
 
-                        num++;
-                        let peminjaman_status = (v.peminjaman_jumlah==v.peminjaman_sudah_kembali?`<span class="badge bg-success">Sudah Kembali</span>`:`<span class="badge bg-danger">Belum Kembali</span>`)
-                        $('#list_table').append(`
-                            <tr onclick=onDetail('${encode}') style="cursor:pointer">
-                                <td>${num}</td>
-                                <td>${v.anggota.nama_anggota}</td>
-                                <td>${v.peminjaman_jumlah}</td>
-                                <td>${v.peminjaman_belum_kembali}</td>
-                                <td>${v.peminjaman_sudah_kembali}</td>
-                                <td>${peminjaman_status}</td>     
-                            </tr>
-                        `)
-                    });
-                }
+                    num++;
+                    let peminjaman_status = (v.peminjaman_jumlah==v.peminjaman_sudah_kembali?`<span class="badge bg-success">Sudah Kembali</span>`:`<span class="badge bg-danger">Belum Kembali</span>`)
+                    var row = {
+                        "No": num,
+                        "Nama Peminjam": v.anggota.nama_anggota,
+                        "Jumlah Buku": v.peminjaman_jumlah,
+                        "Belum Kembali": v.peminjaman_belum_kembali,
+                        "Sudah Kembali": v.peminjaman_sudah_kembali,
+                        "Status": peminjaman_status,
+                        "Detail": `<button onclick=onDetail('${encode}') class="btn btn-primary btn-detail p-1 ps-2" name="btn-detail" id="btn-detail"><i class="bi bi-arrow-right fs-2"></i></button>`
+                    };
+                    data.push(row);
+                })
+                return data;
             }
-        })
+
+            function searchFunction() {
+                const input = document.getElementById("search_peminjaman").value;        
+                dataTable.search(input).draw();
+            }
+
+            document.getElementById("search_peminjaman").addEventListener("input", searchFunction);
+        } );   
     }
 
     var num = 0;
@@ -327,6 +345,7 @@
     function onRefresh(){
         $('.main_data').removeClass('d-none');
         $('.detail_data').addClass('d-none');
+        $('#tablePeminjaman').DataTable().destroy();
         inittable()
     }
     // $(document).ready(function () {
@@ -547,5 +566,4 @@
         $('#anggota_id').val(null).trigger('change.select2');
         $(`#identitas_peminjam`).html('')
     }
-
 </script>
