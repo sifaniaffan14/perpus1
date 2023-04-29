@@ -54,7 +54,7 @@
                 $.each(response.data, function( k, v ){
                     let jsonString = JSON.stringify(v);
                     let encode = btoa(jsonString)
-                    console.log(encode)
+                    // console.log(encode)
 
                     num++;
                     let peminjaman_status = (v.peminjaman_jumlah==v.peminjaman_sudah_kembali?`<span class="badge bg-success">Sudah Kembali</span>`:`<span class="badge bg-danger">Belum Kembali</span>`)
@@ -87,23 +87,33 @@
         let data = JSON.parse(decode);
         $('[name=peminjaman_id]').val(data.peminjaman_id)
         onDisplayDetail()
-        $.each(data.anggota, function( ka, va ){
-            $('#detail_'+ka).html(va)
-        });
         
+        if (data.anggota['no_induk']){
+            $('#detail_no_induk').html("No. Induk&nbsp;&nbsp;:&nbsp;&nbsp;"+data.anggota['no_induk'])
+        }
+        if (data.anggota['nama_anggota']){
+            $('#detail_nama_anggota').html("Nama&nbsp;&nbsp;:&nbsp;&nbsp;"+data.anggota['nama_anggota'])
+        }
+        if (data.anggota['jenis_anggota']){
+            $('#detail_jenis_anggota').html("Jenis Anggota&nbsp;&nbsp;:&nbsp;&nbsp;"+data.anggota['jenis_anggota'])
+        }
+        if (data.peminjaman_detail.length){
+            $('#detail_peminjaman_jumlah').html("Jumlah Peminjaman&nbsp;&nbsp;:&nbsp;&nbsp;"+data.peminjaman_detail.length)
+        }
+
         $.each(data.peminjaman_detail, function( k, v ){
             var eksemplar_id = v.detail_buku.eksemplar_id;
             let no_panggil = v.detail_buku.no_panggil;
             let judul = v.detail_buku.buku.judul
             let html = `<a onclick="hapusEksemplar('list_buku_${eksemplar_id}')" methode="post" class="btn btn-danger"> <i class="bi bi-trash"></i></a>`
            
-            $('[name=tgl_pinjam]').val(v.tgl_pinjam)
-            $('[name=tgl_kembali]').val(v.tgl_kembali)
+            $('[name=tgl_pinjam]').val(moment(v.tgl_pinjam).format('DD-MM-YYYY'))
+            $('[name=tgl_kembali]').val(moment(v.tgl_kembali).format('DD-MM-YYYY'))
             
             num++
-            let array = [num,no_panggil,judul,v.tgl_pinjam,v.tgl_kembali,html]
+            let array = [num,no_panggil,judul,moment(v.tgl_pinjam).format('DD-MM-YYYY'),moment(v.tgl_kembali).format('DD-MM-YYYY'),html]
             $('#list_pinjaman').append(`<tr id="list_buku_${eksemplar_id}"></tr>`)
-            $('#list_detail').append(`<tr id="detail_${eksemplar_id}"></tr>`)
+            $('#list_detail').append(`<tr class="text-center" id="detail_${eksemplar_id}"></tr>`)
             $.each(array, function( key, value ){
                 if(key != 3 && key != 4){
                     $('#list_buku_'+ eksemplar_id).append(`<td>${value}</td>`)
