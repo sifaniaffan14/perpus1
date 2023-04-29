@@ -6,6 +6,7 @@
 <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script> 
 <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script> 
 <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
 
 <script>
     var index = 0
@@ -25,6 +26,10 @@
     }
     inittable()
     loadData()
+
+    // $(document).ready(function () {
+    //     $('#anggota_id').select2();
+    // });
 
     function inittable() {  
         $(document).ready(function() {
@@ -112,7 +117,7 @@
             
             num++
             let array = [num,no_panggil,judul,moment(v.tgl_pinjam).format('DD-MM-YYYY'),moment(v.tgl_kembali).format('DD-MM-YYYY'),html]
-            $('#list_pinjaman').append(`<tr id="list_buku_${eksemplar_id}"></tr>`)
+            $('#list_pinjaman').append(`<tr class="text-center" id="list_buku_${eksemplar_id}"></tr>`)
             $('#list_detail').append(`<tr class="text-center" id="detail_${eksemplar_id}"></tr>`)
             $.each(array, function( key, value ){
                 if(key != 3 && key != 4){
@@ -429,7 +434,22 @@
                 success: function(response){
                 if(response.status == true){
                     $.each(response.data[0], function( k, v ){
-                        $('#'+k+"_detail").html(v)
+                        if (k == 'nama_anggota'){
+                            $(`#identitas_peminjam`).append(`
+                            <div class="d-flex mt-5">
+                                <p class="m-0 fs-5 fw-bolder" style="width:105px">Nama</p>
+                                <p class="m-0 fs-5 fw-bolder">&nbsp;&nbsp;:&nbsp;&nbsp;${v}</p>
+                            </div>
+                            `)
+                        }
+                        if (k == 'jenis_anggota'){
+                            $(`#identitas_peminjam`).append(`
+                            <div class="d-flex mt-2 mb-5">
+                                <p class="m-0 fs-5 fw-bolder">Jenis Anggota </p>
+                                <p class="m-0 fs-5 fw-bolder">&nbsp;&nbsp;:&nbsp;&nbsp;${v}</p>
+                            </div>
+                            `)
+                        }
                     });
                 } 
             }

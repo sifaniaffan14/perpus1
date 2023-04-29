@@ -19,8 +19,8 @@
                 </div>
             </div>
             <div class="col-8 d-flex mx-auto">
-                <div class="col-lg-12" style="padding: 10vh; padding-bottom:7vh; padding-top: 5vh;">
-                    <h2 class="fw-bolder fs-3 text-center">Data Peminjam</h2>
+                <div class="col-lg-12" style="padding: 10vh; padding-bottom:7vh; padding-top: 4vh;">
+                    <h2 class="fw-bolder text-center">Data Peminjam</h2>
                     <p id="detail_peminjaman_id" style="display: none"></p>
                     <table class="w-50 mx-auto mt-9">
                         <tbody style="color: #000000; font-weight:bold">
@@ -46,7 +46,7 @@
             </div>
             <hr class="mx-auto" style="width: 80%; text-align: center;  border-top: 2px solid ">
             <div class="header-eksemplar" style="padding:3vh;">
-                <h2 class="fw-bolder text-center fs-3">Data Buku</h2>
+                <h2 class="fw-bolder text-center">Data Buku</h2>
             </div>
                 <div class="card-body py-0">
                     <table class="table w-75 mx-auto" id="tableEksemplar">
