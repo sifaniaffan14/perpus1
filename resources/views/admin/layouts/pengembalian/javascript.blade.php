@@ -60,7 +60,7 @@
                             $(`#identitas_peminjam`).append(`
                                 <div class="d-flex mt-5">
                                     <p class="m-0 fs-5 fw-bolder" style="width:105px">No. Induk</p>
-                                    <p class="m-0 fs-5 fw-bolder">&nbsp;:&nbsp;${data.anggota['no_induk']}</p>
+                                    <p class="m-0 fs-5 fw-bolder">&nbsp;&nbsp;:&nbsp;&nbsp;${data.anggota['no_induk']}</p>
                                 </div>
                             `)
                         }
@@ -68,7 +68,7 @@
                             $(`#identitas_peminjam`).append(`
                                 <div class="d-flex mt-2">
                                     <p class="m-0 fs-5 fw-bolder" style="width:105px">Nama</p>
-                                    <p class="m-0 fs-5 fw-bolder">&nbsp;:&nbsp;${data.anggota['nama_anggota']}</p>
+                                    <p class="m-0 fs-5 fw-bolder">&nbsp;&nbsp;:&nbsp;&nbsp;${data.anggota['nama_anggota']}</p>
                                 </div>
                             `)
                         }
@@ -76,7 +76,7 @@
                             $(`#identitas_peminjam`).append(`
                                 <div class="d-flex mt-2 mb-5">
                                     <p class="m-0 fs-5 fw-bolder">Jenis Anggota </p>
-                                    <p class="m-0 fs-5 fw-bolder">&nbsp;:&nbsp;${data.anggota['jenis_anggota']}</p>
+                                    <p class="m-0 fs-5 fw-bolder">&nbsp;&nbsp;:&nbsp;&nbsp;${data.anggota['jenis_anggota']}</p>
                                 </div>
                             `)
                         }
