@@ -2,8 +2,8 @@
     <div class="col-12">
         <div class="card pb-6 mb-5 mb-xl-8">
             <div class="card-header border-0 d-flex align-items-center justify-content-between position-sticky top-0 bg-white" style="z-index: 99;">
-                <h2 class="text-dark-gray fw-bolder fs-3 d-flex align-items-center gap-5 mb-0">Tambah Buku</h2>
-                <h2 class="text-dark-gray fw-bolder fs-3 d-flex align-items-center gap-5 mb-0 d-none actEdit">Edit Buku</h2>
+                <h2 class="text-dark-gray fw-bolder fs-3 d-flex align-items-center gap-5 mb-0 actCreate actCreate1">Tambah Buku</h2>
+                <h2 class="text-dark-gray fw-bolder fs-3 d-flex align-items-center gap-5 mb-0 d-none actEdit actEdit1">Edit Buku</h2>
                 <div class="form-action-wrapper d-flex gap-4 align-items-center mt-5 w-50 justify-content-end">
                     <button type="button" class="btn text-body m-0 fw-bolder w-25 actCreate" style="border:1px solid #264A8A;" onclick="closeForm()"> <span style="color:#264A8A">Batal</span> </button>
                     <button type="button" class="btn m-0 d-flex flex-center gap-2 fw-bolder w-25 text-light actCreate" style="background-color:#264A8A" onclick="onSubmitForm()">
@@ -75,7 +75,7 @@
                         <div class="d-flex flex-column gap-1">
                             <label class="fw-bolder">Gambar Cover Buku</label>
                             <div class="d-flex align-items-center gap-3">
-                                <label for="image" class="d-flex flex-center gap-2 btn text-light" style="background-color:#264A8A">
+                                <label for="image" class="d-flex flex-center gap-2 btn text-light label-input" style="background-color:#264A8A">
                                     <span class="material-icons fs-3"> upload </span> Pilih File </label>
                                 <span class="text-light-gray file-chosen">Tidak ada file terpilih</span>
                                 <input id="image" name="image" type="file" hidden accept="image/png, image/gif, image/jpeg, image/jpg"/>

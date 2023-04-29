@@ -94,7 +94,7 @@ class BukuController extends Controller
     {
         try {
             $data = $request->all();
-            // print_r($data);exit;
+            
             $request->validate([
                 'buku_kategori_id' => 'required',
                 'kode_buku' => 'required',
@@ -114,10 +114,7 @@ class BukuController extends Controller
                 $image->move(public_path('storage/buku/') , $request->image);
             }
 
-            // $myArray = array();
-            // foreach ($data as $key=>$value) {
-            //     $myArray[$key] = "'".$data['judul'].".";
-            // }
+            
             $operation = DB::table('bukus')
             ->where('id', '=', $data['id'])
             ->update([

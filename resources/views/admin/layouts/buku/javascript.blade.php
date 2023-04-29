@@ -88,6 +88,7 @@
                     processData: false,
                     type: 'POST',
                     success: function(response){
+                        console.log('onsave',response)
                         if(response.status == true){
                             onRefresh()
                             swal("Success !", response.message, "success");
@@ -185,6 +186,10 @@
                     loadForm();
                     DisplayEdit();
                     $.each(response.data[0], function( k, v ){
+                        if (k == 'image'){
+                            $('.label-input').html('<span class="material-icons fs-3">edit</span> Ubah File');
+                            $('.file-chosen').html(v)
+                        }
                         $('[name='+k+']').val(v)
                     });
                 } 
@@ -387,6 +392,11 @@
         $('.form_data').removeClass('d-none');
         $('.datail_data').addClass('d-none');
         $('.main_data').addClass('d-none');
+        $('.actEdit1').addClass('d-none');
+        $('.actCreate1').removeClass('d-none');
+        $(`#${form} input`).val('');
+        $('.label-input').html('<span class="material-icons fs-3"> upload </span> Pilih File ');
+        $('.file-chosen').html('Tidak ada file terpilih');
 	}
 
     closeForm = () => {
@@ -403,6 +413,8 @@
     onDisplayEdit = () => {
 		$('.actEdit').addClass('d-none');
         $('.actCreate').removeClass('d-none');
+        $('.actEdit1').removeClass('d-none');
+        $('.actCreate1').addClass('d-none');
         $(`#${form} input`).removeAttr('disabled', 'disabled')
 
 	}
