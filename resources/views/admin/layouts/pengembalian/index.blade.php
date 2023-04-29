@@ -1,7 +1,6 @@
 @extends('master.Landing')
 
 @section('content')
-
 <div>
     <div class="row gy-5 g-xl-8">
         <div class="col-12">
@@ -34,7 +33,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="text-header d-none">
                             <h2 class="text mt-5 fs-3 fw-bolder">
                                 Data Peminjaman
@@ -47,7 +45,7 @@
                         </div>
                         <div class="card-body py-0 d-none">
                             <div class="row mb-2">
-                                <label class="fs-5 mb-2" for="kode_eksemplar">Kode Eksemplar</label>
+                                <label class="fs-6 mb-2" for="kode_eksemplar">Kode Eksemplar</label>
                                 <input type="text" class="form-control w-25" id="kode_eksemplar"
                                     placeholder="Masukkan Kode Eksemplar" onchange="onPengembalian()" />
                             </div>
