@@ -162,6 +162,13 @@
                         tgl_kembali = `<td class="text-center">${v.tgl_kembali}</td>`;
                         button = '';
                     }
+                    var status = '';
+                    if (v.status_peminjaman == 5){
+                        status = `<span class="badge bg-danger">Tidak diperpanjang</span>`; 
+                    }
+                    if (v.status_peminjaman == 4){
+                        status = `<span class="badge bg-success">Diperpanjang</span>`; 
+                    }
                     $('#list_perpanjangan').append(`
                         <tr>
                             <td class="text-center">${k+1}</td>
@@ -169,6 +176,7 @@
                             <td class="text-center">${v.judul}</td>
                             <td class="text-center">${moment(v.tgl_pinjam).format('DD/MM/YYYY')}</td>
                             ${tgl_kembali}
+                            <td class="text-center">${status}</td>
                             ${button}                            
                         </tr>
                     `)
