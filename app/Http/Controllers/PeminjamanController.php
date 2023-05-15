@@ -155,6 +155,11 @@ class PeminjamanController extends Controller
                     $detail['peminjaman_detail_id'] = $data['peminjaman_detail_id'];
                     $detail['detail_buku_id'] = $value;
                     PeminjamanDetail::create($detail);
+
+                    // Perubahan status buku menjadi dipinjam
+                    DetailBuku::where('eksemplar_id',$value)->update([
+                        'status' => 'dipinjam'
+                    ]);
                 }
             });
 
@@ -219,7 +224,20 @@ class PeminjamanController extends Controller
     {
         try {
             if (isset($_GET['id'])) {
-                $operation = Anggota::where('id', $_GET['id'])->where('is_active', 1)->get();
+                $peminjaman = Peminjaman::where("anggota_id", $_GET['id'])->orderBy("created_at", "asc")->first();
+                // dd($peminjaman);
+                $peminjamanDetail = [];
+                if ($peminjaman != null){
+                    $peminjaman = $peminjaman->toArray();
+                    $peminjamanDetail = PeminjamanDetail::where("peminjaman_detail_peminjaman_id", $peminjaman['peminjaman_id'])
+                                    ->whereNotIn('status_peminjaman', ['2'])->get()->toArray();
+                }
+                
+                if ($peminjaman != null || $peminjamanDetail != []){
+                    $operation = $peminjamanDetail;
+                } else {
+                    $operation = Anggota::where('id', $_GET['id'])->where('is_active', 1)->get();
+                }
             } else {
                 $operation = Anggota::where('is_active', 1)->get();
             }
@@ -231,25 +249,29 @@ class PeminjamanController extends Controller
         }
     }
     public function selectEksemplar()
-    {
+    {  
         try {
             if (isset($_GET['no_panggil'])) {
                 $detail_buku = DetailBuku::where('no_panggil', $_GET['no_panggil'])->get()->toArray();
-                $peminjaman_detail = PeminjamanDetail::where('detail_buku_id', $detail_buku[0]['eksemplar_id'])
+                
+                if ($detail_buku != []){
+                    $peminjaman_detail = PeminjamanDetail::where('detail_buku_id', $detail_buku[0]['eksemplar_id'])
                                     ->whereNotIn('status_peminjaman', ['2'])
                                     ->get()->toArray();
-                if ($peminjaman_detail){
-                    $operation = $peminjaman_detail;
+                    if ($peminjaman_detail){
+                        $operation = $peminjaman_detail;
+                    } else {
+                        $operation = db::select('SELECT detail_bukus.*,bukus.judul FROM `detail_bukus`
+                        LEFT JOIN bukus
+                        ON detail_bukus.buku_id = bukus.id
+                        WHERE detail_bukus.no_panggil = "' . $_GET['no_panggil'] . '" AND detail_bukus.is_active = 1');
+                    }
+                    return $this->response($operation);
                 } else {
-                    $operation = db::select('SELECT detail_bukus.*,bukus.judul FROM `detail_bukus`
-                    LEFT JOIN bukus
-                    ON detail_bukus.buku_id = bukus.id
-                    WHERE detail_bukus.no_panggil = "' . $_GET['no_panggil'] . '" AND detail_bukus.is_active = 1');
+                    $detail_buku['message'] = "Buku tidak ditemukan!";
+                    return $this->response($detail_buku);
                 }
             }
-            // $generator = new BarcodeGeneratorPNG();
-            // $generator->getBarcode($code, $generator::TYPE_CODE_128), 200, ['Content-Type' => 'image/png'];
-            return $this->response($operation);
         } catch (\Exception $e) {
             return $this->response($e->getMessage(), true);
         }

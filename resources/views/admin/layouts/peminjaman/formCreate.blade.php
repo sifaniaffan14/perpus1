@@ -14,7 +14,7 @@
                         <div class="form-action-wrapper d-flex gap-4 align-items-center mt-5 w-50 justify-content-end">
                             <button type="button"
                                 class="btn p-4 text-body m-0 fw-bolder w-25 actCreate" style="border:1px solid #264A8A"
-                                onclick="onClear()"> <span style="color:#264A8A">Batal</span> </button>
+                                onclick="onClear()"> <span style="color:#264A8A">Reset</span> </button>
                             <button type="submit"
                                 class="btn p-4 m-0 d-flex flex-center gap-2 fs-5 fw-bolder w-25 text-light actCreate" style="background-color:#264A8A">
                                 <span class="material-icons-outlined fs-2">save</span> Simpan
