@@ -132,7 +132,12 @@
                             <th class="fw-bolder">Tanggal Pinjam</th>
                             <th class="fw-bolder">Tanggal Kembali</th>
                             <th class="fw-bolder">Barcode</th>
-                            <th class="fw-bolder">Cetak Barcode</th>
+                            <th class="fw-bolder">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <p class="m-0">Pilih Cetak Barcode&nbsp;&nbsp;</p>
+                                    <input type="checkbox" id="allCheckbox" name="pilih[]" value="checked_all">
+                                </div>
+                            </th>
                             <th class="fw-bolder">Action</th>
                         </tr>
                     </thead>
@@ -190,7 +195,7 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Edit Data Eksemplar</h5>
           <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-            <span aria-hidden="true">&times;</span>
+            <span class='d-none' aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">

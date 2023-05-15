@@ -66,6 +66,7 @@
                                         <th class="fw-bolder text-center">Judul Buku</th>
                                         <th class="fw-bolder text-center">Tgl Pinjam</th>
                                         <th class="fw-bolder text-center tglKembali">Tgl Kembali(Baru)</th>
+                                        <th class="fw-bolder text-center">Status</th>
                                         <th class="fw-bolder text-center action">Action</th>
                                     </tr>
                                 </thead>

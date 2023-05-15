@@ -40,6 +40,7 @@ class BukuController extends Controller
             return $this->response($e->getMessage(), true);
         }
     }
+    
     public function getData()
     {
         $kategori_buku = KategoriBuku::select('nama_kategori', 'id')->where('is_active', 1)->orderBy('nama_kategori', 'asc')->get();
@@ -92,9 +93,10 @@ class BukuController extends Controller
     }
     public function update(Request $request)
     {
+        // dd($request->all());
         try {
             $data = $request->all();
-            // print_r($data);exit;
+            
             $request->validate([
                 'buku_kategori_id' => 'required',
                 'kode_buku' => 'required',
@@ -114,10 +116,7 @@ class BukuController extends Controller
                 $image->move(public_path('storage/buku/') , $request->image);
             }
 
-            // $myArray = array();
-            // foreach ($data as $key=>$value) {
-            //     $myArray[$key] = "'".$data['judul'].".";
-            // }
+            
             $operation = DB::table('bukus')
             ->where('id', '=', $data['id'])
             ->update([
@@ -141,11 +140,19 @@ class BukuController extends Controller
     {
         try {
             $data = $request->all();
-            // $operation = db::select('UPDATE bukus
-            // SET is_active = 0
-            // WHERE bukus.id = "'.$data['id'].'"');
+            
+            // $buku = DB::table("bukus")->where("id", $data['id'])->get()->all();
+            // $url = "D:\\project\\project affan\\perpus1\\public\\storage\\buku\\";
+            // unlink($url.$buku[0]->image);
+
             $operation = DB::table('bukus')
                 ->where('id', '=', $data['id'])
+                ->update([
+                    'is_active' => '0'
+                ]);
+
+            $operation = DB::table('detail_bukus')
+                ->where('buku_id', '=', $data['id'])
                 ->update([
                     'is_active' => '0'
                 ]);

@@ -38,6 +38,24 @@ a {
     width: 20px;
 }
 
+.form div input{
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.user {
+    padding: 14px;
+    background-color:#B8B8B8
+}
+
+.user img{
+    width:25px;
+}
+
+.detail-card img {
+    width:40%;
+    padding-right: 30px;
+}
 footer {
     position: fixed;
     bottom: 0;

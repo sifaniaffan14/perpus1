@@ -114,7 +114,7 @@
             </div>
         </div>
     </div>
-    @include('admin.layouts.perpanjangan.formCreate')
+    @include('admin.layouts.perpanjangan.detail')
 </div>
 
 @endsection

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
+use Mockery\Undefined;
 
 class UserController extends Controller
 {
@@ -94,20 +95,39 @@ class UserController extends Controller
         }
     }
     public function update(Request $request)
-    {
+    {  
         try {
-            $data = $request->all();
-            // print_r($data);exit;
             $request->validate([
                 'role_id' => 'required',
                 'username' => 'required',
-                'password' => 'required',
+                // 'password' => 'required',
             ]);
-            $data['password'] = bcrypt(request()->password);
-            // $data['password'] = ($data['password'] == $data['password']) ? bcrypt($data['username']) : bcrypt($data['password']);
-            // $data = User::find(request()->id);
-            // print_r($data);exit;
-            $operation = User::where('id', $data['id'])->update($data);
+
+            $user = User::find($request->all()['id']);
+            $user->role_id = $request->all()['role_id'];
+            $user->username = $request->all()['username'];
+            
+            if ($request->all()['password'] != null){
+                $user->password = bcrypt(request()->password);
+            } 
+
+            if ($request->all()['isremoved'] == 1){
+                unlink("D:\\project\\project affan\\perpus1\\public\\storage\\user\\".$user->picture);
+                $user->picture = null;
+            } else {
+                try {
+                    $photo = $request->file('photo');
+                    if (!empty($photo)) {
+                        $request->photo = $request->username . '-user.' . $photo->getClientOriginalExtension();
+                        $photo->move(public_path('storage/user/') , $request->photo);
+                    }
+    
+                    $user->picture = $request->photo;
+                } catch (\Exception $e) {
+                }
+            }
+          
+            $operation = $user->save();
             return $this->responseUpdate($operation);
         } catch (\Exception $e) {
             return $this->responseUpdate($e->getMessage(), true);

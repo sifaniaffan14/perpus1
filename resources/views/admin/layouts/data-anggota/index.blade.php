@@ -8,15 +8,15 @@
             <div class="data-card card pb-6 mb-5 mb-xl-8">
                 <div class="card-header">
                     <h2 class="text-dark-gray fw-bolder fs-3 d-flex align-items-center gap-5 mb-0">
-                        <span class="material-icons" style="color:#264A8A"> text_snippet </span> Data Buku
+                        <span class="material-icons" style="color:#264A8A"> text_snippet </span> Data Anggota
                     </h2>
                 </div>
                 <div class="d-flex flex-column flex-lg-row flex-stack py-5 px-9"
                     style="border-bottom: 1px solid #eff2f5">
                     <div class="d-flex flex-column flex-lg-row gap-5 align-items-lg-center w-100">
-                        <label for="search_buku" class="fs-4">Search</label>
+                        <label for="search_anggota" class="fs-4">Search</label>
                         <div class="position-relative w-lg-50">
-                            <input type="search" name="search_buku" id="search_buku"
+                            <input type="search" name="search_anggota" id="search_anggota"
                                 placeholder="Ketik untuk mencari" class="border-0 py-4 ps-12 pe-5 fs-5 w-100"
                                 style="background-color: #fafafa;border-radius: 6px;" />
                             <span class="material-icons position-absolute top-50 translate-middle-y text-light-gray"
@@ -36,14 +36,13 @@
                     </div>
                 </div>
                 <div class="card-body py-0">
-                    <table id="tabelBuku" class="table">
+                    <table id="tabelAnggota" class="table">
                         <thead>
                             <tr>
                                 <th class="fw-bolder" style="max-width: 37px"> No </th>
-                                <th class="fw-bolder">Kode Buku</th>
-                                <th class="fw-bolder">Nama Buku</th>
-                                <th class="fw-bolder">Penerbit</th>
-                                <th class="fw-bolder">Kategori</th>
+                                <th class="fw-bolder">No. Induk</th>
+                                <th class="fw-bolder">Nama Anggota</th>
+                                <th class="fw-bolder">Jenis Anggota</th>
                                 <th class="fw-bolder">Detail</th>
                             </tr>
                         </thead>
@@ -53,12 +52,11 @@
             </div>
         </div>
     </div>
-    @include('admin.layouts.buku.form')
-    @include('admin.layouts.buku.detail')
+    @include('admin.layouts.data-anggota.form')
 </div>
 
 @endsection
 
 @section('js')
-@include('admin.layouts.buku.javascript')
+@include('admin.layouts.data-anggota.javascript')
 @endsection

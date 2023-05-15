@@ -32,15 +32,16 @@
             </div>
             <div class="card-body py-0">
                 <div class="table-responsive">
-                <table class="table table-striped" id="tableUser">
+                <table class="table" id="tableUser">
                     <thead>
                         <tr>
-                            <th class="fw-bolder" style="width: 5%">No </th>
+                            <th class="fw-bolder" style="width: 10%">No </th>
                             <th class="fw-bolder" style="width: 30%">Username</th>
                             <th class="fw-bolder" style="width: 30%">Role</th>
+                            <th class="fw-bolder" style="width: 15%">Detail</th>
                         </tr>
                     </thead>
-                    <tbody id="list_table"></tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>

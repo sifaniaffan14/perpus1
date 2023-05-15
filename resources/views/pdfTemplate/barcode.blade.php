@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Membuat Laporan PDF Dengan DOMPDF Laravel</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<title>Cetak Barcode</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <body>
 	<svg id="barcode"></svg>
@@ -12,16 +12,16 @@
 				if (count($operation) == 1): ?>
 					<tr>
 						<td class="w-50 pt-3">
-							<table class="table table-bordered mx-auto" style="width:65%">
+							<table class="table mx-auto" style="width:65%; border:1px solid black">
 								<tr>
-									<td class="border-dark text-center p-0" style="font-size:13px">
+									<td class="text-center p-0" style="font-size:13px;">
 										<p class="m-0 mt-1 mb-2">Perpustakaan SMP AL-FALAH</p>
 										<p class="m-0 mb-1">KETINTANG, SURABAYA</p>
 									</td>
 								</tr>
 								<tr>
-									<td class="border-dark p-0">
-										<div class="text-center mx-auto">
+									<td class="p-0">
+										<div class="text-center mx-auto" style="border-top:1px solid black">
 											@php
 											$generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
 											@endphp
@@ -41,16 +41,16 @@
 					if ($key % 2 == 0):?>	
 						<tr>
 							<td class="w-50 pt-3">
-								<table class="table table-bordered mx-auto" style="width:65%">
+								<table class="table mx-auto" style="width:65%; border:1px solid black">
 									<tr>
-										<td class="border-dark text-center p-0" style="font-size:13px">
+										<td class="text-center p-0" style="font-size:13px">
 											<p class="m-0 mt-1 mb-2">Perpustakaan SMP AL-FALAH</p>
 											<p class="m-0 mb-1">KETINTANG, SURABAYA</p>
 										</td>
 									</tr>
 									<tr>
-										<td class="border-dark p-0">
-											<div class="text-center mx-auto">
+										<td class="p-0">
+											<div class="text-center mx-auto" style="border-top:1px solid black">
 												@php
 												$generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
 												@endphp
@@ -66,16 +66,16 @@
 							</td>
 					<?php else: ?>
 							<td class="w-50 pt-3">
-							<table class="table table-bordered mx-auto" style="width:65%">
+								<table class="table mx-auto" style="width:65%; border:1px solid black">
 									<tr>
-										<td class="border-dark text-center p-0" style="font-size:13px">
+										<td class="text-center p-0" style="font-size:13px">
 											<p class="m-0 mt-1 mb-2">Perpustakaan SMP AL-FALAH</p>
 											<p class="m-0 mb-1">KETINTANG, SURABAYA</p>
 										</td>
 									</tr>
 									<tr>
-										<td class="border-dark p-0">
-											<div class="text-center mx-auto">
+										<td class="p-0">
+											<div class="text-center mx-auto" style="border-top:1px solid black">
 												@php
 												$generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
 												@endphp
@@ -95,5 +95,6 @@
 			<?php endforeach; ?>
 		</tbody>
 	</table>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -13,6 +13,7 @@
     var table = 'tablePeminjaman'
     var form = 'formPeminjaman'
     var list_table = 'list_table'
+    var val_select = null;
 
     var urlPath = {
         insert: "{{ route('peminjaman.insert') }}",
@@ -139,6 +140,38 @@
         $('.main_data').addClass('d-none');
 	}
 
+    function tableBukuPinjaman(){
+        // alert(detail_buku_id)
+        $.ajax({
+            url: urlPath.select,
+            type: 'GET',
+            
+            success: function(response){
+                if(response.status == true){
+                    $('#listTable').html('')
+                    data = response.data[0];
+                    $.each(data.eksemplar, function( k, v ){
+                       
+                        $('#listTable').append(`
+                            <tr>
+                                <td>${k+1}</td>
+                                <td>${v.no_panggil}</td>
+                                <td>${v.judul}</td>
+                                <td>${v.tgl_pinjam}</td>
+                                <td>${v.tgl_kembali}</td>
+                                <td> 
+                                    <button onclick="hapusEksemplar('${v.peminjaman_detail_id}')" methode="post" class="btn btn-danger btn-hapus" name="btn-hapus" id="btn-hapus" disabled><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                        `) 
+                    // });
+                });
+                } 
+            }
+        })
+    }
+
+   
     function onDelete(){
         swal({
             title: "Peringatan",
@@ -433,24 +466,32 @@
                 },
                 success: function(response){
                 if(response.status == true){
-                    $.each(response.data[0], function( k, v ){
-                        if (k == 'nama_anggota'){
-                            $(`#identitas_peminjam`).append(`
-                            <div class="d-flex mt-5">
-                                <p class="m-0 fs-5 fw-bolder" style="width:105px">Nama</p>
-                                <p class="m-0 fs-5 fw-bolder">&nbsp;&nbsp;:&nbsp;&nbsp;${v}</p>
-                            </div>
-                            `)
-                        }
-                        if (k == 'jenis_anggota'){
-                            $(`#identitas_peminjam`).append(`
-                            <div class="d-flex mt-2 mb-5">
-                                <p class="m-0 fs-5 fw-bolder">Jenis Anggota </p>
-                                <p class="m-0 fs-5 fw-bolder">&nbsp;&nbsp;:&nbsp;&nbsp;${v}</p>
-                            </div>
-                            `)
-                        }
-                    });
+                    if (response.data[0]['peminjaman_detail_id']){
+                        swal("Warning !", "Anggota memiliki tanggungan peminjaman!", "warning");
+                        $("#anggota_id").val(val_select).trigger('change.select2');
+                    } else {
+                        val_select = selectedOptionValue;
+                        document.getElementById("identitas_peminjam").innerHTML = "";
+                        $.each(response.data[0], function( k, v ){
+                            if (k == 'nama_anggota'){
+                                $(`#identitas_peminjam`).append(`
+                                <div class="d-flex mt-5">
+                                    <p class="m-0 fs-5 fw-bolder" style="width:105px">Nama</p>
+                                    <p class="m-0 fs-5 fw-bolder">&nbsp;:&nbsp;${v}</p>
+                                </div>
+                                `)
+                            }
+                            if (k == 'jenis_anggota'){
+                                $(`#identitas_peminjam`).append(`
+                                <div class="d-flex mt-2 mb-5">
+                                    <p class="m-0 fs-5 fw-bolder">Jenis Anggota </p>
+                                    <p class="m-0 fs-5 fw-bolder">&nbsp;:&nbsp;${v}</p>
+                                </div>
+                                `)
+                            }
+                            // $('#'+k+"_detail").html(v)
+                        });
+                    }
                 } 
             }
             })
@@ -490,28 +531,41 @@
                 success: function(response){
                 if (response.status == true) {
                     // $('#list_pinjaman').html('')
-                var data=response.data[0]
-                    if($('#'+data.eksemplar_id).length != 1){
-                        $("#kode_eksemplar").val('');
-                        $('#list_pinjaman').append(`
-                            <tr id="list_buku_${data.eksemplar_id}">
-                                <td>${num}</td>
-                                <td>${data.no_panggil}</td>
-                                <td>${data.judul}</td>
-                                <td class="d-none">
-                                    <input type="hidden" name="eksemplar_id[]" value="${data.eksemplar_id}">
-                                </td>
-                                <td>
-                                    <a onclick="hapusEksemplar('list_buku_${data.eksemplar_id}')" methode="post" class="btn btn-danger"> <i class="bi bi-trash"></i></a>
-                                </td>
-                            </tr>
-                        `)
-                    } else{
-                        swal("Warning", 'data sudah ada', "warning");
-
+                    if (response.data['message']){
+                        swal("Warning", "Buku tidak ditemukan!", "warning");
+                    } else {
+                        var data=response.data[0]
+                        if (data.peminjaman_detail_id){
+                            swal("Warning", 'Buku dalam proses peminjaman', "warning");
+                        } else {
+                            if($('#'+data.eksemplar_id).length != 1){
+                                index = index + 1;
+                                $("#kode_eksemplar").val('');
+                                $('#list_pinjaman').append(`
+                                    <tr id="${data.eksemplar_id}">
+                                        <td class="text-center">${index}</td>
+                                        <td class="text-center">${data.no_panggil}</td>
+                                        <td class="text-center">${data.judul}</td>
+                                        <td class="d-none">
+                                            <input type="hidden" name="eksemplar_id[]" value="${data.eksemplar_id}">
+                                        </td>
+                                        <td class="text-center">
+                                            <a onclick="hapusEksemplar('${data.eksemplar_id}')" methode="post" class="btn btn-danger" style="padding:5px 2.5px 6px 6px"> <i class="bi bi-trash fs-4"></i></a>
+                                        </td>
+                                    </tr>
+                                `)
+                            } else{
+                                swal("Warning", 'Data sudah ada', "warning");
+                            }
+                        }
                     }
                 } else{
-                    swal("Warning", response.message, "warning");
+                    if (response.message == 'Failed To Load Data'){
+                        swal("Warning", "Buku tidak ditemukan!", "warning");
+                    } else {
+                        swal("Warning", response.message, "warning");
+                    }
+
                 }
             }
             })
@@ -547,6 +601,7 @@
                     success: function(response){
                         if(response.status == true){
                             onRefresh()
+                            onClear()
                             swal("Success !", response.message, "success");
                         } else{
                             swal("Warning", response.message, "warning");
