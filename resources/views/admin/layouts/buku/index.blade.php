@@ -26,7 +26,7 @@
                     <div class="d-flex gap-4 mt-5">
                         <button type="button"
                             class="btn btn-outline-primary btn-outline border-2 text-body m-0 fw-bolder w-100 d-flex flex-center p-3"
-                            onclick="onRefreshTable(this)">
+                            onclick="onRefresh(this)">
                             <span class="material-icons fs-2"> refresh </span>
                         </button>
                         <button type="button" class="btn m-0 d-flex flex-center gap-2 fw-bolder w-100 text-light"

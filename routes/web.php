@@ -13,6 +13,9 @@ use App\Http\Controllers\PerpanjanganController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViewController;
+use App\Http\Controllers\DataAnggotaController;
+use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\PengunjungController;
 use App\Http\Middleware\loginCheck;
 use App\Models\PeminjamanDetail;
 use Illuminate\Support\Facades\Auth;
@@ -133,6 +136,28 @@ Auth::routes();
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
     });
+
+    Route::controller(DataAnggotaController::class)->name('dataAnggota.')->prefix('dataAnggota')->group(function () {
+        $route = array('index', 'select', 'insert', 'update', 'delete');  
+        foreach ($route as $route) {
+            Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+        }
+    });
+
+    Route::controller(AbsensiController::class)->name('absensi.')->prefix('absensi')->group(function () {
+        $route = array('index', 'insert');  
+        foreach ($route as $route) {
+            Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+        }
+    });
+
+    Route::controller(PengunjungController::class)->name('pengunjung.')->prefix('pengunjung')->group(function () {
+        $route = array('index', 'select', 'onFilter');  
+        foreach ($route as $route) {
+            Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+        }
+    });
+
     //peminjaman start
     Route::get('/bukupeminjaman',[App\Http\Controllers\PeminjamanController::class, 'list'])->name('bukupeminjaman');
     //peminjaman end

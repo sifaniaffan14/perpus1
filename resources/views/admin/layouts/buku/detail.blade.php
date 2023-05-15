@@ -132,7 +132,12 @@
                             <th class="fw-bolder">Tanggal Pinjam</th>
                             <th class="fw-bolder">Tanggal Kembali</th>
                             <th class="fw-bolder">Barcode</th>
-                            <th class="fw-bolder">Cetak Barcode</th>
+                            <th class="fw-bolder">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <p class="m-0">Pilih Cetak Barcode&nbsp;&nbsp;</p>
+                                    <input type="checkbox" id="allCheckbox" name="pilih[]" value="checked_all">
+                                </div>
+                            </th>
                             <th class="fw-bolder">Action</th>
                         </tr>
                     </thead>

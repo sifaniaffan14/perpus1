@@ -36,30 +36,50 @@
     getData()
   
     const checkboxes = document.getElementsByName('pilih[]');
-    const checkedValues = [];
+    var checkedValues = [];
     var value = '';
     function check() {
-        var i = 0;
+        var i2 = 0;
         checkboxes.forEach((checkbox) => {
             checkbox.addEventListener('change', () => {
             if (checkbox.checked) {
+                if (checkbox.value == 'checked_all'){
+                    checkedValues = [];
+                    var myCheckbox = document.querySelectorAll('input[id=myCheckbox]');
+                    for (var i = 0; i < myCheckbox.length; i++) {
+                        myCheckbox[i].checked = true;
+                        myCheckbox[i].disabled = true;
+                    }
+                } 
                 if (!checkedValues.includes(checkbox.value)) { // tambahan: cek apakah sudah dipilih sebelumnya
                     checkedValues.push(checkbox.value);
                 }
             } else {
                 const index = checkedValues.indexOf(checkbox.value);
                 if (index > -1) {
-                checkedValues.splice(index, 1);
+                    checkedValues.splice(index, 1);
                 }
+                if (checkedValues.length == 0){
+                    if (!document.getElementById("allCheckbox").checked) {
+                        var myCheckbox = document.querySelectorAll('input[id=myCheckbox]');
+                        for (var i = 0; i < myCheckbox.length; i++) {
+                            myCheckbox[i].checked = false;
+                            myCheckbox[i].disabled = false;
+                        }
+                    }
+                }
+                document.getElementById("pdfBarcode").removeAttribute("href");
             }
-            if (i == 0){
-                value = checkedValues.join(',');
-                if (value != ''){
-                    document.getElementById("pdfBarcode").setAttribute('href', "http://127.0.0.1:8000/PDFBarcode/"+id_buku+"?checkedValues="+value);
-                } else {
-                    document.getElementById("pdfBarcode").setAttribute('href', "http://127.0.0.1:8000/PDFBarcode/"+id_buku);
+            if (i2 == 0){
+                if (checkedValues.length != 0){
+                    value = checkedValues.join(',');
+                    if (value == 'checked_all'){
+                        document.getElementById("pdfBarcode").setAttribute('href', "http://127.0.0.1:8000/PDFBarcode/"+id_buku);
+                    } else {
+                        document.getElementById("pdfBarcode").setAttribute('href', "http://127.0.0.1:8000/PDFBarcode/"+id_buku+"?checkedValues="+value);
+                    }
+                    i2 = 1;
                 }
-                i = 1;
             }
             });
         });
@@ -88,7 +108,6 @@
                     processData: false,
                     type: 'POST',
                     success: function(response){
-                        console.log('onsave',response)
                         if(response.status == true){
                             onRefresh()
                             swal("Success !", response.message, "success");
@@ -209,7 +228,7 @@
                     onDisplayDetail()
                     tableEksemplar(id);
                     id_buku = id;
-                    document.getElementById("pdfBarcode").setAttribute('href', "http://127.0.0.1:8000/PDFBarcode/"+id);
+                    // document.getElementById("pdfBarcode").setAttribute('href', "http://127.0.0.1:8000/PDFBarcode/"+id);
                     $.each(response.data[0], function( k, v ){
                         $('#detail_'+k).html(v)
                         if(k=='id'){
@@ -265,37 +284,39 @@
                 
                 if(response.status == true){
                     $('#listTable').html('')
+                    var num = 1;
                     $.each(response.data, function( k, v ){
-                        var img = $('<img>').attr('src', 'data:image/png;base64,' + v.eksemplar_id);
-                        var generatorPNG = "<?php new Picqer\Barcode\BarcodeGeneratorPNG(); ?>";
+                        if (v.status_peminjaman != 2){
+                            var img = $('<img>').attr('src', 'data:image/png;base64,' + v.eksemplar_id);
+                            var generatorPNG = "<?php new Picqer\Barcode\BarcodeGeneratorPNG(); ?>";
 
-                        var tgl_pinjam = '-';
-                        var tgl_kembali = '-';
-                        if (v.tgl_pinjam){
-                            tgl_pinjam = moment(v.tgl_pinjam).format('DD/MM/YYYY');
-                            tgl_kembali = moment(v.tgl_kembali).format('DD/MM/YYYY');
-                        }
-                        $('#listTable').append(`
-                            <tr>
-                                <td>${k+1}</td>
-                                <td>${v.no_panggil}</td>
-                                <td>${v.status}</td>
-                                <td>${v.kondisi}</td>
-                                <td>${tgl_pinjam}</td>
-                                <td>${tgl_kembali}</td>
-                                <td id="barcode_${v.eksemplar_id}"></td>
-                                <td><input type="checkbox" name="pilih[]" value="${v.no_panggil}"></td>
-                                <td> 
-                                    <a onclick="editEksemplar('${v.eksemplar_id}')" class="btn btn-warning" style="padding:5px 4px 8px 9px"><i class="bi bi-pencil-square fs-4"></i></a>
-                                    <a onclick="hapusEksemplar('${v.eksemplar_id}')" methode="post" class="btn btn-danger ms-1" style="padding:5px 4px 8px 9px"><i class="bi bi-trash fs-4"></i></a>
-                                </td>
-                            </tr>
-                        `)
+                            var tgl_pinjam = '-';
+                            var tgl_kembali = '-';
+                            if (v.tgl_pinjam){
+                                tgl_pinjam = moment(v.tgl_pinjam).format('DD/MM/YYYY');
+                                tgl_kembali = moment(v.tgl_kembali).format('DD/MM/YYYY');
+                            }
+                            $('#listTable').append(`
+                                <tr>
+                                    <td>${num}</td>
+                                    <td>${v.no_panggil}</td>
+                                    <td>${v.status}</td>
+                                    <td>${v.kondisi}</td>
+                                    <td>${tgl_pinjam}</td>
+                                    <td>${tgl_kembali}</td>
+                                    <td id="barcode_${v.eksemplar_id}"></td>
+                                    <td><input type="checkbox" id="myCheckbox" name="pilih[]" value="${v.no_panggil}"></td>
+                                    <td> 
+                                        <a onclick="editEksemplar('${v.eksemplar_id}')" class="btn btn-warning" style="padding:5px 4px 8px 9px"><i class="bi bi-pencil-square fs-4"></i></a>
+                                        <a onclick="hapusEksemplar('${v.eksemplar_id}')" methode="post" class="btn btn-danger ms-1" style="padding:5px 4px 8px 9px"><i class="bi bi-trash fs-4"></i></a>
+                                    </td>
+                                </tr>
+                            `)
 
-                        $("#barcode_"+v.eksemplar_id).barcode(v.no_panggil, "code128");  
-                        $(" .codeBarcode").html(v.eksemplar_id);  
-                        
-                        
+                            $("#barcode_"+v.eksemplar_id).barcode(v.no_panggil, "code128");  
+                            $(" .codeBarcode").html(v.eksemplar_id);
+                            num++;
+                        }  
                     });
                 } 
             }
@@ -407,15 +428,20 @@
     DisplayEdit = () => {
 		$('.actEdit').removeClass('d-none');
         $('.actCreate').addClass('d-none');
-        $(`#${form} input`).attr('disabled', 'disabled')
+        $(`#${form} input`).attr('disabled', 'disabled');
+        document.getElementById("buku_kategori_id").disabled = true;
+        $('.actEdit1').addClass('d-none');
+        $('.dataBuku').removeClass('d-none');
 	}
 
     onDisplayEdit = () => {
 		$('.actEdit').addClass('d-none');
         $('.actCreate').removeClass('d-none');
         $('.actEdit1').removeClass('d-none');
+        $('.dataBuku').addClass('d-none');
         $('.actCreate1').addClass('d-none');
         $(`#${form} input`).removeAttr('disabled', 'disabled')
+        document.getElementById("buku_kategori_id").disabled = false;
 
 	}
 
@@ -449,6 +475,7 @@
         $('#tabelBuku').DataTable().destroy();
         inittable()
         onClear()
+        document.getElementById("search_buku").value = "";
     }
 
     function onClear(){

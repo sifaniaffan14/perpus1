@@ -26,6 +26,7 @@ class DetailBukuController extends Controller
                 $operation = DetailBuku::leftJoin('peminjaman_details','detail_bukus.eksemplar_id','=','peminjaman_details.detail_buku_id')
                             ->where('is_active', 1)
                             ->where('buku_id', $_GET['id'])
+                            
                             ->get();
             }
             // $generator = new BarcodeGeneratorPNG();
