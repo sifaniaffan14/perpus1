@@ -29,94 +29,22 @@ class PeminjamanController extends Controller
     public function select()
     {
         try {
+            $where = array();
             if (isset($_GET['peminjaman_id'])) {
-                $peminjaman = Peminjaman::where('peminjaman_id',$_GET['peminjaman_id'])->get();
-                $operation = array();
-                foreach($peminjaman as $key=>$value){
-                    $anggota = Anggota::select('nama_anggota','no_induk','jenis_anggota')->where('id', $value['anggota_id'])->first();
-                    $peminjamanDetail = PeminjamanDetail::select('status_peminjaman','tgl_pinjam','tgl_kembali','detail_buku_id')->where('peminjaman_detail_peminjaman_id',$value['peminjaman_id'])->get();
-                
-                    $eksemplar = array();
-                    $jumlah = 0;
-                    $belum_kembali = 0;
-                    $sudah_kembali = 0;
-                    foreach($peminjamanDetail as $valueDetail){
-                        if($valueDetail['status_peminjaman'] == 2){
-                            $sudah_kembali = $sudah_kembali+1;
-                        } else{
-                            $belum_kembali = $belum_kembali+1;
-                        }
-                        $jumlah = $jumlah+1;
+                $condition = ['peminjaman_id',$_GET['peminjaman_id']];
+                array_push($where,$condition);
+            } 
 
-                        $find_eksemplar = DetailBuku::select('buku_id','no_panggil')->where('eksemplar_id', $valueDetail['detail_buku_id'])->first();
-                        $buku = Buku::select('judul')->where('id', $find_eksemplar['buku_id'])->first();
-
-                        $concat= array_merge($find_eksemplar->toArray(), $buku->toArray(),$valueDetail->toArray());
-
-                        array_push($eksemplar,$concat);
-                    }
-                    
-                    $status = 'Belum Kembali';
-                    if($jumlah == $sudah_kembali){
-                        $status = 'Sudah Kembali';
-                    }
-                // print_r($peminjamanDetail);exit;
-
-                    $operation[$key] = $value; 
-                    $operation[$key]['eksemplar'] = $eksemplar;  
-                    $operation[$key]['nama_anggota'] = $anggota['nama_anggota'];
-                    $operation[$key]['no_induk'] = $anggota['no_induk'];
-                    $operation[$key]['jenis_anggota'] = $anggota['jenis_anggota'];
-                    $operation[$key]['peminjaman_jumlah'] = $jumlah;
-                    $operation[$key]['peminjaman_belum_kembali'] = $belum_kembali;
-                    $operation[$key]['peminjaman_sudah_kembali'] = $sudah_kembali;
-                    $operation[$key]['peminjaman_status'] = $status;
+            $operation = Peminjaman::with('peminjaman_detail.detail_buku.buku')->withCount([
+                'peminjaman_detail as peminjaman_jumlah',
+                'peminjaman_detail as peminjaman_sudah_kembali' => function ($query) {
+                    $query->where('status_peminjaman', '=', '2');
+                },
+                'peminjaman_detail as peminjaman_belum_kembali' => function ($query) {
+                    $query->where('status_peminjaman', '!=', '2');
                 }
-            } else {
-                $peminjaman = Peminjaman::all();
-                // $anggota = Anggota::select('nama_anggota')->where('id', $peminjaman['anggota_id'])->first();
-                // print_r([$anggota]);exit;
-                $operation = array();
-                foreach($peminjaman as $key=>$value){
-                    $peminjamanDetail = PeminjamanDetail::select('status_peminjaman','tgl_pinjam','tgl_kembali','detail_buku_id')->where('peminjaman_detail_peminjaman_id',$value['peminjaman_id'])->get();
-                    $anggota = Anggota::select('nama_anggota','no_induk','jenis_anggota')->where('id', $value['anggota_id'])->first();
-                    // $eksemplar = DetailBuku::select('no_panggil')->where('eksemplar_id', $peminjamanDetail['detail_buku_id'])->first();
-                    // $buku = Buku::select('judul')->where('id', $eksemplar['buku_id'])->first();
-                    $jumlah = 0;
-                    $belum_kembali = 0;
-                    $sudah_kembali = 0;
-                    foreach($peminjamanDetail as $k=>$v){
-                        $eksemplar = DetailBuku::select('buku_id','no_panggil')->where('eksemplar_id', $v['detail_buku_id'])->first();
-                        $buku = Buku::select('judul')->where('id', $eksemplar['buku_id'])->first();
-                        // print_r($eksemplar);exit;
-                        if($v['status_peminjaman'] == 2){
-                            $sudah_kembali = $sudah_kembali+1;
-                        } else{
-                            $belum_kembali = $belum_kembali+1;
-                        }
-                        $jumlah = $jumlah+1;
-                    }
-
-                    $status = 'Belum Kembali';
-                    if($jumlah == $sudah_kembali){
-                        $status = 'Sudah Kembali';
-                    }
-                // print_r($peminjamanDetail);exit;
-
-                    $operation[$key] = $value;
-                    $operation[$key]['no_panggil'] = $eksemplar['no_panggil'];
-                    $operation[$key]['judul'] = $buku['judul'];
-                    $operation[$key]['peminjaman_detail'] = $peminjamanDetail;
-
-                    $operation[$key]['nama_anggota'] = $anggota['nama_anggota'];
-                    $operation[$key]['no_induk'] = $anggota['no_induk'];
-                    $operation[$key]['jenis_anggota'] = $anggota['jenis_anggota'];
-                    $operation[$key]['peminjaman_jumlah'] = $jumlah;
-                    $operation[$key]['peminjaman_belum_kembali'] = $belum_kembali;
-                    $operation[$key]['peminjaman_sudah_kembali'] = $sudah_kembali;
-                    $operation[$key]['peminjaman_status'] = $status;
-                }
-            }
+            ])->with('anggota')->where($where)->get();
+ 
             return $this->response($operation);
         } catch (\Exception $e) {
             return $this->response($e->getMessage(), true);
@@ -169,14 +97,13 @@ class PeminjamanController extends Controller
         } catch (\Exception $e) {
             return $this->responseCreate($e->getMessage(),true);
         }
-    }   
+    }  
 
     public function update(Request $request)
     {
         try {
             $data = $request->all();
 
-            print_r($data);exit;
             $request->validate([
                 'anggota_id'=> 'required',
                 'tgl_pinjam'=> 'required',
@@ -189,20 +116,25 @@ class PeminjamanController extends Controller
                     'anggota_id' => $data['anggota_id'],
                 ]);
 
-                $peminjaman_detail = PeminjamanDetail::where('peminjaman_detail_peminjaman_id',$data['peminjaman_id'])->get();
-                foreach($peminjaman_detail as $value){
-                    foreach($data['peminjaman_detail_id'] as $v){
-                        if($value['detail_buku_id'] == $v){
-
-                        }
-                    }
+                $peminjaman_detail = PeminjamanDetail::where('peminjaman_detail_peminjaman_id',$data['peminjaman_id'])->delete();
+                
+                $detail['peminjaman_detail_peminjaman_id'] = $data['peminjaman_id'];
+                $detail['status_peminjaman'] = 1;
+                $detail['tgl_pinjam'] = $data['tgl_pinjam'];
+                $detail['tgl_kembali'] = $data['tgl_kembali'];
+                foreach ($data['eksemplar_id'] as $key => $value) {
+                    $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, Str::random());
+                    $data['peminjaman_detail_id'] = md5($uuid->toString());
+                    $detail['peminjaman_detail_id'] = $data['peminjaman_detail_id'];
+                    $detail['detail_buku_id'] = $value;
+                    PeminjamanDetail::create($detail);
                 }
             });
 
             $operation['success'] = true;
-            return $this->respondUpdated($operation);
+            return $this->responseUpdate($operation);
         } catch (\Exception $e) {
-            return $this->respondUpdated($e->getMessage(), true);
+            return $this->responseUpdate($e->getMessage(), true);
         }
     }
 

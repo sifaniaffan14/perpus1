@@ -118,3 +118,14 @@
       background-color: #0e2c62;
       color:#fff
   }
+
+  .select2-container--default .select2-selection--single {
+    border: 0px;
+    background-color: #F6F6F6;
+    height: 5vh;
+    padding: 1vh;
+    width: 40vh;
+  }
+  .select2-selection__arrow {
+      margin-top: 1vh;
+  }

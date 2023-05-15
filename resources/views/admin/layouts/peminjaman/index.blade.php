@@ -26,7 +26,7 @@
                     <div class="d-flex gap-4 mt-5">
                         <button type="button"
                             class="btn btn-outline-primary btn-outline border-2 text-body m-0 fw-bolder w-100 d-flex flex-center p-3"
-                            onclick="onRefreshTable(this)">
+                            onclick="onRefresh()">
                             <span class="material-icons fs-2"> refresh </span>
                         </button>
                     </div>
@@ -35,15 +35,16 @@
                     <table class="table" id="tablePeminjaman">
                         <thead>
                             <tr>
-                                <th class="fw-bolder" style="max-width: 20px"> No </th>
+                                <th class="fw-bolder" style="max-width: 37px"> No </th>
                                 <th class="fw-bolder">Nama Peminjam</th>
                                 <th class="fw-bolder">Jumlah Buku</th>
                                 <th class="fw-bolder">Belum Kembali</th>
                                 <th class="fw-bolder">Sudah Kembali</th>
-                                <th class="fw-bolder">status</th>
+                                <th class="fw-bolder">Status</th>
+                                <th class="fw-bolder">Detail</th>
                             </tr>
                         </thead>
-                        <tbody id="list_table"></tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
