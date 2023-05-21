@@ -43,6 +43,14 @@
                             if (k == 'no_induk'){
                                 $("#no_induk2").html(": "+v)
                             }
+                            if (k == 'picture'){
+                                if (v == '' || v == null){
+                                    document.getElementById("img").setAttribute("src", "images/User(2).png")
+                                } else {
+                                    var path = "http://127.0.0.1:8000/storage/user/"+v
+                                    document.getElementById("img").setAttribute("src", path)
+                                }
+                            }
                         })
                     }
                 } else{

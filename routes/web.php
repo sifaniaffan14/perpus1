@@ -37,7 +37,12 @@ use Illuminate\Support\Facades\Auth;
 // });
 
 Route::get('/', [ViewController::class, 'home']);
-
+Route::controller(ViewController::class)->name('landing.')->prefix('landing')->group(function () {
+    $route = array('search', 'selectCategory', 'selectDetail', 'selectEksemplar');  
+    foreach ($route as $route) {
+        Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+    }
+});
 
 Auth::routes();
 

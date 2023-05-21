@@ -19,8 +19,9 @@ class AbsensiController extends Controller
     public function insert(Request $request)
     {
         try {
-            $operation = Anggota::where("no_induk", $_POST['no_induk'])->get()->toArray();
-        
+            $operation = Anggota::join('users', 'anggotas.user_id', '=', 'users.id')
+                            ->where("anggotas.no_induk", $_POST['no_induk'])->get()->toArray();
+
             if ($operation == []){
                 $operation['message'] = "Anggota tidak ditemukan!";
                 return $this->response($operation);
@@ -30,7 +31,6 @@ class AbsensiController extends Controller
             $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, Str::random());
             $uuid1 = md5($uuid->toString());
             $add = AbsenPengunjung::create([
-                // 'id' => 3,
                 'anggota_id' => $operation[0]["id"],
                 'waktu' => $date
             ]);

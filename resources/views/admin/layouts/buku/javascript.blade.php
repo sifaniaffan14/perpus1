@@ -96,7 +96,7 @@
         })
         .then((response) => {
             if (response) {
-                const formElement = $('#formBuku')[0];
+            const formElement = $('#formBuku')[0];
                 const form = new FormData(formElement);
                 form.append('image', $('#image')[0].files[0])
 

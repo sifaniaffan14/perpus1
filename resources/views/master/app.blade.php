@@ -89,6 +89,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="../media/logo.svg">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/pencarian.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
     <script src="assets/js/bootstrap.bundle.min.js"></script>
@@ -99,7 +100,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid px-5">
-            <img src="../media/logo.svg" class="logo__navbar" alt="">
+            <img src="images/logo.svg" class="logo__navbar" alt="">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -107,7 +108,7 @@
             <div class="collapse navbar-collapse pe-5" id="navbarNav">
                 <ul class="navbar-nav ms-auto gap-3 fw-semibold ">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="./index.html">Beranda</a>
+                        <p class="nav-link active m-0" onclick="onDisplayLanding()" style="cursor:pointer;" aria-current="page">Beranda</p>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -131,96 +132,191 @@
             </div>
         </div>
     </nav>
-    <section id="hero1" class="hero__1 container-fluid d-flex flex-column align-items-center justify-content-center">
-        <div class="row d-flex gap-4">
-            <div class="col-12 text-white text-center">
-                <h1 class="fw-bold">Library</h1>
-                <h5>SMP Al Falah Ketintang Surabaya</h5>
-            </div>
-            <div class="col-12">
-                <form action="">
-                    <div class="d-flex max-h-25">
-                        <div class="dropdown category__">
-                            <button class="btn btn-light rounded-pill dropdown-toggle h-100 fw-semibold" type="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Category
+    <div class="page-landing">
+        <section id="hero1" class="hero__1 container-fluid d-flex flex-column align-items-center justify-content-center">
+            <div class="row d-flex gap-4">
+                <div class="col-12 text-white text-center">
+                    <h1 class="fw-bold">Library</h1>
+                    <h5>SMP Al Falah Ketintang Surabaya</h5>
+                </div>
+                <div class="col-12">
+                    <form onsubmit="onSearch(event)" method="POST" autocomplete="off" id="formSearch">
+                        @csrf
+                        <div class="d-flex justify-content-center" style="height:7.5vh">
+                            <div class="dropdown category__">
+                                <button class="btn btn-light rounded-pill dropdown-toggle h-100 fw-semibold" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Category
+                                </button>
+                                <ul class="dropdown-menu" id="category">
+                                </ul>
+                            </div>
+                            <input type="text" class="form-control rounded-pill ps-5 search__input" name="val_search" id="val_search" 
+                                placeholder="Ketik satu atau lebih kata kunci berupa Judul, Pengarang atau Subyek" style="width:100vh"/>
+                            <button type="submit" class="btn btn-warning btn__search text-white rounded-pill">
+                                <i class="bi bi-search fs-4"></i>
                             </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
                         </div>
-                        <input type="text" class="form-control rounded-pill ps-4 search__input w-100"
-                            placeholder="Ketik satu atau lebih kata kunci berupa Judul, Pengarang atau Subyek" />
-                        <button class="btn btn-warning btn__search text-white rounded-circle">
-                            <i class="bi bi-search"></i>
-                        </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
-    </section>
-    <section id="gallery" class="container-fluid gallery shadow-sm">
-        <div class="row">
-            <div class="col-12">
-                <h3 class="fw-bold text-center p-2" style="color: #306484;"><u>Gallery</u></h3>
-                <div class="w-100" style="max-height: 20vh;">
-                    <!-- Set up your HTML -->
-                    <div class="prevnext">
-                        <button class="prev"><i class="bi bi-chevron-left"></i></button>
-                        <button class="next"><i class="bi bi-chevron-right"></i></button>
-                    </div>
-                    <div class="swiper mySwiper">
-                        <div class="swiper-wrapper" id="bebas">
-                            <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                            <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                            <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                            <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                            <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                            <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                            <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                            <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                            <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                            <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                            <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                            <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                            <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
+        </section>
+        <section id="gallery" class="container-fluid gallery shadow-sm">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="fw-bold text-center p-2" style="color: #306484;"><u>Gallery</u></h3>
+                    <div class="w-100" style="max-height: 20vh;">
+                        <!-- Set up your HTML -->
+                        <div class="prevnext">
+                            <button class="prev"><i class="bi bi-chevron-left"></i></button>
+                            <button class="next"><i class="bi bi-chevron-right"></i></button>
+                        </div>
+                        <div class="swiper mySwiper">
+                            <div class="swiper-wrapper" id="bebas">
+                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
+                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
+                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
+                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
+                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
+                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
+                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
+                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
+                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
+                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
+                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
+                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
+                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
+    <div class="page-search d-none">
+        <section id="search__bar" class="container-fluid">
+            <div class="row">
+                <div class="col-lg-7 col-12 d-flex align-items-center gap-3 my-5">
+                    <label class="w-75 ps-lg-5">
+                        <input type="text" id="search2" class="form-control rounded-pill px-4" placeholder="Cari buku disini..."/>
+                    </label>
+                    <button onclick="onSearch2()" class="btn btn-warning rounded-pill text-white button__ fw-semibold" style="width:14vh">Search</button>
+                    <button onclick="onReset()" class="btn btn-warning rounded-pill text-white button__ fw-semibold" style="width:14vh">Clear</button>
+                </div>
+            </div>
+        </section>
+        <section id="search__result" class="container-fluid search__result rounded rounded-top rounded-3 overflow-auto">
+            <div class="row">
+                <div class="col-12 p-4">
+                    <h3 class="fw-bold text__custom">Hasil Pencarian</h3>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center align-items-top gap-3 h-75 mx-auto">
+                <div class="d-flex align-items-top flex-wrap gap-5" style="width:70%" id="result_buku">
+                </div>
+                <div class="col-12 d-flex justify-content-end mt-4 pe-5">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <p class="page-link bg-transparent text-dark fw-semibold border-0" onclick="previousPage()" style="cursor:pointer;"
+                                aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </p>
+                            </li>
+                            <div class="d-flex" id="num_pagination">
+                            </div>
+                            <li class="page-item">
+                                <p class="page-link bg-transparent text-dark fw-semibold border-0" onclick="nextPage()" style="cursor:pointer;" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </p>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="page-detail d-none">
+        <section id="search__bar" class="container">
+            <div class="row">
+                <div class="col-2 d-flex align-items-center gap-3 my-5">
+                    <p onclick="onDisplaySearch()" class="btn btn-warning m-0 rounded-pill text-light w-75" style="min-width: 100px">Back</p>
+                </div>
+            </div>
+        </section>
+        <section id="search__result" class="container card rounded rounded-4 overflow-auto">
+            <div class="row">
+                <div class="col-12 p-4">
+                    <h3 class="fw-bold text__custom text-center">Details</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 d-flex justify-content-center h-auto pb-lg-5 pb-0" style="min-height: 300px">
+                    <img id="img_detail" class="mt-4" alt="" style="width:20vh; height:24vh">
+                </div>
+                <div class="col-lg-6 col-12 d-flex flex-column justify-content-center p-lg-2 p-5">
+                    <table class="border-0 text__custom fw-semibold align-bottom ">
+                        <tr class="pb-2">
+                            <td class="align-baseline w-lg-25 w-50">Kode Buku</td>
+                            <td class="align-baseline text-center">:</td>
+                            <td class="align-baseline" id="kode_buku"></td>
+                        </tr>
+                        <tr class="pb-2">
+                            <td class="align-baseline w-25">Judul Buku</td>
+                            <td class="align-baseline text-center">:</td>
+                            <td class="align-baseline" id="judul"></td>
+                        </tr>
+                        <tr class="pb-2">
+                            <td class="align-baseline w-25">Pengarang</td>
+                            <td class="align-baseline text-center">:</td>
+                            <td class="align-baseline" id="pengarang"></td>
+                        </tr>
+                        <tr class="pb-2">
+                            <td class="align-baseline w-25">Penerbit</td>
+                            <td class="align-baseline text-center">:</td>
+                            <td class="align-baseline" id="penerbit"></td>
+                        </tr>
+                        <tr class="pb-2">
+                            <td class="align-baseline w-25">No. ISBN</td>
+                            <td class="align-baseline text-center">:</td>
+                            <td class="align-baseline" id="no_isbn"></td>
+                        </tr>
+                        <tr class="pb-2">
+                            <td class="align-baseline w-25">Jumlah Halaman</td>
+                            <td class="align-baseline text-center">:</td>
+                            <td class="align-baseline" id="halaman"></td>
+                        </tr>
+                        <tr class="pb-2">
+                            <td class="align-baseline w-25">Kategori</td>
+                            <td class="align-baseline text-center">:</td>
+                            <td class="align-baseline" id="nama_kategori"></td>
+                        </tr>
+                    </table>
+                    <div class="mt-4 table__detail">
+                        <table class="table table-bordered table-sm mw-100" style="width:90%">
+                            <thead class="bg__custom text-dark">
+                            <tr>
+                                <td>No.</td>
+                                <td>Kode Eksemplar</td>
+                                <td>Status</td>
+                                <td>Kondisi</td>
+                                <td>Tanggal Pinjam</td>
+                                <td>Tanggal Kembali</td>
+                            </tr>
+                            </thead>
+                            <tbody id="list_table">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
     <footer>
         <h6 class="text-white text-center">Copyright 2022 © SMP Al Falah Ketintang Surabaya</h6>
     </footer>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-<script>
-    // swiper.js for carousel
-    var swiper = new Swiper(".mySwiper", {
-        effect: "coverflow",
-        slidesPerView: 3,
-        spaceBetween: 20,
-        centeredSlides: true,
-        autoplay: {
-            delay: 2500,
-            disableOnInteraction: false,
-        },
-        coverflowEffect: {
-            rotate: 0,
-            stretch: 0,
-            depth: 0,
-            modifier: 0,
-            slideShadows: false,
-        },
-        navigation: {
-            nextEl: ".next",
-            prevEl: ".prev",
-        },
-    });
-
-</script>
-
+@include('master.javascript')
 </html>

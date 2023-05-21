@@ -38,16 +38,18 @@ body {
     color: #eaeaea;
     aspect-ratio: 1/1 !important;
     font-weight: 800 !important;
-    margin-left: -40px;
+    margin-left: -52px;
+    width: 10vh;
 }
 
 .search__input {
     text-indent: 18px;
-    font-size: 13px;
+    font-size: 15px;
+    width: 100vh;
 }
 
 .category__ {
-    margin-right: -40px;
+    margin-right: -52px;
 }
 
 .gallery {

@@ -35,13 +35,13 @@
         </div>
         <div class="detail-card w-75 mt-4 d-none">
             <div class="d-flex mb-4">
-                <img src="images/User(2).png" alt="user">
+                <img id="img" src="images/User(2).png" style="width:22.5vh; height:19vh" alt="user">
                 <div class="ms-1 w-100">
                     <table class="w-100 h-100">
                         <tbody style="font-size:19.5px;">
                             <tr>
                                 <td>Nama</td>
-                                <td id="nama_anggota">: M.Sifani Affan</td>
+                                <td id="nama_anggota"></td>
                             </tr>
                             <tr>
                                 <td>No. Induk</td>
