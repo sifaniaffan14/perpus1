@@ -164,7 +164,7 @@
         <section id="gallery" class="container-fluid gallery shadow-sm">
             <div class="row">
                 <div class="col-12">
-                    <h3 class="fw-bold text-center p-2" style="color: #306484;"><u>Gallery</u></h3>
+                    <h4 class="fw-bold text-center p-2" style="color: #202F4E;">Koleksi Terbaru</h4>
                     <div class="w-100" style="max-height: 20vh;">
                         <!-- Set up your HTML -->
                         <div class="prevnext">
@@ -201,7 +201,7 @@
                         <input type="text" id="search2" class="form-control rounded-pill px-4" placeholder="Cari buku disini..."/>
                     </label>
                     <button onclick="onSearch2()" class="btn btn-warning rounded-pill text-white button__ fw-semibold" style="width:14vh">Search</button>
-                    <button onclick="onReset()" class="btn btn-warning rounded-pill text-white button__ fw-semibold" style="width:14vh">Clear</button>
+                    <button onclick="onReset()" class="btn btn-danger rounded-pill text-white button__ fw-semibold" style="width:14vh">Clear</button>
                 </div>
             </div>
         </section>

@@ -6,13 +6,13 @@
 body {
     max-width: 100vw;
     max-height: 100vh;
-    background: rgb(48, 100, 132);
-    background: linear-gradient(90deg, rgba(48, 100, 132, 1) 0%, rgba(48, 137, 121, 1) 57%, rgba(32, 137, 121, 1) 100%);
+    background: #202F4E;
+    /* background: linear-gradient(90deg, rgba(48, 100, 132, 1) 0%, rgba(48, 137, 121, 1) 57%, rgba(32, 137, 121, 1) 100%); */
 
 }
 
 .text__custom {
-    color: #306484;
+    color: #202F4E;
 }
 
 .logo__navbar {
@@ -22,13 +22,13 @@ body {
 
 .btn__login {
     width: 100px;
-    background-color: #306484;
+    background-color: #202F4E;
     color: #eaeaea;
 }
 
 .hero__1 {
-    background: rgb(48, 100, 132);
-    background: linear-gradient(90deg, rgba(48, 100, 132, 1) 0%, rgba(48, 137, 121, 1) 57%, rgba(32, 137, 121, 1) 100%);
+    background: #202F4E;
+    /* background: linear-gradient(90deg, rgba(48, 100, 132, 1) 0%, rgba(48, 137, 121, 1) 57%, rgba(32, 137, 121, 1) 100%); */
     height: 40vh;
     min-height: 280px;
 }
@@ -141,7 +141,7 @@ footer {
     width: 100%;
     padding: 6px;
     height: auto;
-    background-color: #306484;
+    background-color: #202F4E;
 }
 
 @media screen and (max-width: 600px) {
