@@ -294,7 +294,7 @@
             </div>
             <!--end:Menu item-->
             <!--begin:Menu item-->
-            <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+            {{-- <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
                 <!--begin:Menu link-->
                 <span class="menu-link py-3">
                     <span class="menu-icon">
@@ -367,7 +367,7 @@
                     <!--end:Menu item-->
                 </div>
                 <!--end:Menu sub-->
-            </div>
+            </div> --}}
             <!--end:Menu item-->
         </div>
         <!--end::Menu-->
@@ -386,7 +386,7 @@
 
         <!--end::Activities-->
         <!--begin::Notifications-->
-        <div class="app-navbar-item ms-1 ms-lg-3">
+        {{-- <div class="app-navbar-item ms-1 ms-lg-3">
             <!--begin::Menu- wrapper-->
             <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
                 <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
@@ -925,7 +925,7 @@
             </div>
             <!--end::Menu-->
             <!--end::Menu wrapper-->
-        </div>
+        </div> --}}
         <!--end::Notifications-->
         <!--begin::Chat-->
         <div class="app-navbar-item ms-1 ms-lg-3">
@@ -1083,62 +1083,10 @@
                 <div class="separator my-2"></div>
                 <!--end::Menu separator-->
                 <!--begin::Menu item-->
-                <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
-                    <a href="#" class="menu-link px-5">
-                        <span class="menu-title position-relative">Language
-                            <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English
-                                <img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/united-states.svg" alt="" /></span></span>
-                    </a>
-                    <!--begin::Menu sub-->
-                    <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-3">
-                            <a href="../../demo1/dist/account/settings.html" class="menu-link d-flex px-5 active">
-                                <span class="symbol symbol-20px me-4">
-                                    <img class="rounded-1" src="assets/media/flags/united-states.svg" alt="" />
-                                </span>English</a>
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-3">
-                            <a href="../../demo1/dist/account/settings.html" class="menu-link d-flex px-5">
-                                <span class="symbol symbol-20px me-4">
-                                    <img class="rounded-1" src="assets/media/flags/spain.svg" alt="" />
-                                </span>Spanish</a>
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-3">
-                            <a href="../../demo1/dist/account/settings.html" class="menu-link d-flex px-5">
-                                <span class="symbol symbol-20px me-4">
-                                    <img class="rounded-1" src="assets/media/flags/germany.svg" alt="" />
-                                </span>German</a>
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-3">
-                            <a href="../../demo1/dist/account/settings.html" class="menu-link d-flex px-5">
-                                <span class="symbol symbol-20px me-4">
-                                    <img class="rounded-1" src="assets/media/flags/japan.svg" alt="" />
-                                </span>Japanese</a>
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-3">
-                            <a href="../../demo1/dist/account/settings.html" class="menu-link d-flex px-5">
-                                <span class="symbol symbol-20px me-4">
-                                    <img class="rounded-1" src="assets/media/flags/france.svg" alt="" />
-                                </span>French</a>
-                        </div>
-                        <!--end::Menu item-->
-                    </div>
-                    <!--end::Menu sub-->
-                </div>
+               
                 <!--end::Menu item-->
                 <!--begin::Menu item-->
-                <div class="menu-item px-5 my-1">
-                    <a href="../../demo1/dist/account/settings.html" class="menu-link px-5">Account Settings</a>
-                </div>
+                
                 <!--end::Menu item-->
                 <!--begin::Menu item-->
                 <div class="menu-item px-5">
