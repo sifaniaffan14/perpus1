@@ -279,4 +279,5 @@
             $('#val_search').val('')
         }
     }
+    
 </script>

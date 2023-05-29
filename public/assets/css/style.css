@@ -52,6 +52,14 @@ body {
     margin-right: -52px;
 }
 
+.carousel__container {
+    height: 40px !important;
+}
+
+.book__ {
+    width: 65% !important;
+}
+
 .gallery {
     height: 45vh;
     background-image: url('../media/bg3.png');
@@ -61,6 +69,7 @@ body {
     object-fit: cover;
     border-radius: 20px;
 }
+
 
 .prevnext {
     width: 100%;

@@ -15,16 +15,23 @@ class loginCheck
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next,$role)
     {
-        $isAuthenticatedAdmin = (Auth::check());
+        // $isAuthenticatedAdmin = (Auth::check());
 
-        //This will be excecuted if the new authentication fails.
-        if (!$isAuthenticatedAdmin){
+        // //This will be excecuted if the new authentication fails.
+        // if (!$isAuthenticatedAdmin){
 
-            return redirect()->route('login')->with('message', 'Authentication Error.');
+        //     return redirect()->route('login')->with('message', 'Authentication Error.');
+        // }
+        // return $next($request);
+
+        
+    
+        if (Auth::check() && Auth::user()->role_id == $role) {
+            return $next($request);
         }
-        return $next($request);
 
+        return abort(403, 'Unauthorized');
     }
 }

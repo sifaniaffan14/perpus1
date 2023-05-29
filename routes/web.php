@@ -53,7 +53,7 @@ Auth::routes();
 // });
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::middleware([loginCheck::class])->group(function () {
+Route::middleware('protectedPage:1')->group(function () {
     Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
     Route::get('/admin-dashboard',[DashboardController::class, 'admin'])->name('admin-dashboard');
     
@@ -174,4 +174,8 @@ Auth::routes();
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
     });
-// });
+});
+
+Route::middleware('protectedPage:2')->group(function () {
+    Route::get('/dashboard',[DashboardController::class, 'anggota'])->name('dashboard');
+});
