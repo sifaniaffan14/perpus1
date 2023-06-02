@@ -17,6 +17,7 @@ class PengunjungController extends Controller
         try {
             $operation = DB::table("absen_pengunjungs")
                         ->join("anggotas","absen_pengunjungs.anggota_id","=","anggotas.id")
+                        ->orderBy('absen_pengunjungs.created_at','desc')
                         ->get();
             return $this->response($operation);
         } catch (\Exception $e) {

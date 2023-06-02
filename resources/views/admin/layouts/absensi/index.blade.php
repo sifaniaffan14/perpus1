@@ -48,7 +48,7 @@
                                 <td id="no_induk2"></td>
                             </tr>
                             <tr>
-                                <td style="width:48%">Jenis Anggota</td>
+                                <td style="width:48%; white-space: nowrap;">Jenis Anggota</td>
                                 <td id="jenis_anggota"></td>
                             </tr>
                         </tbody>
