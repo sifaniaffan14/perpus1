@@ -118,6 +118,12 @@
       background-color: #0e2c62;
       color:#fff
   }
+  
+  .menu-title {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  /* end sidebar */
 
   .select2-container--default .select2-selection--single {
     border: 0px;
