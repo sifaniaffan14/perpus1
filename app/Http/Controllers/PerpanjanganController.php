@@ -21,7 +21,7 @@ class PerpanjanganController extends Controller
                 $operation = DB::table('peminjaman_details')
                             ->join('peminjamen', 'peminjaman_details.peminjaman_detail_peminjaman_id', '=', 'peminjamen.peminjaman_id')
                             ->join('anggotas', 'peminjamen.anggota_id', '=', 'anggotas.id')
-                            ->whereIn('status_peminjaman',['1','3']) // status sedang dipinjam atau proses diperpanjang
+                            ->whereIn('status_peminjaman',['3']) // status proses diperpanjang
                             ->select(
                                 'peminjamen.peminjaman_id',
                                 'peminjaman_details.peminjaman_detail_peminjaman_id',
