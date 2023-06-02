@@ -9,7 +9,7 @@
 }
 
 .search__item {
-    width: 380px;
+    width: auto;
     display: flex;
     justify-content: start;
     align-items: top;
