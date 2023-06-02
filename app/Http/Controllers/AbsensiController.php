@@ -20,8 +20,15 @@ class AbsensiController extends Controller
     {
         try {
             $operation = Anggota::join('users', 'anggotas.user_id', '=', 'users.id')
-                            ->where("anggotas.no_induk", $_POST['no_induk'])->get()->toArray();
-
+                            ->where("anggotas.no_induk", $_POST['no_induk'])
+                            ->select(
+                                "anggotas.id",
+                                "anggotas.nama_anggota",
+                                "anggotas.no_induk",
+                                "anggotas.jenis_anggota",
+                                "users.picture"
+                                )
+                            ->get()->toArray();
             if ($operation == []){
                 $operation['message'] = "Anggota tidak ditemukan!";
                 return $this->response($operation);

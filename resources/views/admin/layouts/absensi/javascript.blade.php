@@ -12,6 +12,7 @@
     document.getElementById("back").addEventListener("click", function() {
         $(".detail-card").addClass("d-none");
         $(".main-card").removeClass("d-none");
+        $('#no_induk').val('');
     })
 
     function myFunction() {
@@ -22,6 +23,15 @@
             x.type = "password";
         }
     }
+
+    $(document).ready(function() {
+        $('#no_induk').keypress(function(event) {
+            if (event.keyCode === 13) { // keycode untuk tombol enter adalah 13
+                event.preventDefault(); // menghindari submit form
+                onSave(event);
+            }
+        });
+    });
 
     function onSave(event){
         $.ajax({

@@ -37,7 +37,7 @@
             prevEl: ".prev",
         },
     });
-
+    
     function getCategory(){
         $.ajax({
             url: "{{ route('landing.selectCategory') }}",
@@ -46,12 +46,20 @@
                 if(response.status == true){
                     var options = "";
                     $.each(response.data, function(index, value) {
-                        options += '<li><a class="dropdown-item" href="#'+ value.id +'">'+ value.nama_kategori +'</a></li>';
+                        options += '<li onclick="showCategory()" ><a class="dropdown-item" href="#'+ value.id +'">'+ value.nama_kategori +'</a></li>';
                     });
                     $("#category").append(options);
                 }
             }
         })
+    }
+
+    function showCategory(){
+        if (!$('#category').hasClass('show')){
+            $('#category').addClass('show')
+        } else {
+            $('#category').removeClass('show')
+        }
     }
 
     function onSearch(event){
@@ -130,11 +138,14 @@
         var baseUrl = window.location.origin + '/storage/buku/'; 
         $("#result_buku").html("")
         $.each(pageData, function( k, v ){
+            if (v.image == '' || v.image == null){
+                v.image = 'default-cover.jpeg';
+            }
             if ((k+1) % 3 != 0){
                 $("#result_buku").append(`
-                    <div class=" col-xxl-3 col-xl-3 col-lg-4 col-12" style="width:29%; margin-right:2.5vh">
+                    <div class="col-xxl-3 col-xl-3 col-lg-4 col-12" style="width:30%; margin-right:2.5vh">
                         <div onclick="onDetail('`+ v.id +`')" style="cursor:pointer;"
-                        class="w-100 p-0 text-dark search__item text-decoration-none fw-semibold">
+                        class="ps-4 p-3 rounded-4 text-dark search__item text-decoration-none fw-semibold">
                             <img src="`+ baseUrl + v.image +`" style="width:15vh; height:18vh" alt="img">
                             <div class="w-auto">
                                 <div class="text-start ps-1 fs-5" >`+ v.judul +`</div>
@@ -147,9 +158,9 @@
                 `)
             } else {
                 $("#result_buku").append(`
-                    <div class=" col-xxl-3 col-xl-3 col-lg-4 col-12" style="width:30%">
+                    <div class="col-xxl-3 col-xl-3 col-lg-4 col-12" style="width:30%">
                         <div onclick="onDetail('`+ v.id +`')" style="cursor:pointer;"
-                        class="w-100 p-0 text-dark search__item text-decoration-none fw-semibold">
+                        class="ps-4 p-3 rounded-4 text-dark search__item text-decoration-none fw-semibold">
                             <img src="`+ baseUrl + v.image +`" style="width:15vh; height:18vh" alt="img">
                             <div class="w-auto">
                                 <div class="text-start ps-1 fs-5">`+ v.judul +`</div>
@@ -179,6 +190,9 @@
                     $('.page-search').addClass('d-none');
                     $('.page-detail').removeClass('d-none');
 
+                    if (response.data[0]['image'] == '' || response.data[0]['image'] == null){
+                        response.data[0]['image'] = 'default-cover.jpeg';
+                    }
                     document.getElementById('img_detail').setAttribute('src',baseUrl + response.data[0]['image']);
                     $('#kode_buku').html(response.data[0]['kode_buku']);
                     $('#no_isbn').html(response.data[0]['no_isbn']);

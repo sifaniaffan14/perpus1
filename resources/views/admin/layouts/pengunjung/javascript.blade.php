@@ -14,7 +14,7 @@
     selectTahun()
 
     $(document).ready(function () {
-        $('#tahun').select2();
+        // $('#tahun').select2();
         $('#tahun').change(function() {
             var currentYear = currentTime.getFullYear();
             var valTahun = $(this).val();
@@ -25,7 +25,7 @@
             }
             document.getElementById("bulan").disabled = false;
         })
-        $('#bulan').select2();
+        // $('#bulan').select2();
         $('#bulan').change(function() {
             var currentYear = currentTime.getFullYear();
             var valTahun = $('#tahun').val();
@@ -38,7 +38,7 @@
             }
             document.getElementById("tanggal").disabled = false;
         })
-        $('#tanggal').select2();
+        // $('#tanggal').select2();
     })
 
     function inittable(){

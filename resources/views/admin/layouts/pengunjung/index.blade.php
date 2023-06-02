@@ -9,7 +9,7 @@
 border-radius: 10px;">
                 <div class="card-header">
                     <h2 class="text-dark-gray fw-bolder fs-3 d-flex align-items-center gap-5 mb-0">
-                        <span class="material-icons" style="color:#264A8A"> text_snippet </span> Filter
+                        <span class="material-icons" style="color:#264A8A"> filter_alt </span> Filter
                     </h2>
                 </div>
                 <div class="d-flex flex-column flex-lg-row flex-stack py-5 mt-5 mx-auto"
@@ -17,30 +17,30 @@ border-radius: 10px;">
                     <div class="d-flex">
                         <div class="d-flex align-items-center me-5">
                             <p class="m-0 me-4 fw-bolder">Tahun : </p>
-                            <select name="tahun" id="tahun" style="width:120px;">
+                            <select class="rounded p-2 ps-1" name="tahun" id="tahun" style="width:120px;">
                                 <option value="#" selected disabled hidden>Pilih tahun</option>
                             </select>
                         </div>
                         <div class="d-flex align-items-center ps-5 ms-5 me-5">
                             <p class="m-0 me-4 fw-bolder">Bulan : </p>
-                            <select name="bulan" id="bulan" style="width:120px;" disabled>
+                            <select class="rounded p-2 ps-1" name="bulan" id="bulan" style="width:120px;" disabled>
                                 <option value="#" selected disabled hidden>Pilih bulan</option>
                             </select>
                         </div>
                         <div class="d-flex align-items-center ps-5 ms-5 me-5">
                             <p class="m-0 me-4 fw-bolder">Tanggal : </p>
-                            <select name="tanggal" id="tanggal" style="width:120px;" disabled>
+                            <select class="rounded p-2 ps-1" name="tanggal" id="tanggal" style="width:120px;" disabled>
                                 <option value="#" selected disabled hidden>Pilih tanggal</option>
                             </select>
                         </div>
                     </div>
                     <div class="d-flex w-25 text-end">
                         <button type="button" class="btn m-0 d-flex flex-center gap-2 text-light"
-                                style="background-color:#264A8A; width:35%"
+                                style="background-color:#264A8A; width:35%; height:5vh"
                                 onclick="onFilter()">
                                 <span class="material-icons fs-2"> search </span> Cari </button>
                         <button type="button" class="btn m-0 d-flex flex-center gap-2 text-light ms-5"
-                                style="background-color:#03BE43; width:35%"
+                                style="background-color:#03BE43; width:35%; height:5vh"
                                 onclick="loadForm()">
                                 <span class="material-icons fs-2"> print </span> Cetak </button>
                     </div>

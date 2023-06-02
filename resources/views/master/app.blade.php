@@ -144,15 +144,15 @@
                         @csrf
                         <div class="d-flex justify-content-center" style="height:7.5vh">
                             <div class="dropdown category__">
-                                <button class="btn btn-light rounded-pill dropdown-toggle h-100 fw-semibold" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-light rounded-pill dropdown-toggle h-100 fw-semibold" onclick="showCategory()" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false" style="width:140px; color:#202F4E">
                                     Category
                                 </button>
-                                <ul class="dropdown-menu" id="category">
+                                <ul class="dropdown-menu" id="category" aria-labelledby="dropdownCategory">
                                 </ul>
                             </div>
-                            <input type="text" class="form-control rounded-pill ps-5 search__input" name="val_search" id="val_search" 
-                                placeholder="Ketik satu atau lebih kata kunci berupa Judul, Pengarang atau Subyek" style="width:100vh"/>
+                            <input type="text" class="form-control rounded-pill search__input" name="val_search" id="val_search" 
+                                placeholder="Ketik satu atau lebih kata kunci berupa Judul, Pengarang atau Subyek"/>
                             <button type="submit" class="btn btn-warning btn__search text-white rounded-pill">
                                 <i class="bi bi-search fs-4"></i>
                             </button>
@@ -197,8 +197,9 @@
         <section id="search__bar" class="container-fluid">
             <div class="row">
                 <div class="col-lg-7 col-12 d-flex align-items-center gap-3 my-5">
-                    <label class="w-75 ps-lg-5">
-                        <input type="text" id="search2" class="form-control rounded-pill px-4" placeholder="Cari buku disini..."/>
+                    <label class="w-75 ps-lg-5 d-flex align-items-center">
+                        <i class="bi bi-search position-absolute text-warning fs-5" style="margin-left: 16px"></i>
+                        <input type="text" id="search2" class="form-control rounded-pill ps-5 px-4" placeholder="Cari buku disini..."/>
                     </label>
                     <button onclick="onSearch2()" class="btn btn-warning rounded-pill text-white button__ fw-semibold" style="width:14vh">Search</button>
                     <button onclick="onReset()" class="btn btn-danger rounded-pill text-white button__ fw-semibold" style="width:14vh">Clear</button>
@@ -207,12 +208,12 @@
         </section>
         <section id="search__result" class="container-fluid search__result rounded rounded-top rounded-3 overflow-auto">
             <div class="row">
-                <div class="col-12 p-4">
+                <div class="col-12 ms-4 ps-5 p-4">
                     <h3 class="fw-bold text__custom">Hasil Pencarian</h3>
                 </div>
             </div>
             <div class="row d-flex justify-content-center align-items-top gap-3 h-75 mx-auto">
-                <div class="d-flex align-items-top flex-wrap gap-5" style="width:70%" id="result_buku">
+                <div class="d-flex align-items-top flex-wrap gap-5" style="width:90%" id="result_buku">
                 </div>
                 <div class="col-12 d-flex justify-content-end mt-4 pe-5">
                     <nav aria-label="Page navigation example">
