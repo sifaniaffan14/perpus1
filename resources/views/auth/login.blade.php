@@ -7,159 +7,14 @@
     {!! ReCaptcha::htmlScriptTagJsApi() !!}
     <link rel="stylesheet" href="assets/css/login.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/login.css">
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <title>Login - Anggota Perpustakaan</title>
-    {{-- <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Poppins:wght@400;500;600&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Poppins", sans-serif;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(120deg, #2980b9, #8e44ad);
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .center h3 {
-            text-align: center;
-            padding: 20px 0;
-            border-bottom: 1px solid silver;
-        }
-
-        .bottom {
-            text-align: center !important;
-            bottom: 8px;
-            padding-top: 85vh;
-        }
-
-        .bottom strong {
-            text-align: center;
-            color: #e9f4fb;
-            font-size: 100%
-        }
-
-        .bottom small {
-            text-align: center;
-            color: #e9f4fb;
-        }
-
-        .center form {
-            padding: 0 40px;
-            box-sizing: border-box;
-        }
-
-        form .txt_field {
-            position: relative;
-            border-bottom: 2px solid #adadad;
-            margin: 30px 0;
-        }
-
-        .txt_field input {
-            width: 100%;
-            padding: 0 5px;
-            height: 40px;
-            font-size: 16px;
-            border: none;
-            background: none;
-            outline: none;
-        }
-
-        .txt_field label {
-            position: absolute;
-            top: 50%;
-            left: 5px;
-            color: #adadad;
-            transform: translateY(-50%);
-            font-size: 16px;
-            pointer-events: none;
-            transition: .5s;
-        }
-
-        .txt_field span::before {
-            content: '';
-            position: absolute;
-            top: 40px;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: #2691d9;
-            transition: .5s;
-        }
-
-        .txt_field input:focus~label,
-        .txt_field input:valid~label {
-            top: -5px;
-            color: #2691d9;
-        }
-
-        .txt_field input:focus~span::before,
-        .txt_field input:valid~span::before {
-            width: 100%;
-        }
-
-        .pass {
-            margin: -5px 0 20px 5px;
-            color: #a6a6a6;
-            cursor: pointer;
-        }
-
-        .pass:hover {
-            text-decoration: underline;
-        }
-
-        input[type="submit"] {
-            width: 100%;
-            height: 50px;
-            border: 1px solid;
-            background: #2691d9;
-            border-radius: 25px;
-            font-size: 18px;
-            color: #e9f4fb;
-            font-weight: 700;
-            cursor: pointer;
-            outline: none;
-        }
-
-        input[type="submit"]:hover {
-            border-color: #2691d9;
-            transition: .5s;
-        }
-
-        .signup_link {
-            margin: 30px 0;
-            text-align: center;
-            font-size: 16px;
-            color: #666666;
-        }
-
-        .signup_link a {
-            color: #2691d9;
-            text-decoration: none;
-        }
-
-        .signup_link a:hover {
-            text-decoration: underline;
-        }
-    </style> --}}
-
+    <script src="assets/js/jquery.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
 </head>
 
 {{-- <body>
@@ -204,27 +59,30 @@
         <h5>Anggota</h5>
         <form method="POST" action="{{ route('login') }}" class="w-75">
         @csrf
-            <div class="w-100 p-0">
-                {{-- <input type="text" id="username"  name="username" class="form-control bg-light w-100 d-block my-3" placeholder="Username" required autofocus>
-                 --}}
-                 <input id="username" type="text" class="form-control bg-light w-100 d-block my-3 @error('email') is-invalid @enderror" name="username" value="{{ old('email') }}" required autocomplete="email" autofocus
+            <div class="w-100 p-0 position-relative">
+                <span class="material-symbols-outlined position-absolute icon__">
+                    person
+                </span>
+                 <input id="username" type="text" class="form-control form-control-lg bg-light w-100 username__login d-block my-3" name="username" value="{{ old('email') }}" required autocomplete="off" autofocus
                     placeholder="Username">
             </div>
-            <div class="w-100 mb-5">
-                {{-- <input type="password" id="password" class="form-control bg-light w-100 my-3" placeholder="Password" required autocomplete="current-password">
-                 --}}
-                 <input id="password" type="password" class="form-control bg-light w-100 my-3 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password"
-                    placeholder="Password">
-                    <div class=" float-end cursor-pointer">
-                        <input type="checkbox" name="" id="showPassword" onclick="myFunction()">
-                        <small>Show Password</small>
-                    </div>
+            <div class="w-100 mb-5 position-relative">
+                <span class="material-symbols-outlined position-absolute icon__">
+                    key
+                </span>
+                 <input id="password" type="password" class="form-control form-control-lg bg-light w-100 password__login my-3" name="password" required autocomplete="current-password"
+                    placeholder="Password"/>
+                    <button type="button" class="btn p-0 position-absolute see__pass">
+                        <span class="material-symbols-outlined" onclick="showPassword()">
+                            visibility
+                        </span>
+                    </button>
             </div>
             <div style="align-items: ">
                 {!! htmlFormSnippet() !!}
             </div>
         <button class="btn btn-warning text-white my-3 border-0 rounded-pill w-25 submit" type="submit" value="Login">
-            Submit
+            Login
         </button> 
     </form>
     </div>
@@ -232,6 +90,16 @@
         Copyright <span id="currenYear"></span> © SMP Al Falah Ketintang Surabaya
     </footer>
 </body>
-
+<script type="text/javascript">
+    const showPassword = () => {
+      if ($("#password").attr("type") == "password") {
+        $("#password").attr("type", "text");
+        $(".far.fa-eye").removeClass("fa-eye").addClass("fa-eye-slash");
+      } else {
+        $(".far.fa-eye-slash").removeClass("fa-eye-slash").addClass("fa-eye");
+        $("#password").attr("type", "password");
+      }
+    };
+  </script>
 </html>
 <script src='https://www.google.com/recaptcha/api.js'></script>
