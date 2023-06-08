@@ -75,29 +75,9 @@ License: For each use you must have a valid license purchased only from above li
 						</div>
 						<!--end::Toolbar-->
 						<!--begin::Content-->
-						<div id="kt_app_content" class="app-content flex-column-fluid">
+						<div id="kt_app_content" class="app-content flex-column-fluid ms-20 me-20">
 							<!--begin::Content container-->
-							<div id="kt_app_content_container" class="app-container container-fluid">
-								<!--begin::Row-->
-								<div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-									<!--begin::Col-->
-									<div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-							
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-
-									</div>
-									<!--end::Col-->
-									<!--begin::Col-->
-									<div class="col-xxl-6">
-
-									</div>
-									<!--end::Col-->
-								</div>
-								<!--end::Row-->
-							</div>
+								@yield('content2')
 							<!--end::Content container-->
 						</div>
 						<!--end::Content-->

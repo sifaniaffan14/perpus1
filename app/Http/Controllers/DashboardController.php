@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function anggota(){
-        return view('anggota/master/app');
+        return view('anggota/layouts/dashboard');
     }
 
     public function admin(){

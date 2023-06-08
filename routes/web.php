@@ -17,6 +17,9 @@ use App\Http\Controllers\ViewController;
 use App\Http\Controllers\DataAnggotaController;
 use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\PengunjungController;
+use App\Http\Controllers\Anggota\PencarianBukuController;
+use App\Http\Controllers\Anggota\CekPinjamanController;
+use App\Http\Controllers\Anggota\AnggotaPerpanjanganController;
 use App\Http\Middleware\loginCheck;
 use App\Models\PeminjamanDetail;
 use Illuminate\Support\Facades\Auth;
@@ -54,7 +57,7 @@ Auth::routes();
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware('protectedPage:1')->group(function () {
-    Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
+    // Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
     Route::get('/admin-dashboard',[DashboardController::class, 'admin'])->name('admin-dashboard');
     
     Route::get('/bukumanagement',[App\Http\Controllers\BukuController::class, 'list'])->name('bukumanagement');
@@ -178,4 +181,23 @@ Route::middleware('protectedPage:1')->group(function () {
 
 Route::middleware('protectedPage:2')->group(function () {
     Route::get('/dashboard',[DashboardController::class, 'anggota'])->name('dashboard');
+
+    Route::controller(PencarianBukuController::class)->name('cariBuku.')->prefix('cariBuku')->group(function () {
+        $route = array('index');  
+        foreach ($route as $route) {
+            Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+        }
+    });
+    Route::controller(CekPinjamanController::class)->name('cekPinjaman.')->prefix('cekPinjaman')->group(function () {
+        $route = array('index');  
+        foreach ($route as $route) {
+            Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+        }
+    });
+    Route::controller(AnggotaPerpanjanganController::class)->name('perpanjangan.')->prefix('perpanjangan')->group(function () {
+        $route = array('index');  
+        foreach ($route as $route) {
+            Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+        }
+    });
 });
