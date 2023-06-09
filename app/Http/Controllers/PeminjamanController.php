@@ -50,6 +50,70 @@ class PeminjamanController extends Controller
             return $this->response($e->getMessage(), true);
         }
     }
+
+    public function onFilter(Request $request)
+    {
+        $where = array();
+        if (isset($_GET['peminjaman_id'])) {
+            $condition = ['peminjaman_id',$_GET['peminjaman_id']];
+            array_push($where,$condition);
+        } 
+        try {
+            if ($_GET['tahun'] != "" && $_GET['bulan'] == "" && $_GET['tanggal'] == ""){
+                $operation = Peminjaman::with('peminjaman_detail.detail_buku.buku')->withCount([
+                                'peminjaman_detail as peminjaman_jumlah',
+                                'peminjaman_detail as peminjaman_sudah_kembali' => function ($query) {
+                                    $query->where('status_peminjaman', '=', '2');
+                                },
+                                'peminjaman_detail as peminjaman_belum_kembali' => function ($query) {
+                                    $query->where('status_peminjaman', '!=', '2');
+                                }
+                            ])->with('anggota')
+                            ->where($where)
+                            ->whereHas('peminjaman_detail', function ($query) {
+                                $query->whereYear('tgl_pinjam', $_GET['tahun']);
+                            })
+                            ->get();
+            } elseif($_GET['tahun'] != "" && $_GET['bulan'] != "" && $_GET['tanggal'] == ""){
+                $operation = Peminjaman::with('peminjaman_detail.detail_buku.buku')->withCount([
+                                'peminjaman_detail as peminjaman_jumlah',
+                                'peminjaman_detail as peminjaman_sudah_kembali' => function ($query) {
+                                    $query->where('status_peminjaman', '=', '2');
+                                },
+                                'peminjaman_detail as peminjaman_belum_kembali' => function ($query) {
+                                    $query->where('status_peminjaman', '!=', '2');
+                                }
+                            ])->with('anggota')
+                            ->where($where)
+                            ->whereHas('peminjaman_detail', function ($query) {
+                                $query->whereYear('tgl_pinjam', $_GET['tahun'])
+                                      ->whereMonth('tgl_pinjam', $_GET['bulan']);
+                            })
+                            ->get();
+            } elseif($_GET['tahun'] != "" && $_GET['bulan'] != "" && $_GET['tanggal'] != ""){
+                $operation = Peminjaman::with('peminjaman_detail.detail_buku.buku')->withCount([
+                                'peminjaman_detail as peminjaman_jumlah',
+                                'peminjaman_detail as peminjaman_sudah_kembali' => function ($query) {
+                                    $query->where('status_peminjaman', '=', '2');
+                                },
+                                'peminjaman_detail as peminjaman_belum_kembali' => function ($query) {
+                                    $query->where('status_peminjaman', '!=', '2');
+                                }
+                            ])->with('anggota')
+                            ->where($where)
+                            ->whereHas('peminjaman_detail', function ($query) {
+                                $query->whereYear('tgl_pinjam', $_GET['tahun'])
+                                      ->whereMonth('tgl_pinjam', $_GET['bulan'])
+                                      ->whereDay('tgl_pinjam', $_GET['tanggal']);
+                            })
+                            ->get();
+            }
+            return $this->response($operation);
+        } catch (\Exception $e) {
+            return $this->response($e->getMessage(), true);
+        }
+    }
+
     //     public function form(){
     //         // $detailbuku=Peminjaman::find(request()->id_buku);
     //         return view('admin.layouts.Peminjaman.peminjamanForm');

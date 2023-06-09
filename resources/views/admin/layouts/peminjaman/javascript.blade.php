@@ -14,6 +14,7 @@
     var form = 'formPeminjaman'
     var list_table = 'list_table'
     var val_select = null;
+    var currentTime = new Date();
 
     var urlPath = {
         insert: "{{ route('peminjaman.insert') }}",
@@ -24,9 +25,36 @@
         selectAnggota: "{{ route('peminjaman.selectAnggota') }}",
         selectEksemplar: "{{ route('peminjaman.selectEksemplar') }}",
         detailPeminjaman: "{{ route('detailPeminjaman.select') }}",
+        onFilter: "{{ route('peminjaman.onFilter') }}",
     }
     inittable()
     loadData()
+    selectTahun()
+
+    $(document).ready(function () {
+        $('#tahun').change(function() {
+            var currentYear = currentTime.getFullYear();
+            var valTahun = $(this).val();
+            if (currentYear == valTahun){
+                selectBulan(true)
+            } else {
+                selectBulan(false)
+            }
+            document.getElementById("bulan").disabled = false;
+        })
+        $('#bulan').change(function() {
+            var currentYear = currentTime.getFullYear();
+            var valTahun = $('#tahun').val();
+            var currentMonth = currentTime.getMonth() + 1;
+            var valBulan = $(this).val();
+            if (currentYear == valTahun && currentMonth == valBulan){
+                selectTanggal(true)
+            } else {
+                selectTanggal(false)
+            }
+            document.getElementById("tanggal").disabled = false;
+        })
+    })
 
     // $(document).ready(function () {
     //     $('#anggota_id').select2();
@@ -650,5 +678,121 @@
         $("#jenis_anggota_detail").html('')
         $('#anggota_id').val(null).trigger('change.select2');
         $(`#identitas_peminjam`).html('')
+    }
+
+    function selectTahun(){
+        var currentYear = currentTime.getFullYear();
+        var options = "";
+        var tahun = "";
+        options += '<option value="#" selected disabled hidden>Pilih tahun</option>';
+        for (var i = 0; i < 5; i++) {
+            tahun = currentYear - i;
+            options += "<option value='" + tahun + "'>" + tahun + "</option>";
+        };
+        $("#tahun").html("");
+        $("#tahun").append(options);
+    }
+
+    function selectBulan(status){
+        var monthNames = [
+            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+        ];
+        var options = "";
+        options += '<option value="#" selected disabled hidden>Pilih bulan</option>';
+        if (status == true){
+            var currentMonthNumber = currentTime.getMonth();
+            for (var i = 0; i <= currentMonthNumber; i++) {
+                options += "<option value='" + (i + 1) + "'>" + monthNames[i] + "</option>";
+            }
+        } else {
+            for (var i = 0; i < monthNames.length; i++) {
+                options += "<option value='" + (i + 1) + "'>" + monthNames[i] + "</option>";
+            }
+        }
+        $("#bulan").html("");
+        $("#bulan").append(options);
+    }
+
+    function selectTanggal(status){
+        var currentDate = new Date();
+        var options = "";
+        options += '<option value="#" selected disabled hidden>Pilih tanggal</option>';
+        if (status == true){
+            var currentDateNumber = currentDate.getDate();
+            for (var i = 1; i <= currentDateNumber; i++) {
+                options += "<option value='" + i + "'>" + i + "</option>";
+            }
+        } else {
+            var valBulan = $('#bulan').val();
+            currentDate.setDate(1);
+            var CountDay = new Date(currentDate.getFullYear(),valBulan, 0).getDate();
+            for (var i = 1; i <= CountDay; i++) {
+                options += "<option value='" + i + "'>" + i + "</option>";
+            }
+        }
+        $("#tanggal").html("");
+        $("#tanggal").append(options);
+    }
+
+    function onFilter(){
+        $('#tablePeminjaman').DataTable().destroy();
+        $(document).ready(function() {
+            var dataTable = $('#tablePeminjaman').DataTable( {
+                "ajax": {
+                    "url": urlPath.onFilter,
+                    "type": "GET",
+                    "data" : {
+                        tahun : $("#tahun").val(),
+                        bulan : $("#bulan").val(),
+                        tanggal : $("#tanggal").val()
+                    },
+                    "dataSrc": function (response) {
+                        var data = processData(response);
+                        return data;
+                    }
+                },
+                "columns": [
+                    { "data": "No" },
+                    { "data": "Nama Peminjam" },
+                    { "data": "Jumlah Buku" },
+                    { "data": "Belum Kembali" },
+                    { "data": "Sudah Kembali" },
+                    { "data": "Status" },
+                    { "data": "Detail" }
+                ]
+            } );
+            
+            function processData(response) {
+                var data = [];
+                var num = 0;
+                $.each(response.data, function( k, v ){
+                    let jsonString = JSON.stringify(v);
+                    let encode = btoa(jsonString)
+                    // console.log(encode)
+
+                    num++;
+                    let peminjaman_status = (v.peminjaman_jumlah==v.peminjaman_sudah_kembali?`<span class="badge bg-success">Sudah Kembali</span>`:`<span class="badge bg-danger">Belum Kembali</span>`)
+                    var row = {
+                        "No": num,
+                        "Nama Peminjam": v.anggota.nama_anggota,
+                        "Jumlah Buku": v.peminjaman_jumlah,
+                        "Belum Kembali": v.peminjaman_belum_kembali,
+                        "Sudah Kembali": v.peminjaman_sudah_kembali,
+                        "Status": peminjaman_status,
+                        "Detail": `<button onclick=onDetail('${encode}') class="btn btn-primary btn-detail p-1 ps-2" name="btn-detail" id="btn-detail"><i class="bi bi-arrow-right fs-2"></i></button>`
+                    };
+                    data.push(row);
+                })
+                return data;
+            }
+
+            function searchFunction() {
+                const input = document.getElementById("search_peminjaman").value;        
+                dataTable.search(input).draw();
+            }
+
+            document.getElementById("search_peminjaman").addEventListener("input", searchFunction);
+        } );
     }
 </script>
