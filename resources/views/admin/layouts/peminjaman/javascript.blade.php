@@ -26,6 +26,7 @@
         selectEksemplar: "{{ route('peminjaman.selectEksemplar') }}",
         detailPeminjaman: "{{ route('detailPeminjaman.select') }}",
         onFilter: "{{ route('peminjaman.onFilter') }}",
+        onDownload: "{{ route('peminjaman.onDownload') }}",
     }
     inittable()
     loadData()
@@ -794,5 +795,40 @@
 
             document.getElementById("search_peminjaman").addEventListener("input", searchFunction);
         } );
+    }
+
+    function onDownload(){
+        if ($('#bulan').val() == null){
+            swal("Warning", 'Isi bulan untuk mendownload!', "warning")
+        } else {
+            swal({
+            title: "Peringatan",
+            text: "Apakah Anda Yakin Untuk Mencetak Data?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((response) => {
+                if (response) {
+                    $.ajax({
+                        url: urlPath.onDownload,
+                        type: 'GET',
+                        data: {
+                            tahun : $("#tahun").val(),
+                            bulan : $("#bulan").val()
+                        },
+                        success: function(response){
+                            if(response.status == true){
+                                var fileName = response.data.fileName;
+                                var url = window.location.origin + '/upload_files/'+fileName;
+                                window.open(url,'_blank');
+                            } else{
+                                swal("Warning", response.message, "warning");
+                            }
+                        }
+                    })
+                }
+            }); 
+        }
     }
 </script>

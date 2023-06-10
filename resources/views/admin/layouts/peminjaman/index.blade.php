@@ -41,7 +41,7 @@
                                 <span class="material-icons fs-2"> search </span> Cari </button>
                         <button type="button" class="btn m-0 d-flex flex-center gap-2 text-light ms-5"
                                 style="background-color:#03BE43; width:35%; height:5vh"
-                                onclick="loadForm()">
+                                onclick="onDownload()">
                                 <span class="material-icons fs-2"> print </span> Cetak </button>
                     </div>
                 </div>  

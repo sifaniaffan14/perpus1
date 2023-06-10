@@ -10,9 +10,16 @@ use App\Models\Anggota;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\DB;
-
-
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use Illuminate\Support\Collection;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Borders;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Color;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class PeminjamanController extends Controller
 {
@@ -112,6 +119,112 @@ class PeminjamanController extends Controller
         } catch (\Exception $e) {
             return $this->response($e->getMessage(), true);
         }
+    }
+
+    public function onDownload(Request $request){
+        try {
+            $operation = PeminjamanDetail::join('peminjamen','peminjaman_detail_peminjaman_id','=','peminjamen.peminjaman_id')
+                        ->join('anggotas','peminjamen.anggota_id','=','anggotas.id')
+                        ->select(
+                            'peminjaman_details.peminjaman_detail_peminjaman_id', 
+                            'anggotas.nama_anggota',
+                            'anggotas.no_induk',
+                            )
+                        ->groupBy('peminjaman_details.peminjaman_detail_peminjaman_id', 'anggotas.nama_anggota', 'anggotas.no_induk')
+                        ->get();
+            
+            $operation2 = PeminjamanDetail::
+                        select(
+                            'peminjaman_detail_peminjaman_id', 
+                            'tgl_pinjam',
+                            DB::raw('MAX(tgl_kembali) as tgl_kembali'), 
+                            DB::raw('COUNT(*) AS jumlah_buku'),
+                            // DB::raw('SUM(CASE WHEN status_peminjaman = "2" THEN 1 ELSE 0 END) AS sudah_kembali'),
+                            DB::raw('SUM(CASE WHEN status_peminjaman != "2" THEN 1 ELSE 0 END) AS belum_kembali')
+                            )
+                        ->groupBy('peminjaman_detail_peminjaman_id', 'tgl_pinjam')
+                        ->get();
+
+            // Mengubah hasil query builder menjadi koleksi Laravel
+            $operation = Collection::make($operation);
+            $operation2 = Collection::make($operation2);
+            
+            // Menggabungkan kedua koleksi menjadi satu array
+            $result = $operation->map(function ($item) use ($operation2) {
+                $count = $operation2->firstWhere('peminjaman_detail_peminjaman_id', $item->peminjaman_detail_peminjaman_id);
+                $item->tgl_pinjam = $count->tgl_pinjam;
+                $item->tgl_kembali = $count->tgl_kembali;
+                $item->jumlah_buku = $count->jumlah_buku;
+                $item->status = $count->belum_kembali != 0 ? 'Belum Kembali' : 'Sudah Kembali';
+                return $item;
+            })->toArray();
+
+            $spreadsheet = IOFactory::load($_SERVER['DOCUMENT_ROOT'].'/template_laporan/template_laporan_peminjaman.xlsx');;
+            $sheet = $spreadsheet->getActiveSheet();
+            
+            $sheet->setCellValue('D8', $_GET['tahun']);
+            $sheet->setCellValue('D9', $_GET['bulan']);
+
+            $lastCell = '';
+            for ($i = 0; $i < count($result); $i++){
+                $sheet->setCellValue('B'.($i + 12), $i + 1);
+                $sheet->setCellValue('C'.($i + 12), $result[$i]['nama_anggota']);
+                $sheet->setCellValue('D'.($i + 12), $result[$i]['no_induk']);
+                $sheet->setCellValue('E'.($i + 12), $result[$i]['tgl_pinjam']);
+                $sheet->setCellValue('F'.($i + 12), $result[$i]['tgl_kembali']);
+                $sheet->setCellValue('G'.($i + 12), $result[$i]['jumlah_buku']);
+                $sheet->setCellValue('H'.($i + 12), $result[$i]['status']);
+                $style = $sheet->getStyle('H'.($i + 12));
+                if ($result[$i]['status'] == 'Sudah Kembali'){  
+                    $rgb = 'A9D08E';
+                } else {
+                    $rgb = 'FF4B4B';
+                }
+                $spreadsheet->getActiveSheet()->getStyle('H'.($i + 12))->applyFromArray([
+                    'fill' => [
+                        'fillType' => Fill::FILL_SOLID,
+                        'startColor' => [
+                            'rgb' => $rgb,
+                        ],
+                    ],
+                ]);
+                $lastCell = 'H'.($i + 12);
+            }
+
+            $styleArray = [
+                'font' => [
+                    'bold' => false,
+                    'size' => 10,
+                    'color' => ['rgb' => '3A3838'],
+                ],
+                'alignment' => [
+                    'horizontal' => Alignment::HORIZONTAL_CENTER,
+                ],
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => Border::BORDER_THIN,
+                    ],
+                ]
+            ];
+            
+            $spreadsheet->getActiveSheet()->getStyle('B12:'.$lastCell)->applyFromArray($styleArray);
+
+            $writer = new Xlsx($spreadsheet);
+
+            $folderPath = $_SERVER['DOCUMENT_ROOT'].'/upload_files';
+            if (!is_dir($folderPath)) {
+                mkdir($folderPath);
+            }
+            $fileName = 'Laporan_Peminjaman_'.$_GET['tahun'].'_'.$_GET['bulan'].'_'.time().'.xlsx';
+            $url = $folderPath.'/'.$fileName;
+            $writer->save($url);
+
+            $operation['fileName'] = $fileName;
+            return $this->response($operation);
+        } catch (\Exception $e) {
+            return $this->responseCreate($e->getMessage(),true);
+        }
+        
     }
 
     //     public function form(){
