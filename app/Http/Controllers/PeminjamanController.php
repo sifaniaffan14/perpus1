@@ -10,9 +10,16 @@ use App\Models\Anggota;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\DB;
-
-
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use Illuminate\Support\Collection;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Borders;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Color;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class PeminjamanController extends Controller
 {
@@ -50,6 +57,195 @@ class PeminjamanController extends Controller
             return $this->response($e->getMessage(), true);
         }
     }
+
+    public function onFilter(Request $request)
+    {
+        $where = array();
+        if (isset($_GET['peminjaman_id'])) {
+            $condition = ['peminjaman_id',$_GET['peminjaman_id']];
+            array_push($where,$condition);
+        } 
+        try {
+            if ($_GET['tahun'] != "" && $_GET['bulan'] == "" && $_GET['tanggal'] == ""){
+                $operation = Peminjaman::with('peminjaman_detail.detail_buku.buku')->withCount([
+                                'peminjaman_detail as peminjaman_jumlah',
+                                'peminjaman_detail as peminjaman_sudah_kembali' => function ($query) {
+                                    $query->where('status_peminjaman', '=', '2');
+                                },
+                                'peminjaman_detail as peminjaman_belum_kembali' => function ($query) {
+                                    $query->where('status_peminjaman', '!=', '2');
+                                }
+                            ])->with('anggota')
+                            ->where($where)
+                            ->whereHas('peminjaman_detail', function ($query) {
+                                $query->whereYear('tgl_pinjam', $_GET['tahun']);
+                            })
+                            ->get();
+            } elseif($_GET['tahun'] != "" && $_GET['bulan'] != "" && $_GET['tanggal'] == ""){
+                $operation = Peminjaman::with('peminjaman_detail.detail_buku.buku')->withCount([
+                                'peminjaman_detail as peminjaman_jumlah',
+                                'peminjaman_detail as peminjaman_sudah_kembali' => function ($query) {
+                                    $query->where('status_peminjaman', '=', '2');
+                                },
+                                'peminjaman_detail as peminjaman_belum_kembali' => function ($query) {
+                                    $query->where('status_peminjaman', '!=', '2');
+                                }
+                            ])->with('anggota')
+                            ->where($where)
+                            ->whereHas('peminjaman_detail', function ($query) {
+                                $query->whereYear('tgl_pinjam', $_GET['tahun'])
+                                      ->whereMonth('tgl_pinjam', $_GET['bulan']);
+                            })
+                            ->get();
+            } elseif($_GET['tahun'] != "" && $_GET['bulan'] != "" && $_GET['tanggal'] != ""){
+                $operation = Peminjaman::with('peminjaman_detail.detail_buku.buku')->withCount([
+                                'peminjaman_detail as peminjaman_jumlah',
+                                'peminjaman_detail as peminjaman_sudah_kembali' => function ($query) {
+                                    $query->where('status_peminjaman', '=', '2');
+                                },
+                                'peminjaman_detail as peminjaman_belum_kembali' => function ($query) {
+                                    $query->where('status_peminjaman', '!=', '2');
+                                }
+                            ])->with('anggota')
+                            ->where($where)
+                            ->whereHas('peminjaman_detail', function ($query) {
+                                $query->whereYear('tgl_pinjam', $_GET['tahun'])
+                                      ->whereMonth('tgl_pinjam', $_GET['bulan'])
+                                      ->whereDay('tgl_pinjam', $_GET['tanggal']);
+                            })
+                            ->get();
+            }
+            return $this->response($operation);
+        } catch (\Exception $e) {
+            return $this->response($e->getMessage(), true);
+        }
+    }
+
+    public function onDownload(Request $request){
+        try {
+            $operation = PeminjamanDetail::join('peminjamen','peminjaman_detail_peminjaman_id','=','peminjamen.peminjaman_id')
+                        ->join('anggotas','peminjamen.anggota_id','=','anggotas.id')
+                        ->select(
+                            'peminjaman_details.peminjaman_detail_peminjaman_id', 
+                            'anggotas.nama_anggota',
+                            'anggotas.no_induk',
+                            )
+                        ->whereYear('peminjaman_details.tgl_pinjam', $_GET['tahun'])
+                        ->whereMonth('peminjaman_details.tgl_pinjam', $_GET['bulan'])
+                        ->groupBy('peminjaman_details.peminjaman_detail_peminjaman_id', 'anggotas.nama_anggota', 'anggotas.no_induk')
+                        ->get();
+            
+            $operation2 = PeminjamanDetail::
+                        select(
+                            'peminjaman_detail_peminjaman_id', 
+                            'tgl_pinjam',
+                            DB::raw('MAX(tgl_kembali) as tgl_kembali'), 
+                            DB::raw('COUNT(*) AS jumlah_buku'),
+                            // DB::raw('SUM(CASE WHEN status_peminjaman = "2" THEN 1 ELSE 0 END) AS sudah_kembali'),
+                            DB::raw('SUM(CASE WHEN status_peminjaman != "2" THEN 1 ELSE 0 END) AS belum_kembali')
+                            )
+                        ->whereYear('peminjaman_details.tgl_pinjam', $_GET['tahun'])
+                        ->whereMonth('peminjaman_details.tgl_pinjam', $_GET['bulan'])
+                        ->groupBy('peminjaman_detail_peminjaman_id', 'tgl_pinjam')
+                        ->get();
+
+            // Mengubah hasil query builder menjadi koleksi Laravel
+            $operation = Collection::make($operation);
+            $operation2 = Collection::make($operation2);
+            
+            // Menggabungkan kedua koleksi menjadi satu array
+            $result = $operation->map(function ($item) use ($operation2) {
+                $count = $operation2->firstWhere('peminjaman_detail_peminjaman_id', $item->peminjaman_detail_peminjaman_id);
+                $item->tgl_pinjam = $count->tgl_pinjam;
+                $item->tgl_kembali = $count->tgl_kembali;
+                $item->jumlah_buku = $count->jumlah_buku;
+                $item->status = $count->belum_kembali != 0 ? 'Belum Kembali' : 'Sudah Kembali';
+                return $item;
+            })->toArray();
+
+            $spreadsheet = IOFactory::load($_SERVER['DOCUMENT_ROOT'].'/template_laporan/template_laporan_peminjaman.xlsx');;
+            $sheet = $spreadsheet->getActiveSheet();
+            
+            $daftarBulan = [
+                1 => 'Januari',
+                2 => 'Februari',
+                3 => 'Maret',
+                4 => 'April',
+                5 => 'Mei',
+                6 => 'Juni',
+                7 => 'Juli',
+                8 => 'Agustus',
+                9 => 'September',
+                10 => 'Oktober',
+                11 => 'November',
+                12 => 'Desember'
+            ];
+
+            $sheet->setCellValue('D8', $_GET['tahun']);
+            $sheet->setCellValue('D9', $daftarBulan[$_GET['bulan']]);
+
+            $lastCell = '';
+            for ($i = 0; $i < count($result); $i++){
+                $sheet->setCellValue('B'.($i + 12), $i + 1);
+                $sheet->setCellValue('C'.($i + 12), $result[$i]['nama_anggota']);
+                $sheet->setCellValue('D'.($i + 12), $result[$i]['no_induk']);
+                $sheet->setCellValue('E'.($i + 12), $result[$i]['tgl_pinjam']);
+                $sheet->setCellValue('F'.($i + 12), $result[$i]['tgl_kembali']);
+                $sheet->setCellValue('G'.($i + 12), $result[$i]['jumlah_buku']);
+                $sheet->setCellValue('H'.($i + 12), $result[$i]['status']);
+                $style = $sheet->getStyle('H'.($i + 12));
+                if ($result[$i]['status'] == 'Sudah Kembali'){  
+                    $rgb = 'A9D08E';
+                } else {
+                    $rgb = 'FF4B4B';
+                }
+                $spreadsheet->getActiveSheet()->getStyle('H'.($i + 12))->applyFromArray([
+                    'fill' => [
+                        'fillType' => Fill::FILL_SOLID,
+                        'startColor' => [
+                            'rgb' => $rgb,
+                        ],
+                    ],
+                ]);
+                $lastCell = 'H'.($i + 12);
+            }
+
+            $styleArray = [
+                'font' => [
+                    'bold' => false,
+                    'size' => 10,
+                    'color' => ['rgb' => '3A3838'],
+                ],
+                'alignment' => [
+                    'horizontal' => Alignment::HORIZONTAL_CENTER,
+                ],
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => Border::BORDER_THIN,
+                    ],
+                ]
+            ];
+            
+            $spreadsheet->getActiveSheet()->getStyle('B12:'.$lastCell)->applyFromArray($styleArray);
+
+            $writer = new Xlsx($spreadsheet);
+
+            $folderPath = $_SERVER['DOCUMENT_ROOT'].'/upload_files';
+            if (!is_dir($folderPath)) {
+                mkdir($folderPath);
+            }
+            $fileName = 'Laporan_Peminjaman_'.$_GET['tahun'].'_'.$_GET['bulan'].'_'.time().'.xlsx';
+            $url = $folderPath.'/'.$fileName;
+            $writer->save($url);
+
+            $operation['fileName'] = $fileName;
+            return $this->response($operation);
+        } catch (\Exception $e) {
+            return $this->responseCreate($e->getMessage(),true);
+        }
+        
+    }
+
     //     public function form(){
     //         // $detailbuku=Peminjaman::find(request()->id_buku);
     //         return view('admin.layouts.Peminjaman.peminjamanForm');
@@ -157,7 +353,7 @@ class PeminjamanController extends Controller
         try {
             if (isset($_GET['id'])) {
                 $peminjaman = Peminjaman::where("anggota_id", $_GET['id'])->orderBy("created_at", "asc")->first();
-                // dd($peminjaman);
+
                 $peminjamanDetail = [];
                 if ($peminjaman != null){
                     $peminjaman = $peminjaman->toArray();
@@ -165,7 +361,7 @@ class PeminjamanController extends Controller
                                     ->whereNotIn('status_peminjaman', ['2'])->get()->toArray();
                 }
                 
-                if ($peminjaman != null || $peminjamanDetail != []){
+                if ($peminjamanDetail != []){
                     $operation = $peminjamanDetail;
                 } else {
                     $operation = Anggota::where('id', $_GET['id'])->where('is_active', 1)->get();
@@ -264,5 +460,11 @@ class PeminjamanController extends Controller
         }
 
         return $operation;
+    }
+
+    public function selectDataAnggota(){
+        $operation = Anggota::all();
+
+        return $this->response($operation);
     }
 }

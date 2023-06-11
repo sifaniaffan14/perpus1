@@ -17,6 +17,7 @@ use App\Http\Controllers\ViewController;
 use App\Http\Controllers\DataAnggotaController;
 use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\PengunjungController;
+use App\Http\Controllers\InformasiPentingController;
 use App\Http\Controllers\Anggota\PencarianBukuController;
 use App\Http\Controllers\Anggota\CekPinjamanController;
 use App\Http\Controllers\Anggota\AnggotaPerpanjanganController;
@@ -81,6 +82,13 @@ Route::middleware('protectedPage:1')->group(function () {
         }
     });
 
+    Route::controller(InformasiPentingController::class)->name('informasiPenting.')->prefix('informasiPenting')->group(function () {
+        $route = array('index', 'insert', 'update','select', 'delete');  
+        foreach ($route as $route) {
+            Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+        }
+    });
+
     Route::controller(DetailBukuController::class)->name('detailBuku.')->prefix('detailBuku')->group(function () {
         $route = array('index', 'insert', 'update','select', 'delete');  
         foreach ($route as $route) {
@@ -112,7 +120,7 @@ Route::middleware('protectedPage:1')->group(function () {
     });
 
     Route::controller(PeminjamanController::class)->name('peminjaman.')->prefix('peminjaman')->group(function () {
-        $route = array('index','formPeminjaman', 'insert', 'update','select', 'delete', 'getAnggota','selectAnggota', 'selectEksemplar');  
+        $route = array('index','formPeminjaman', 'insert', 'update','select', 'delete', 'getAnggota','selectAnggota', 'selectEksemplar', 'onFilter', 'onDownload', 'selectDataAnggota');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
@@ -172,7 +180,7 @@ Route::middleware('protectedPage:1')->group(function () {
     //peminjaman end
 
     Route::controller(PengembalianController::class)->name('pengembalian.')->prefix('pengembalian')->group(function () {
-        $route = array('index', 'update','select','select_eksemplar');  
+        $route = array('index', 'update','select','select_eksemplar', 'selectDataAnggota');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
@@ -194,7 +202,7 @@ Route::middleware('protectedPage:2')->group(function () {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
     });
-    Route::controller(AnggotaPerpanjanganController::class)->name('perpanjangan.')->prefix('perpanjangan')->group(function () {
+    Route::controller(AnggotaPerpanjanganController::class)->name('perpanjanganBuku.')->prefix('perpanjanganBuku')->group(function () {
         $route = array('index');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);

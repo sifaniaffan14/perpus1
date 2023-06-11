@@ -10,6 +10,7 @@
     var list_table = 'list_table'
     var foto = false;
     var url = '';
+    var tabelUser = null;
     
     var urlPath ={
         insert: "{{ route('user.insert') }}",
@@ -87,9 +88,16 @@
         }); 
     }
 
+    $(document).ready(function() {
+        $('#tableUser tbody').on('click', 'tr', function() {
+            var data = tabelUser.row(this).data();
+            onEdit(data.Id)
+        });
+    });
+
     function inittable(){
         $(document).ready(function() {
-            var dataTable = $('#tableUser').DataTable( {
+            tabelUser = $('#tableUser').DataTable( {
                 "ajax": {
                     "url": urlPath.select,
                     "type": "GET",
@@ -100,9 +108,9 @@
                 },
                 "columns": [
                     { "data": "No" },
+                    { "data": "Id", visible: false },
                     { "data": "Username" },
                     { "data": "Role" },
-                    { "data": "Detail"}
                 ]
             } );
             
@@ -111,9 +119,9 @@
                 $.each(response.data, function( k, v ){
                     var row = {
                         "No": k + 1,
+                        "Id" : v.id,
                         "Username": v.username,
                         "Role": v.nama_role,
-                        "Detail": `<button onclick=onEdit('${v.id}') class="btn btn-primary btn-detail p-1 ps-2" name="btn-detail" id="btn-detail"><i class="bi bi-arrow-right fs-2"></i></button>`
                     };
                     data.push(row);
                 })
@@ -122,7 +130,7 @@
 
             function searchFunction() {
                 const input = document.getElementById("search_village").value;        
-                dataTable.search(input).draw();
+                tabelUser.search(input).draw();
             }
 
             document.getElementById("search_village").addEventListener("input", searchFunction);

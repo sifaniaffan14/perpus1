@@ -5,7 +5,8 @@
 <div>
     <div class="main_data row gy-5 g-xl-8">
         <div class="col-12">
-            <div class="data-card card pb-6 mb-5 mb-xl-8">
+            <div class="data-card card pb-6 mb-5 mb-xl-8" style="box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;">
                 <div class="card-header">
                     <h2 class="text-dark-gray fw-bolder fs-3 d-flex align-items-center gap-5 mb-0">
                         <span class="material-icons" style="color:#264A8A"> text_snippet </span> Data Buku

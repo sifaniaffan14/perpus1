@@ -1,20 +1,20 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> --}}
-<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script> 
+<script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script> 
 
 <script>
-    var table = 'tableRole'
-    var form = 'formRole'
+    var table = 'tabelInformasi'
+    var form = 'formInformasi'
     var list_table = 'list_table'
-    var tabelRole = null;
+    var tabelInformasi = null;
     
     var urlPath ={
-        insert: "{{ route('role.insert') }}",
-        update: "{{ route('role.update') }}",
-        select: "{{ route('role.select') }}",
-        delete: "{{ route('role.delete') }}",
+        insert: "{{ route('informasiPenting.insert') }}",
+        update: "{{ route('informasiPenting.update') }}",
+        select: "{{ route('informasiPenting.select') }}",
+        delete: "{{ route('informasiPenting.delete') }}",
     }
     inittable()
 
@@ -28,7 +28,7 @@
         })
         .then((response) => {
             if (response) {
-                const formElement = $('#formRole')[0];
+                const formElement = $('#formInformasi')[0];
                 const form = new FormData(formElement);
 
                 urlSave = $('[name=id]').val()  == ''? urlPath.insert:urlPath.update;
@@ -52,16 +52,30 @@
     }
 
     $(document).ready(function() {
-        $('#tableRole tbody').on('click', 'tr', function() {
-            var data = tabelRole.row(this).data();
-            onEdit(data.Id)
+        $('#tabelInformasi tbody').on('click', 'tr', function() {
+            var data = tabelInformasi.row(this).data();
+            $.ajax({
+                url: urlPath.select,
+                type: 'GET',
+                data: {
+                    id: data.Id
+                },
+                success: function(response){
+                    if(response.status == true){
+                        DisplayEdit();
+                        $.each( response.data[0], function( k, v ){
+                            $('[name='+k+']').val(v)
+                        });
+                    } 
+                }
+            })
         });
     });
 
     function inittable(){
-        $('#tableRole').DataTable().destroy();
+        $('#tabelInformasi').DataTable().destroy();
         $(document).ready(function() {
-            tabelRole = $('#tableRole').DataTable( {
+            tabelInformasi = $('#tabelInformasi').DataTable( {
                 "ajax": {
                     "url": urlPath.select,
                     "type": "GET",
@@ -73,7 +87,8 @@
                 "columns": [
                     { "data": "No" },
                     { "data": "Id", visible: false },
-                    { "data": "Nama Role" },
+                    { "data": "Isi" },
+                    { "data": "Tanggal" },
                 ]
             } );
             
@@ -83,7 +98,8 @@
                     var row = {
                         "No": k + 1,
                         "Id" : v.id,
-                        "Nama Role": v.nama_role,
+                        "Isi": v.isi_informasi,
+                        "Tanggal": moment(v.tgl_informasi).format('DD/MM/YYYY'),
                     };
                     data.push(row);
                 })
@@ -92,29 +108,11 @@
 
             function searchFunction() {
                 const input = document.getElementById("search_village").value;        
-                tabelRole.search(input).draw();
+                tabelInformasi.search(input).draw();
             }
 
             document.getElementById("search_village").addEventListener("input", searchFunction);
         } );      
-    }
-
-    function onEdit(id){
-        $.ajax({
-            url: urlPath.select,
-            type: 'GET',
-            data: {
-                id: id
-            },
-            success: function(response){
-                if(response.status == true){
-                    DisplayEdit();
-                    $.each( response.data[0], function( k, v ){
-                        $('[name='+k+']').val(v)
-                    });
-                } 
-            }
-        })
     }
 
     function onDelete(id){
@@ -137,7 +135,6 @@
                     success: function(response){
                         if(response.status == true){
                             swal("Success !", response.message, "success");
-                            // onRefresh()
                             reloadPage()
                         } else{
                             swal("Warning", response.message, "warning");
@@ -151,13 +148,13 @@
     DisplayEdit = () => {
 		$('.actEdit').removeClass('d-none');
         $('.actCreate').addClass('d-none');
-        $(`#${form} input`).attr('disabled', 'disabled')
+        $(`#${form} textarea`).attr('disabled', 'disabled')
 	}
 
     onDisplayEdit = () => {
 		$('.actEdit').addClass('d-none');
         $('.actCreate').removeClass('d-none');
-        $(`#${form} input`).removeAttr('disabled', 'disabled')
+        $(`#${form} textarea`).removeAttr('disabled', 'disabled')
 
 	}
 

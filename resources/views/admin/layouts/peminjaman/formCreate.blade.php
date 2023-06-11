@@ -5,7 +5,8 @@
 <div>
     <div class="row gy-5 g-xl-8">
         <div class="col-12">
-            <div class="data-card card pb-6 mb-5 mb-xl-8">
+            <div class="data-card card pb-6 mb-5 mb-xl-8" style="box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;">
                 <form action="javascript:onSave()" name="formPeminjaman" id="formPeminjaman">
                     <div class="card-header pb-5">
                         <h2 class="text-dark-gray fw-bolder fs-3 d-flex align-items-center gap-5 mb-0">
@@ -38,12 +39,40 @@
                         </div>
                         <div
                             style="border-bottom: 1px solid #eff2f5">
-                            <div class="gap-5 mb-3 align-items-lg-center w-100">
-                                <label for="anggota_id" class="fs-4 fw-bolder">No. Induk</label>
-                                <div class="position-relative w-lg-25">
-                                    <select name="anggota_id" id="anggota_id" style="width: 100%">
+                            <div class="gap-5 mb-3 align-items-lg-center w-100 mt-3">
+                                <label for="select_anggota_id" class="fs-4 fw-bolder">No. Induk</label>
+                                <div class="position-relative w-lg-25" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    <select id="select_anggota_id" style="width: 100%" disabled>
                                         <option value="#" selected disabled>Silahkan Pilih No. Induk</option>
                                     </select>
+                                    <input type="hidden" name="anggota_id" id="anggota_id" value="">
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade modalAnggota" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                        <div class="modal-body">
+                                            <div class="position-relative">
+                                                <input type="search" name="search_anggota" id="search_anggota"
+                                                    placeholder="Ketik untuk mencari" class="py-3 ps-12 pe-5 fs-6 w-100"
+                                                    style="background-color: #fafafa;border-radius: 6px; border-width:1.5px" />
+                                                <span class="material-icons position-absolute top-50 translate-middle-y text-light-gray"
+                                                    style="left: 10px"> search </span>
+                                            </div>
+                                            <table class="table" id="tabelAnggota" style="cursor:pointer">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="fw-bolder" style="max-width: 37px"> No </th>
+                                                        <th class="fw-bolder d-none">Id</th>
+                                                        <th class="fw-bolder">No. Induk</th>
+                                                        <th class="fw-bolder">Nama</th>
+                                                        <th class="fw-bolder">Jenis Anggota</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="text-content mx-auto" id="identitas_peminjam">

@@ -13,6 +13,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.0",
+        "phpoffice/phpspreadsheet": "dev-master",
         "picqer/php-barcode-generator": "^2.2"
     },
     "require-dev": {
