@@ -40,7 +40,6 @@
                     type: 'POST',
                     success: function(response){
                         if(response.status == true){
-                            inittable()
                             swal("Success !", response.message, "success");
                             onRefresh()
                         } else{
