@@ -85,7 +85,7 @@
 								</a>
 								<!--end:Menu item-->
 								<!--begin:Menu item-->
-								<a href="{{route('perpanjangan.index')}}" class="menu-item py-3 here show menu-accordion">
+								<a href="{{route('perpanjanganBuku.index')}}" class="menu-item py-3 here show menu-accordion">
 									<!--begin:Menu link-->
 									<span class="menu-link">
 										<span class="menu-icon">

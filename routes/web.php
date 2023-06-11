@@ -202,10 +202,10 @@ Route::middleware('protectedPage:2')->group(function () {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
     });
-    // Route::controller(AnggotaPerpanjanganController::class)->name('perpanjangan.')->prefix('perpanjangan')->group(function () {
-    //     $route = array('index');  
-    //     foreach ($route as $route) {
-    //         Route::any($route=='index'?'':'/'.$route, $route)->name($route);
-    //     }
-    // });
+    Route::controller(AnggotaPerpanjanganController::class)->name('perpanjanganBuku.')->prefix('perpanjanganBuku')->group(function () {
+        $route = array('index');  
+        foreach ($route as $route) {
+            Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+        }
+    });
 });
