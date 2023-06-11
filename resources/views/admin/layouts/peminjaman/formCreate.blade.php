@@ -39,7 +39,7 @@
                         </div>
                         <div
                             style="border-bottom: 1px solid #eff2f5">
-                            <div class="gap-5 mb-3 align-items-lg-center w-100">
+                            <div class="gap-5 mb-3 align-items-lg-center w-100 mt-3">
                                 <label for="select_anggota_id" class="fs-4 fw-bolder">No. Induk</label>
                                 <div class="position-relative w-lg-25" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                     <select id="select_anggota_id" style="width: 100%" disabled>
@@ -59,7 +59,7 @@
                                                 <span class="material-icons position-absolute top-50 translate-middle-y text-light-gray"
                                                     style="left: 10px"> search </span>
                                             </div>
-                                            <table class="table" id="tabelAnggota">
+                                            <table class="table" id="tabelAnggota" style="cursor:pointer">
                                                 <thead>
                                                     <tr>
                                                         <th class="fw-bolder" style="max-width: 37px"> No </th>

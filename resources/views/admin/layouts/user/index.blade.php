@@ -32,13 +32,13 @@
             </div>
             <div class="card-body py-0">
                 <div class="table-responsive">
-                <table class="table" id="tableUser">
+                <table class="table table-striped" style="cursor:pointer" id="tableUser">
                     <thead>
                         <tr>
                             <th class="fw-bolder" style="width: 10%">No </th>
+                            <th class="fw-bolder d-none">Id</th>
                             <th class="fw-bolder" style="width: 30%">Username</th>
                             <th class="fw-bolder" style="width: 30%">Role</th>
-                            <th class="fw-bolder" style="width: 15%">Detail</th>
                         </tr>
                     </thead>
                     <tbody></tbody>

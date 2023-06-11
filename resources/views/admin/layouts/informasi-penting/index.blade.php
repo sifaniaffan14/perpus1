@@ -32,7 +32,7 @@
             </div>
             <div class="card-body py-0">
                 <div class="table-responsive">
-                <table class="table table-striped" id="tabelInformasi">
+                <table class="table table-striped" style="cursor:pointer" id="tabelInformasi">
                     <thead>
                         <tr>
                             <th class="fw-bolder" style="width: 10%">No</th>
