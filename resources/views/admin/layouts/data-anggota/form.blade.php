@@ -1,6 +1,7 @@
 <div class="form_data row gy-5 g-xl-8 d-none">
     <div class="col-12">
-        <div class="card pb-6 mb-5 mb-xl-8">
+        <div class="card pb-6 mb-5 mb-xl-8" style="box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;">
             <div class="card-header border-0 d-flex align-items-center justify-content-between position-sticky top-0 bg-white" style="z-index: 99;">
                 <h2 class="text-dark-gray fw-bolder fs-3 d-flex align-items-center gap-5 mb-0 actCreate actCreate1">Tambah Anggota</h2>
                 <h2 class="text-dark-gray fw-bolder fs-3 d-flex align-items-center gap-5 mb-0 d-none actEdit actEdit1">Edit Anggota</h2>
