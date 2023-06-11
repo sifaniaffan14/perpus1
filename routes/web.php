@@ -17,6 +17,7 @@ use App\Http\Controllers\ViewController;
 use App\Http\Controllers\DataAnggotaController;
 use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\PengunjungController;
+use App\Http\Controllers\InformasiPentingController;
 use App\Http\Controllers\Anggota\PencarianBukuController;
 use App\Http\Controllers\Anggota\CekPinjamanController;
 use App\Http\Controllers\Anggota\AnggotaPerpanjanganController;
@@ -75,6 +76,13 @@ Route::middleware('protectedPage:1')->group(function () {
     });
 
     Route::controller(KategoriBukuController::class)->name('kategoriBuku.')->prefix('kategoriBuku')->group(function () {
+        $route = array('index', 'insert', 'update','select', 'delete');  
+        foreach ($route as $route) {
+            Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+        }
+    });
+
+    Route::controller(InformasiPentingController::class)->name('informasiPenting.')->prefix('informasiPenting')->group(function () {
         $route = array('index', 'insert', 'update','select', 'delete');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
