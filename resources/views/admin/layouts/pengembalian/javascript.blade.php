@@ -91,6 +91,11 @@
     }
 
     function onClear(){
+        $('.text-header').addClass('d-none');
+        $('.header-eksemplar').addClass('d-none');
+        $('.card-eksemplar').addClass('d-none');
+        document.getElementById("identitas_peminjam").innerHTML = "";
+        $('#listTable').html('');
         var options = '<option value="#" selected disabled>Silahkan Pilih No. Induk</option>';
         $("#select_anggota_id").html(options);
     }
