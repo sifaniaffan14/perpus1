@@ -172,7 +172,7 @@ Route::middleware('protectedPage:1')->group(function () {
     //peminjaman end
 
     Route::controller(PengembalianController::class)->name('pengembalian.')->prefix('pengembalian')->group(function () {
-        $route = array('index', 'update','select','select_eksemplar');  
+        $route = array('index', 'update','select','select_eksemplar', 'selectDataAnggota');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DetailBuku;
 use App\Models\Peminjaman;
 use App\Models\PeminjamanDetail;
+use App\Models\Anggota;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -70,5 +71,11 @@ class PengembalianController extends Controller
         } catch (\Exception $e) {
             return $this->responseUpdate($e->getMessage(), true);
         }
+    }
+
+    public function selectDataAnggota(){
+        $operation = Anggota::all();
+
+        return $this->response($operation);
     }
 }
