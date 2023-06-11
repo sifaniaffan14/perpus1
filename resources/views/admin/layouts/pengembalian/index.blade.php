@@ -4,7 +4,8 @@
 <div>
     <div class="row gy-5 g-xl-8">
         <div class="col-12">
-            <div class="data-card card pb-6 mb-5 mb-xl-8">
+            <div class="data-card card pb-6 mb-5 mb-xl-8" style="box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;">
                 <div class="card-body p-0">
                     <div class="card-header">
                         <h2 class="text-dark-gray fw-bolder fs-3 d-flex align-items-center gap-5 mb-0">
@@ -70,7 +71,7 @@
                         <div class="header-eksemplar d-none" style="padding:4vh; padding-bottom:2vh;">
                             <h2 style="text-align: center; font-weight:bold;">Data Buku</h2>
                         </div>
-                        <div class="card-body py-0 d-none">
+                        <div class="card-body card-eksemplar py-0 d-none">
                             <div class="row mb-2">
                                 <label class="fs-6 mb-2" for="kode_eksemplar">Kode Eksemplar</label>
                                 <input type="text" class="form-control w-25" id="kode_eksemplar"
