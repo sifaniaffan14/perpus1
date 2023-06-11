@@ -353,7 +353,7 @@ class PeminjamanController extends Controller
         try {
             if (isset($_GET['id'])) {
                 $peminjaman = Peminjaman::where("anggota_id", $_GET['id'])->orderBy("created_at", "asc")->first();
-                // dd($peminjaman);
+
                 $peminjamanDetail = [];
                 if ($peminjaman != null){
                     $peminjaman = $peminjaman->toArray();
@@ -361,7 +361,7 @@ class PeminjamanController extends Controller
                                     ->whereNotIn('status_peminjaman', ['2'])->get()->toArray();
                 }
                 
-                if ($peminjaman != null || $peminjamanDetail != []){
+                if ($peminjamanDetail != []){
                     $operation = $peminjamanDetail;
                 } else {
                     $operation = Anggota::where('id', $_GET['id'])->where('is_active', 1)->get();

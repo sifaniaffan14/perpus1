@@ -15,6 +15,7 @@
     var list_table = 'list_table'
     var val_select = null;
     var currentTime = new Date();
+    var tabelAnggota = null;
 
     var urlPath = {
         insert: "{{ route('peminjaman.insert') }}",
@@ -27,8 +28,10 @@
         detailPeminjaman: "{{ route('detailPeminjaman.select') }}",
         onFilter: "{{ route('peminjaman.onFilter') }}",
         onDownload: "{{ route('peminjaman.onDownload') }}",
+        selectDataAnggota: "{{ route('peminjaman.selectDataAnggota') }}",
     }
     inittable()
+    initTabelAnggota()
     loadData()
     selectTahun()
 
@@ -57,9 +60,60 @@
         })
     })
 
-    // $(document).ready(function () {
-    //     $('#anggota_id').select2();
-    // });
+    $(document).ready(function() {
+        $('#tabelAnggota tbody').on('click', 'tr', function() {
+            var data = tabelAnggota.row(this).data();
+            $('.modalAnggota').modal('hide');
+            selectAnggota(data.Id);
+        });
+    });
+    
+    function initTabelAnggota() {  
+        $(document).ready(function() {
+            tabelAnggota = $('#tabelAnggota').DataTable( {
+                "ajax": {
+                    "url": urlPath.selectDataAnggota,
+                    "type": "GET",
+                    "dataSrc": function (response) {
+                        var data = processData(response);
+                        return data;
+                    }
+                },
+                "columns": [
+                    { "data": "No" },
+                    { "data": "Id", visible: false },
+                    { "data": "No Induk" },
+                    { "data": "Nama" },
+                    { "data": "Jenis Anggota" }
+                ]
+            } );
+            
+            function processData(response) {
+                var data = [];
+                var num = 0;
+                $.each(response.data, function( k, v ){
+
+                    num++;
+                    var row = {
+                        "No": num,
+                        "Id" : v.id,
+                        "No Induk": v.no_induk,
+                        "Nama": v.nama_anggota,
+                        "Jenis Anggota": v.jenis_anggota,
+                    };
+                    data.push(row);
+                })
+                return data;
+            }
+
+            function searchFunction() {
+                const input = document.getElementById("search_anggota").value;        
+                tabelAnggota.search(input).draw();
+            }
+
+            document.getElementById("search_anggota").addEventListener("input", searchFunction);
+        } );   
+    }
 
     function inittable() {  
         $(document).ready(function() {
@@ -482,51 +536,57 @@
     // });
 
     $(document).ready(function () {
-        $('#anggota_id').select2({
+        $('#select_anggota_id').select2({
             placeholder: 'Select an option',
         });
-        $('#anggota_id').change(function() {
-            var selectedOptionValue = $(this).val();
-            $.ajax({
-                url: urlPath.selectAnggota,
-                type: 'GET',
-                data: {
-                    id:selectedOptionValue
-                },
-                success: function(response){
-                if(response.status == true){
-                    if (response.data[0]['peminjaman_detail_id']){
-                        swal("Warning !", "Anggota memiliki tanggungan peminjaman!", "warning");
-                        $("#anggota_id").val(val_select).trigger('change.select2');
-                    } else {
-                        val_select = selectedOptionValue;
-                        document.getElementById("identitas_peminjam").innerHTML = "";
-                        $.each(response.data[0], function( k, v ){
-                            if (k == 'nama_anggota'){
-                                $(`#identitas_peminjam`).append(`
-                                <div class="d-flex mt-5">
-                                    <p class="m-0 fs-5 fw-bolder" style="width:105px">Nama</p>
-                                    <p class="m-0 fs-5 fw-bolder">&nbsp;:&nbsp;${v}</p>
-                                </div>
-                                `)
-                            }
-                            if (k == 'jenis_anggota'){
-                                $(`#identitas_peminjam`).append(`
-                                <div class="d-flex mt-2 mb-5">
-                                    <p class="m-0 fs-5 fw-bolder">Jenis Anggota </p>
-                                    <p class="m-0 fs-5 fw-bolder">&nbsp;:&nbsp;${v}</p>
-                                </div>
-                                `)
-                            }
-                            // $('#'+k+"_detail").html(v)
-                        });
-                    }
-                } 
-            }
-            })
-        });
+        // $('#anggota_id').change(function() {
+        //     var selectedOptionValue = $(this).val();
+        //     selectAnggota(selectedOptionValue);
+        // });
     });
 
+    function selectAnggota(id){
+        $.ajax({
+            url: urlPath.selectAnggota,
+            type: 'GET',
+            data: {
+                id:id
+            },
+            success: function(response){
+            if(response.status == true){
+                if (response.data[0]['peminjaman_detail_id']){
+                    swal("Warning !", "Anggota memiliki tanggungan peminjaman!", "warning");
+                } else {
+                    document.getElementById("identitas_peminjam").innerHTML = "";
+                    $.each(response.data[0], function( k, v ){
+                        if (k == 'nama_anggota'){
+                            $(`#identitas_peminjam`).append(`
+                            <div class="d-flex mt-5">
+                                <p class="m-0 fs-5 fw-bolder" style="width:105px">Nama</p>
+                                <p class="m-0 fs-5 fw-bolder">&nbsp;:&nbsp;${v}</p>
+                            </div>
+                            `)
+                        }
+                        if (k == 'jenis_anggota'){
+                            $(`#identitas_peminjam`).append(`
+                            <div class="d-flex mt-2 mb-5">
+                                <p class="m-0 fs-5 fw-bolder">Jenis Anggota </p>
+                                <p class="m-0 fs-5 fw-bolder">&nbsp;:&nbsp;${v}</p>
+                            </div>
+                            `)
+                        }
+                        // $('#'+k+"_detail").html(v)
+                    });
+                    var options = '<option value="#" selected disabled>Silahkan Pilih No. Induk</option>';
+                    options += "<option value='" + response.data[0].id + "'>" + response.data[0].no_induk + "</option>";
+                    $("#select_anggota_id").html(options);
+                    document.getElementById('select_anggota_id').selectedIndex = 1;
+                    $('#anggota_id').val(response.data[0].id);
+                }
+            } 
+        }
+        })
+    }
 
     function loadData() {
         $.ajax({
@@ -539,8 +599,8 @@
                         $.each(response.data, function(index, value) {
                             options += "<option value='" + value.id + "'>" + value.no_induk + "</option>";
                         });
-                        $("#anggota_id").append(options);
-                        var get = $("#anggota_id option:selected").val()
+                        // $("#anggota_id").append(options);
+                        // var get = $("#anggota_id option:selected").val()
                     }
             },
         });
@@ -608,37 +668,41 @@
 
     function onSave(){
         // event.preventDefault()
-        swal({
-            title: "Peringatan",
-            text: "Apakah Anda Yakin Untuk Menyimpan Data?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((response) => {
-            if (response) {
-                const formElement = $('#formPeminjaman')[0];
-                const form = new FormData(formElement);
+        if (document.getElementById('tablePinjaman').rows.length == 1){
+            swal("Warning", "Masih belum ada buku yang dipinjam!", "warning");
+        } else {
+            swal({
+                title: "Peringatan",
+                text: "Apakah Anda Yakin Untuk Menyimpan Data?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((response) => {
+                if (response) {
+                    const formElement = $('#formPeminjaman')[0];
+                    const form = new FormData(formElement);
 
-                // urlSave = $('[name=peminjaman_id]').val()  == ''? urlPath.insert:urlPath.update;
-                $.ajax({
-                    url: urlPath.insert,
-                    data: form,
-                    contentType: false,
-                    processData: false,
-                    type: 'POST',
-                    success: function(response){
-                        if(response.status == true){
-                            onRefresh()
-                            onClear()
-                            swal("Success !", response.message, "success");
-                        } else{
-                            swal("Warning", response.message, "warning");
+                    // urlSave = $('[name=peminjaman_id]').val()  == ''? urlPath.insert:urlPath.update;
+                    $.ajax({
+                        url: urlPath.insert,
+                        data: form,
+                        contentType: false,
+                        processData: false,
+                        type: 'POST',
+                        success: function(response){
+                            if(response.status == true){
+                                onRefresh()
+                                onClear()
+                                swal("Success !", response.message, "success");
+                            } else{
+                                swal("Warning", response.message, "warning");
+                            }
                         }
-                    }
-                })
-            }
-        }); 
+                    })
+                }
+            }); 
+        }
     }
 
     function onUpdate(){
@@ -677,8 +741,9 @@
         $("#list_pinjaman").html('')
         $("#nama_anggota_detail").html('')
         $("#jenis_anggota_detail").html('')
-        $('#anggota_id').val(null).trigger('change.select2');
         $(`#identitas_peminjam`).html('')
+        var options = '<option value="#" selected disabled>Silahkan Pilih No. Induk</option>';
+        $("#select_anggota_id").html(options);
     }
 
     function selectTahun(){
