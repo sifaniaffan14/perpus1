@@ -32,10 +32,11 @@
             </div>
             <div class="card-body py-0">
                 <div class="table-responsive">
-                <table class="table table-striped" id="tableKategori">
+                <table class="table table-striped" style="cursor:pointer" id="tableKategori">
                     <thead>
                         <tr>
                             <th class="fw-bolder" style="width: 5%">No </th>
+                            <th class="fw-bolder d-none">Id</th>
                             <th class="fw-bolder" style="width: 30%">Kode Kategori </th>
                             <th class="fw-bolder" style="width: 30%">Nama Kategori</th>
                         </tr>
