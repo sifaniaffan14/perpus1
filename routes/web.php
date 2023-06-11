@@ -112,7 +112,7 @@ Route::middleware('protectedPage:1')->group(function () {
     });
 
     Route::controller(PeminjamanController::class)->name('peminjaman.')->prefix('peminjaman')->group(function () {
-        $route = array('index','formPeminjaman', 'insert', 'update','select', 'delete', 'getAnggota','selectAnggota', 'selectEksemplar', 'onFilter', 'onDownload');  
+        $route = array('index','formPeminjaman', 'insert', 'update','select', 'delete', 'getAnggota','selectAnggota', 'selectEksemplar', 'onFilter', 'onDownload', 'selectDataAnggota');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }

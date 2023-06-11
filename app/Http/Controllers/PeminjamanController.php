@@ -130,6 +130,8 @@ class PeminjamanController extends Controller
                             'anggotas.nama_anggota',
                             'anggotas.no_induk',
                             )
+                        ->whereYear('peminjaman_details.tgl_pinjam', $_GET['tahun'])
+                        ->whereMonth('peminjaman_details.tgl_pinjam', $_GET['bulan'])
                         ->groupBy('peminjaman_details.peminjaman_detail_peminjaman_id', 'anggotas.nama_anggota', 'anggotas.no_induk')
                         ->get();
             
@@ -142,6 +144,8 @@ class PeminjamanController extends Controller
                             // DB::raw('SUM(CASE WHEN status_peminjaman = "2" THEN 1 ELSE 0 END) AS sudah_kembali'),
                             DB::raw('SUM(CASE WHEN status_peminjaman != "2" THEN 1 ELSE 0 END) AS belum_kembali')
                             )
+                        ->whereYear('peminjaman_details.tgl_pinjam', $_GET['tahun'])
+                        ->whereMonth('peminjaman_details.tgl_pinjam', $_GET['bulan'])
                         ->groupBy('peminjaman_detail_peminjaman_id', 'tgl_pinjam')
                         ->get();
 
@@ -162,8 +166,23 @@ class PeminjamanController extends Controller
             $spreadsheet = IOFactory::load($_SERVER['DOCUMENT_ROOT'].'/template_laporan/template_laporan_peminjaman.xlsx');;
             $sheet = $spreadsheet->getActiveSheet();
             
+            $daftarBulan = [
+                1 => 'Januari',
+                2 => 'Februari',
+                3 => 'Maret',
+                4 => 'April',
+                5 => 'Mei',
+                6 => 'Juni',
+                7 => 'Juli',
+                8 => 'Agustus',
+                9 => 'September',
+                10 => 'Oktober',
+                11 => 'November',
+                12 => 'Desember'
+            ];
+
             $sheet->setCellValue('D8', $_GET['tahun']);
-            $sheet->setCellValue('D9', $_GET['bulan']);
+            $sheet->setCellValue('D9', $daftarBulan[$_GET['bulan']]);
 
             $lastCell = '';
             for ($i = 0; $i < count($result); $i++){
@@ -441,5 +460,11 @@ class PeminjamanController extends Controller
         }
 
         return $operation;
+    }
+
+    public function selectDataAnggota(){
+        $operation = Anggota::all();
+
+        return $this->response($operation);
     }
 }
