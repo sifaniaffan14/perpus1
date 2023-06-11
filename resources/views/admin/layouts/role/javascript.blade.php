@@ -1,13 +1,14 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> --}}
-{{-- <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script> --}}
-{{-- <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script> --}}
+<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
 
 <script>
     var table = 'tableRole'
     var form = 'formRole'
     var list_table = 'list_table'
+    var tabelRole = null;
     
     var urlPath ={
         insert: "{{ route('role.insert') }}",
@@ -15,10 +16,6 @@
         select: "{{ route('role.select') }}",
         delete: "{{ route('role.delete') }}",
     }
-    $(document).ready(function () {
-		$(`#${table}`).DataTable();
-		$(`#${list_table}`).DataTable();
-	});
     inittable()
 
     function onSave(){
@@ -43,7 +40,6 @@
                     type: 'POST',
                     success: function(response){
                         if(response.status == true){
-                            inittable()
                             swal("Success !", response.message, "success");
                             onRefresh()
                         } else{
@@ -55,24 +51,52 @@
         }); 
     }
 
+    $(document).ready(function() {
+        $('#tableRole tbody').on('click', 'tr', function() {
+            var data = tabelRole.row(this).data();
+            onEdit(data.Id)
+        });
+    });
+
     function inittable(){
-        $.ajax({
-                    url: urlPath.select,
-                    type: 'GET',
-                    success: function(response){
-                        if(response.status == true){
-                            $('#list_table').html('')
-                            $.each(response.data, function( k, v ){
-                                $('#list_table').append(`
-                                    <tr onclick=onEdit('${v.id}') style="cursor:pointer">
-                                        <td>${k+1}</td>
-                                        <td>${v.nama_role}</td>
-                                    </tr>
-                                `)
-                            });
-                        } 
+        $('#tableRole').DataTable().destroy();
+        $(document).ready(function() {
+            tabelRole = $('#tableRole').DataTable( {
+                "ajax": {
+                    "url": urlPath.select,
+                    "type": "GET",
+                    "dataSrc": function (response) {
+                        var data = processData(response);
+                        return data;
                     }
-        })
+                },
+                "columns": [
+                    { "data": "No" },
+                    { "data": "Id", visible: false },
+                    { "data": "Nama Role" },
+                ]
+            } );
+            
+            function processData(response) {
+                var data = [];
+                $.each(response.data, function( k, v ){
+                    var row = {
+                        "No": k + 1,
+                        "Id" : v.id,
+                        "Nama Role": v.nama_role,
+                    };
+                    data.push(row);
+                })
+                return data;
+            }
+
+            function searchFunction() {
+                const input = document.getElementById("search_village").value;        
+                tabelRole.search(input).draw();
+            }
+
+            document.getElementById("search_village").addEventListener("input", searchFunction);
+        } );      
     }
 
     function onEdit(id){
