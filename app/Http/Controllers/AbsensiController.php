@@ -8,6 +8,7 @@ use App\Models\AbsenPengunjung;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
+use Carbon\Carbon;
 
 class AbsensiController extends Controller
 {
@@ -33,8 +34,8 @@ class AbsensiController extends Controller
                 $operation['message'] = "Anggota tidak ditemukan!";
                 return $this->response($operation);
             }
-            date_default_timezone_set('Asia/Jakarta');
-            $date = date('Y-m-d');
+            $date = Carbon::now('Asia/Jakarta');
+            // $waktu = $date->format('H:i');
             $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, Str::random());
             $uuid1 = md5($uuid->toString());
             $add = AbsenPengunjung::create([

@@ -66,8 +66,8 @@
                         "No": k + 1,
                         "No Induk": v.no_induk,
                         "Nama": v.nama_anggota,
-                        "Tanggal": v.waktu,
-                        "Jam": v.created_at.substring(10,16)
+                        "Tanggal": v.waktu.substring(0,10),
+                        "Jam": v.waktu.substring(10,16)
                     };
                     data.push(row);
                 })
