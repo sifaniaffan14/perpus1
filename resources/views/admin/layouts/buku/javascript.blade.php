@@ -161,7 +161,7 @@
                         "Nama Buku": v.judul,
                         "Penerbit": v.penerbit,
                         "Kategori": v.nama_kategori,
-                        "Detail": `<button onclick=onDetail('${v.id}') class="btn btn-primary btn-detail p-1 ps-2" name="btn-detail" id="btn-detail"><i class="bi bi-arrow-right fs-2"></i></button>`
+                        "Detail": `<span onclick=onDetail('${v.id}') name="btn-detail" id="btn-detail" class="btn p-1 ps-2 material-icons" style="color: rgb(38, 74, 138);"> description</span>`
                     };
                     data.push(row);
                 })
