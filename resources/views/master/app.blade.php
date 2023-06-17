@@ -1,5 +1,6 @@
 {{-- <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,6 +17,7 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
+
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -37,35 +39,34 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
+                        @if (Route::has('login'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        @endif
 
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
+                        @if (Route::has('register'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li>
+                        @endif
                         @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
                         @endguest
                     </ul>
                 </div>
@@ -77,6 +78,7 @@
         </main>
     </div>
 </body>
+
 </html> --}}
 
 <!DOCTYPE html>
@@ -90,10 +92,13 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/pencarian.css">
+    <link rel="stylesheet" href="assets/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css" >
+    <link rel="stylesheet" href="assets/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css" >
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery.js"></script>
+    <script src="assets/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
     <title>Perpustakaan SMP Al-Falah Ketintang Surabaya</title>
 </head>
 
@@ -102,7 +107,7 @@
         <div class="container-fluid px-5">
             <img src="images/logo.svg" class="logo__navbar" alt="">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse pe-5" id="navbarNav">
@@ -111,11 +116,11 @@
                         <p class="nav-link active m-0" onclick="onDisplayLanding()" style="cursor:pointer;" aria-current="page">Beranda</p>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" onclick="showCategory2()" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                             Tentang Kami
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" id="about_us">
                             <li><a class="dropdown-item" href="#">Action</a></li>
                             <li><a class="dropdown-item" href="#">Another action</a></li>
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
@@ -124,10 +129,24 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Koleksi Terbaru</a>
                     </li>
+                    @if (Auth::check())
+                        @if (Auth::user()->isAdmin(Auth::id()))
+                        <li class="nav-item">
+                            <a href="{{ route('admin-dashboard') }}"
+                            class="nav-link btn btn-sm btn-warning rounded-pill border-0 btn__login" style="width: 110px;">Dashboard</a>
+                        </li>
+                        @else
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard') }}"
+                            class="nav-link btn btn-sm btn-warning rounded-pill border-0 btn__login" style="width: 110px;">Dashboard</a>
+                        </li>
+                        @endif
+                    @else
                     <li class="nav-item">
                         <a href="{{ route('login') }}"
-                            class="nav-link btn btn-sm btn-warning rounded-pill border-0 btn__login">Login</a>
+                        class="nav-link btn btn-sm btn-warning rounded-pill border-0 btn__login" style="width: 100px;">Login</a>
                     </li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -142,19 +161,18 @@
                 <div class="col-12">
                     <form onsubmit="onSearch(event)" method="POST" autocomplete="off" id="formSearch">
                         @csrf
-                        <div class="d-flex justify-content-center" style="height:7.5vh">
+                        <div class="d-flex justify-content-center" style="height:7.8vh">
                             <div class="dropdown category__">
-                                <button class="btn btn-light rounded-pill dropdown-toggle h-100 fw-semibold" onclick="showCategory()" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false" style="width:140px; color:#202F4E">
+                                <button class="btn btn-light rounded-pill dropdown-toggle h-100 fw-semibold" onclick="showCategory()" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="width:140px; color:#202F4E">
                                     Category
                                 </button>
                                 <ul class="dropdown-menu" id="category" aria-labelledby="dropdownCategory">
                                 </ul>
                             </div>
-                            <input type="text" class="form-control rounded-pill search__input" name="val_search" id="val_search" 
-                                placeholder="Ketik satu atau lebih kata kunci berupa Judul, Pengarang atau Subyek"/>
-                            <button type="submit" class="btn btn-warning btn__search text-white rounded-pill">
-                                <i class="bi bi-search fs-4"></i>
+                            <input type="text" class="form-control form-control-lg rounded-pill search__input w-100" name="val_search" id="val_search" style="padding-left: 5vh;"
+                            placeholder="Ketik satu atau lebih kata kunci berupa Judul, Pengarang atau Subyek" />
+                            <button class="btn btn-lg btn-warning btn__search text-white rounded-circle">
+                                <i class="bi bi-search"></i>
                             </button>
                         </div>
                     </form>
@@ -163,29 +181,45 @@
         </section>
         <section id="gallery" class="container-fluid gallery shadow-sm">
             <div class="row">
-                <div class="col-12">
-                    <h4 class="fw-bold text-center p-2" style="color: #202F4E;">Koleksi Terbaru</h4>
-                    <div class="w-100" style="max-height: 20vh;">
-                        <!-- Set up your HTML -->
-                        <div class="prevnext">
-                            <button class="prev"><i class="bi bi-chevron-left"></i></button>
-                            <button class="next"><i class="bi bi-chevron-right"></i></button>
-                        </div>
-                        <div class="swiper mySwiper">
-                            <div class="swiper-wrapper" id="bebas">
-                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
-                                <div class="swiper-slide"><a href=""><img src="assets/media/book.svg" alt=""></a></div>
+                <div class="col-12 position-relative">
+                    <h3 class="fw-bold text-center p-2 mb-4" style="color: #202F4E;">Koleksi Terbaru</h3>
+                    <!-- Set up your HTML -->
+                    <div class="container__carousel">
+                        <div class="owl-carousel owl-theme">
+                            <div class="item">
+                                <a href="">
+                                    <img src="assets/media/book.svg" class="book__" alt="" />
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a href="">
+                                    <img src="assets/media/book.svg" class="book__" alt="" />
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a href="">
+                                    <img src="assets/media/book.svg" class="book__" alt="" />
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a href="">
+                                    <img src="assets/media/book.svg" class="book__" alt="" />
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a href="">
+                                    <img src="assets/media/book.svg" class="book__" alt="" />
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a href="">
+                                    <img src="assets/media/book.svg" class="book__" alt="" />
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a href="">
+                                    <img src="assets/media/book.svg" class="book__" alt="" />
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -197,43 +231,21 @@
         <section id="search__bar" class="container-fluid">
             <div class="row">
                 <div class="col-lg-7 col-12 d-flex align-items-center gap-3 my-5">
-                    <label class="w-75 ps-lg-5 d-flex align-items-center">
-                        <i class="bi bi-search position-absolute text-warning fs-5" style="margin-left: 16px"></i>
-                        <input type="text" id="search2" class="form-control rounded-pill ps-5 px-4" placeholder="Cari buku disini..."/>
+                    <label class="w-75 ps-lg-5">
+                        <input type="text" class="form-control rounded-pill px-4" id="search2" placeholder="Search"/>
                     </label>
-                    <button onclick="onSearch2()" class="btn btn-warning rounded-pill text-white button__ fw-semibold" style="width:14vh">Search</button>
-                    <button onclick="onReset()" class="btn btn-danger rounded-pill text-white button__ fw-semibold" style="width:14vh">Clear</button>
+                    <button onclick="onSearch2()" class="btn btn-warning rounded-pill text-white button__ fw-semibold">Search</button>
+                    <button onclick="onReset()" class="btn btn-warning rounded-pill text-white button__ fw-semibold">Clear</button>
                 </div>
             </div>
         </section>
         <section id="search__result" class="container-fluid search__result rounded rounded-top rounded-3 overflow-auto">
             <div class="row">
-                <div class="col-12 ms-4 ps-5 p-4">
+                <div class="col-12 p-4">
                     <h3 class="fw-bold text__custom">Hasil Pencarian</h3>
                 </div>
             </div>
-            <div class="row d-flex justify-content-center align-items-top gap-3 h-75 mx-auto">
-                <div class="d-flex align-items-top flex-wrap gap-5" style="width:90%" id="result_buku">
-                </div>
-                <div class="col-12 d-flex justify-content-end mt-4 pe-5">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <p class="page-link bg-transparent text-dark fw-semibold border-0" onclick="previousPage()" style="cursor:pointer;"
-                                aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </p>
-                            </li>
-                            <div class="d-flex" id="num_pagination">
-                            </div>
-                            <li class="page-item">
-                                <p class="page-link bg-transparent text-dark fw-semibold border-0" onclick="nextPage()" style="cursor:pointer;" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </p>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+            <div class="row d-flex justify-content-center align-items-top gap-3 h-75 w-100" id="result_buku">
             </div>
         </section>
     </div>
@@ -296,14 +308,14 @@
                     <div class="mt-4 table__detail">
                         <table class="table table-bordered table-sm mw-100" style="width:90%">
                             <thead class="bg__custom text-dark">
-                            <tr>
-                                <td>No.</td>
-                                <td>Kode Eksemplar</td>
-                                <td>Status</td>
-                                <td>Kondisi</td>
-                                <td>Tanggal Pinjam</td>
-                                <td>Tanggal Kembali</td>
-                            </tr>
+                                <tr>
+                                    <td>No.</td>
+                                    <td>Kode Eksemplar</td>
+                                    <td>Status</td>
+                                    <td>Kondisi</td>
+                                    <td>Tanggal Pinjam</td>
+                                    <td>Tanggal Kembali</td>
+                                </tr>
                             </thead>
                             <tbody id="list_table">
 
@@ -316,8 +328,9 @@
         </section>
     </div>
     <footer>
-        <h6 class="text-white text-center">Copyright 2022 © SMP Al Falah Ketintang Surabaya</h6>
+        <h6 class="text-white text-center">Copyright 2023 © SMP Al Falah Ketintang Surabaya</h6>
     </footer>
 </body>
 @include('master.javascript')
+
 </html>

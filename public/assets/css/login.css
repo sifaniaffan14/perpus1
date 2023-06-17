@@ -28,13 +28,28 @@ a {
 
 .submit {
     background-color: #202F4E;
-    justify-content: center;
-    align-items: center;
 }
 
 .icon__ {
     aspect-ratio: 1/1 !important;
     border-radius: 100%;
+}
+
+.username__login,
+.password__login {
+    padding-left: 40px;
+}
+
+.icon__ {
+    top: 50%;
+    left: 0;
+    transform: translate(8px, -45%);
+}
+
+.see__pass {
+    right: 0%;
+    top: 50%;
+    transform: translate(-10px, -45%);
 }
 
 footer {
@@ -51,6 +66,7 @@ footer {
     .card__form {
         width: 90%;
     }
+
     footer {
         font-size: small;
     }
