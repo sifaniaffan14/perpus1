@@ -165,7 +165,18 @@
                         var num = 0;
                         $('#listTable').html('');
                         $.each(data.peminjaman_detail, function( k, v ){
-                            let peminjaman_status = (v.status_peminjaman==1?`<span class="badge bg-danger">Belum Kembali</span>`:`<span class="badge bg-success">Sudah Kembali</span>`)
+                            let peminjaman_status = '';
+                            if (v.status_peminjaman == 1){
+                                peminjaman_status = '<span class="badge bg-danger">Belum Kembali</span>';
+                            } else if (v.status_peminjaman == 2){
+                                peminjaman_status = '<span class="badge bg-success">Sudah Kembali</span>';
+                            } else if (v.status_peminjaman == 3){
+                                peminjaman_status = '<span class="badge bg-warning">Proses Perpanjangan</span>';
+                            } else if (v.status_peminjaman == 4){
+                                peminjaman_status = '<span class="badge bg-warning">Diperpanjang</span>';
+                            } else if (v.status_peminjaman == 5){
+                                peminjaman_status = '<span class="badge bg-danger">Ditolak Perpanjangan</span>';
+                            }
                             var eksemplar_id = v.detail_buku.eksemplar_id;
                             let no_panggil = v.detail_buku.no_panggil;
                             let judul = v.detail_buku.buku.judul;
