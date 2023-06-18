@@ -67,7 +67,8 @@
                                         <th class="fw-bolder text-center">Judul Buku</th>
                                         <th class="fw-bolder text-center">Tgl Pinjam</th>
                                         <th class="fw-bolder text-center tglKembali">Tgl Kembali(Baru)</th>
-                                        <th class="fw-bolder text-center">Status</th>
+                                        <th class="fw-bolder text-center status">Status</th>
+                                        <th class="fw-bolder text-center alasan">Alasan Perpanjangan</th>
                                         <th class="fw-bolder text-center action">Action</th>
                                     </tr>
                                 </thead>
@@ -76,6 +77,25 @@
                         </div>
                     </div>
                 </form>
+            </div>
+            <!-- modal -->
+            <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content w-auto mx-auto">
+                    <div class="modal-header border-bottom-3 border-secondary">
+                        <h3 class="modal-title" id="staticBackdropLabel">Alasan Perpanjangan</h3>
+                    </div>
+                    <div class="modal-body">
+                        <textarea rows="8" cols="40" name="alasan" id="alasan" class="border-0 py-4 px-5 fs-5" style="
+                                    background-color: #EFF2F5;
+                                    border-radius: 6px;
+                                " disabled ></textarea>
+                    </div>
+                    <div class="pt-0 modal-footer">
+                        <button type="button" class="btn text-light" style="background-color:#264A8A" data-bs-dismiss="modal">Kembali</button>
+                    </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

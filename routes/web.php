@@ -141,7 +141,7 @@ Route::middleware('protectedPage:1')->group(function () {
     });
 
     Route::controller(PerpanjanganController::class)->name('perpanjangan.')->prefix('perpanjangan')->group(function () {
-        $route = array('index', 'select', 'selectDetail', 'submitPerpanjangan', 'update', 'reset');  
+        $route = array('index', 'select', 'selectDetail', 'update');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }

@@ -98,6 +98,7 @@ class PerpanjanganController extends Controller
                                 'peminjaman_details.status_peminjaman',
                                 'peminjaman_details.tgl_pinjam',
                                 'peminjaman_details.tgl_kembali',
+                                'peminjaman_details.alasan_perpanjangan',
                                 'detail_bukus.no_panggil',
                                 'bukus.judul'
                             )
@@ -121,6 +122,7 @@ class PerpanjanganController extends Controller
                                 'detail_bukus.no_panggil',
                                 'bukus.judul'
                             )
+                            // ->orderBy('peminjaman_details.tgl_kembali', 'asc')
                             ->get();
             }
                             
@@ -130,44 +132,24 @@ class PerpanjanganController extends Controller
         }
     }
 
-    public function submitPerpanjangan(){
-        try {
-            PeminjamanDetail::where('peminjaman_detail_id',$_POST['id'])->update([
-                'status_peminjaman' => '3'
-            ]);
-
-            $operation['success'] = true;
-            return $this->response($operation);
-        } catch (\Exception $e) {
-            return $this->response($e->getMessage(), true);
-        }
-    }
-
     public function update(){
         try {
-            $peminjamanDetail = PeminjamanDetail::where('peminjaman_detail_peminjaman_id',$_POST['id'])->get()->toArray();
-            $tgl_baru = date('Y-m-d', strtotime($peminjamanDetail[0]['tgl_kembali'] . ' + 5 days'));
-
-            PeminjamanDetail::where('peminjaman_detail_peminjaman_id',$_POST['id'])->where('status_peminjaman','3')->update([
-                'status_peminjaman' => '4', 'tgl_kembali' => $tgl_baru
-            ]);
-
-            PeminjamanDetail::where('peminjaman_detail_peminjaman_id',$_POST['id'])->where('status_peminjaman','1')->update([
-                'status_peminjaman' => '5'
-            ]);
-
-            $operation['success'] = true;
-            return $this->response($operation);
-        } catch (\Exception $e) {
-            return $this->response($e->getMessage(), true);
-        }
-    }
-
-    public function reset(){
-        try {
-            PeminjamanDetail::where('peminjaman_detail_peminjaman_id',$_POST['id'])->where('status_peminjaman','3')->update([
-                'status_peminjaman' => '1'
-            ]);
+            if ($_POST['dataSubmit'] != ''){
+                foreach ($_POST['dataSubmit'] as $id){
+                    $peminjamanDetail = PeminjamanDetail::where('peminjaman_detail_id',$id)->get()->toArray();
+                    $tgl_baru = date('Y-m-d', strtotime($peminjamanDetail[0]['tgl_kembali'] . ' + 5 days'));
+                    PeminjamanDetail::where('peminjaman_detail_id',$id)->where('status_peminjaman','3')->update([
+                        'status_peminjaman' => '4', 'tgl_kembali' => $tgl_baru
+                    ]);
+                }
+            }  
+            if ($_POST['dataReject'] != ''){
+                foreach ($_POST['dataReject'] as $id){
+                    PeminjamanDetail::where('peminjaman_detail_id',$id)->where('status_peminjaman','3')->update([
+                        'status_peminjaman' => '5'
+                    ]);
+                }
+            }  
 
             $operation['success'] = true;
             return $this->response($operation);
@@ -175,4 +157,5 @@ class PerpanjanganController extends Controller
             return $this->response($e->getMessage(), true);
         }
     }
+
 }

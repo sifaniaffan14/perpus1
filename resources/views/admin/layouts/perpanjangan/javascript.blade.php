@@ -14,12 +14,12 @@
     var urlPath ={
         select: "{{ route('perpanjangan.select') }}",
         selectDetail: "{{ route('perpanjangan.selectDetail') }}",
-        submitPerpanjangan: "{{ route('perpanjangan.submitPerpanjangan') }}",
         update: "{{ route('perpanjangan.update') }}",
-        reset: "{{ route('perpanjangan.reset') }}",
     }
     var idPeminjaman = '';
     var table = 'table_belumverif';
+    var dataReject = [];
+    var dataSubmit = [];
     inittable('belum_verif');
 
     function changeTab(name){
@@ -57,7 +57,6 @@
                         name:name
                     },
                     "dataSrc": function (response) {
-                        console.log(response)
                         var data = processData(response);
                         return data;
                     }
@@ -115,7 +114,6 @@
         } else {
             name = 'belum_verif'
         }
-        console.log('id peminjaman',id);
         $.ajax({
             url: urlPath.selectDetail,
             type: 'GET',
@@ -124,31 +122,39 @@
                 name: name
             },
             success: function(response){
-                console.log(response);
                 if (idPeminjaman == ''){
                     onDisplayDetail();
-                    $('#no_induk').append(response.data[0]['no_induk']);
-                    $('#jenis_anggota').append(response.data[0]['jenis_anggota'].charAt(0).toUpperCase() + response.data[0]['jenis_anggota'].slice(1));
-                    $('#tgl_pinjam').append(moment(response.data[0]['tgl_pinjam']).format('DD/MM/YYYY'));
-                    $('#tgl_kembali').append(moment(response.data[0]['tgl_kembali']).format('DD/MM/YYYY'));
+
+                    //mencari tgl kembali paling lama
+                    var peminjaman = null;
+                    var tanggalTerlama = null;
+
+                    for (var i = 0; i < response.data.length; i++) {
+                        var tanggalKembali = new Date(response.data[i].tgl_kembali);
+
+                        if (tanggalTerlama === null || tanggalKembali > tanggalTerlama) {
+                        tanggalTerlama = tanggalKembali;
+                        peminjaman = response.data[i];
+                        }
+                    }
+
+                    $('#no_induk').append(peminjaman['no_induk']);
+                    $('#jenis_anggota').append(peminjaman['jenis_anggota'].charAt(0).toUpperCase() + peminjaman['jenis_anggota'].slice(1));
+                    $('#tgl_pinjam').append(moment(peminjaman['tgl_pinjam']).format('DD/MM/YYYY'));
+                    $('#tgl_kembali').append(moment(peminjaman['tgl_kembali']).format('DD/MM/YYYY'));
                 }
 
+                $('#list_perpanjangan').html('')
                 if (name == 'belum_verif'){
                     $('.belum_verif').removeClass('d-none')
                     $('.verif').addClass('d-none')
+                    $('.status').addClass('d-none')
                     $('.action').removeClass('d-none')
+                    $('.alasan').removeClass('d-none')
                     $('.tglKembali').html('Tgl Kembali(Baru)')
-                } else {
-                    $('.belum_verif').addClass('d-none')
-                    $('.verif').removeClass('d-none')
-                    $('.action').addClass('d-none')
-                    $('.tglKembali').html('Tgl Kembali')
-                }
-                $('#list_perpanjangan').html('')
-                $.each(response.data, function( k, v ){
-                    if (name == 'belum_verif'){
-                        tgl_kembali = `<td class="text-center">${moment(v.tgl_kembali).add(5, 'days').format('DD/MM/YYYY')}</td>`;
-                        if (v.status_peminjaman == '1'){
+
+                    $.each(response.data, function( k, v ){
+                        if (v.status_peminjaman == '3'){
                             button = `<td class="text-center" id="${v.peminjaman_detail_id}">
                                         <button type="button" onclick="onReject('${v.peminjaman_detail_id}')" class="btn btn-danger btn-detail p-2 ps-3" name="btn-detail" id="btn-detail"><i class="bi bi bi-x-lg fs-2"></i></button>
                                         <button type="button" onclick="onSubmit('${v.peminjaman_detail_id}')" class="btn btn-success btn-detail p-2 ps-3 ms-1" name="btn-detail" id="btn-detail"><i class="bi bi-check-lg fs-2"></i></button>
@@ -158,33 +164,63 @@
                                         <p class="text-success">Proses Perpanjangan</p>
                                     </td>` 
                         }
-                    } else {
-                        tgl_kembali = `<td class="text-center">${v.tgl_kembali}</td>`;
-                        button = '';
-                    }
-                    var status = '';
-                    if (v.status_peminjaman == 5){
-                        status = `<span class="badge bg-danger">Tidak diperpanjang</span>`; 
-                    }
-                    if (v.status_peminjaman == 4){
-                        status = `<span class="badge bg-success">Diperpanjang</span>`; 
-                    }
-                    $('#list_perpanjangan').append(`
-                        <tr>
-                            <td class="text-center">${k+1}</td>
-                            <td class="text-center">${v.no_panggil}</td>
-                            <td class="text-center">${v.judul}</td>
-                            <td class="text-center">${moment(v.tgl_pinjam).format('DD/MM/YYYY')}</td>
-                            ${tgl_kembali}
-                            <td class="text-center">${status}</td>
-                            ${button}                            
-                        </tr>
-                    `)
-                });
+                        $('#list_perpanjangan').append(`
+                            <tr>
+                                <td class="text-center">${k+1}</td>
+                                <td class="text-center">${v.no_panggil}</td>
+                                <td class="text-center">${v.judul}</td>
+                                <td class="text-center">${moment(v.tgl_pinjam).format('DD/MM/YYYY')}</td>
+                                <td class="text-center">${moment(v.tgl_kembali).add(5, 'days').format('DD/MM/YYYY')}</td>
+                                <td class="text-center"> 
+                                    <p class="text-dark text-decoration-underline" onclick="onModal('${v.alasan_perpanjangan}')" style="cursor:pointer">Lihat</p>
+                                </td>
+                                ${button}             
+                            </tr>
+                        `)
+                    });
+                } else {
+                    $('.status').removeClass('d-none')
+                    $('.belum_verif').addClass('d-none')
+                    $('.verif').removeClass('d-none')
+                    $('.action').addClass('d-none')
+                    $('.alasan').addClass('d-none')
+                    $('.tglKembali').html('Tgl Kembali')
+
+                    $.each(response.data, function( k, v ){
+                        var status = '';
+                        if (v.status_peminjaman == 5){
+                            status = `<span class="badge bg-danger">Tidak diperpanjang</span>`; 
+                        }
+                        if (v.status_peminjaman == 4){
+                            status = `<span class="badge bg-success">Diperpanjang</span>`; 
+                        }
+                        
+                        $('#list_perpanjangan').append(`
+                            <tr>
+                                <td class="text-center">${k+1}</td>
+                                <td class="text-center">${v.no_panggil}</td>
+                                <td class="text-center">${v.judul}</td>
+                                <td class="text-center">${moment(v.tgl_pinjam).format('DD/MM/YYYY')}</td>
+                                <td class="text-center">${moment(v.tgl_kembali).format('DD/MM/YYYY')}</td>
+                                <td class="text-center">${status}</td>               
+                            </tr>
+                        `)
+                    }); 
+                }
             
                 idPeminjaman = response.data[0]['peminjaman_id'];
             }
         })
+    }
+
+    function onModal(alasan){
+        var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+        myModal.show();
+        if (alasan == 'null'){
+            $('#alasan').val('');
+        } else {
+            $('#alasan').val(alasan);
+        }
     }
 
     function onReject(id){
@@ -197,6 +233,7 @@
         })
         .then((response) => {
             if (response) {
+                dataReject.push(id);
                 $('#'+id).html('<p class="text-danger">Tidak Diperpanjang</p>');
             }
         }); 
@@ -212,68 +249,53 @@
         })
         .then((response) => {
             if (response) {
-                $.ajax({
-                    url: urlPath.submitPerpanjangan,
-                    data: {
-                        id: id
-                    },
-                    type: 'POST',
-                    success: function(response){
-                        if(response.status == true){
-                            $('#'+id).html('<p class="text-success">Proses Perpanjangan</p>');
-                        }
-                    }
-                })
+                dataSubmit.push(id);
+                $('#'+id).html('<p class="text-success">Proses Perpanjangan</p>');
             }
         }); 
     }
     
     function onSave(){
-        swal({
-            title: "Peringatan",
-            text: "Apakah Anda Yakin Untuk Menyimpan Data?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((response) => {
-            if (response) {
-                $.ajax({
-                    url: urlPath.update,
-                    data: {
-                        id: idPeminjaman
-                    },
-                    type: 'POST',
-                    success: function(response){
-                        if(response.status == true){
-                            swal("Success !", response.message, "success");
-                            onDisplayMain()
-                            $('#table_belumverif').DataTable().destroy();
-                            inittable('belum_verif');
-                        } else{
-                            swal("Warning", response.message, "warning");
+        if (dataSubmit.length == 0 && dataReject.length == 0){
+            swal("Warning", 'Masih belum ada buku yang dipilih!', "warning");
+        } else {
+            swal({
+                title: "Peringatan",
+                text: "Apakah Anda Yakin Untuk Menyimpan Data?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((response) => {
+                if (response) {
+                    $.ajax({
+                        url: urlPath.update,
+                        data: {
+                            id: idPeminjaman,
+                            dataSubmit: dataSubmit.length != 0 ? dataSubmit : '',
+                            dataReject: dataReject.length != 0 ? dataReject : ''
+                        },
+                        type: 'POST',
+                        success: function(response){
+                            if(response.status == true){
+                                swal("Success !", response.message, "success");
+                                onDisplayMain()
+                                $('#table_belumverif').DataTable().destroy();
+                                inittable('belum_verif');
+                            } else{
+                                swal("Warning", response.message, "warning");
+                            }
                         }
-                    }
-                })
-            }
-        }); 
+                    })
+                }
+            }); 
+        }
     }
 
     function onClear(){
-        $.ajax({
-            url: urlPath.reset,
-            data: {
-                id: idPeminjaman
-            },
-            type: 'POST',
-            success: function(response){
-                if(response.status == true){
-                    onDisplayMain()
-                } else{
-                    swal("Warning", response.message, "warning");
-                }
-            }
-        })
+        dataReject = [];
+        dataSubmit = [];
+        onDisplayMain()
     }
 
     function onDisplayDetail(){
