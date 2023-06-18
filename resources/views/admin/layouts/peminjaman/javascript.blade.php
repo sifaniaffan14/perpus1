@@ -143,7 +143,6 @@
                 $.each(response.data, function( k, v ){
                     let jsonString = JSON.stringify(v);
                     let encode = btoa(jsonString)
-                    // console.log(encode)
 
                     num++;
                     let peminjaman_status = (v.peminjaman_jumlah==v.peminjaman_sudah_kembali?`<span class="badge bg-success">Sudah Kembali</span>`:`<span class="badge bg-danger">Belum Kembali</span>`)

@@ -234,8 +234,6 @@
 
         // var id = $("#kategori_id").val(id);
         // var nama = $("#kategori_nama").val(nama);
-        console.log(id)
-        console.log(nama)
     }
 
     function saveBuku() {

@@ -92,7 +92,6 @@
         event.preventDefault()
         const formElement = $('#formSearch')[0];
         const form = new FormData(formElement);
-        console.log('form', formElement);
         if (window.location.hash != '') {
             form.append('kategori_id', window.location.hash.replace('#', ""))
         } else {
@@ -273,7 +272,6 @@
     }
 
     function switchPage(i) {
-        console.log('switchPage',i)
         onSearchResults(i)
     }
 
