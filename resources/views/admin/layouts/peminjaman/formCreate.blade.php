@@ -48,9 +48,9 @@
                                     <input type="hidden" name="anggota_id" id="anggota_id" value="">
                                 </div>
                                 <!-- Modal -->
-                                <div class="modal fade modalAnggota" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal fade modalAnggota" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                        <div class="modal-content">
+                                        <div class="modal-content p-5">
                                         <div class="modal-body">
                                             <div class="position-relative">
                                                 <input type="search" name="search_anggota" id="search_anggota"

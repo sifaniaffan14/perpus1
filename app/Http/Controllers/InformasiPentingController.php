@@ -18,9 +18,9 @@ class InformasiPentingController extends Controller
     public function select(){
         try {
             if(isset($_GET['id'])){
-                $operation = InformasiPenting::where('id',$_GET['id'])->where('is_active',1)->get();
+                $operation = InformasiPenting::where('id',$_GET['id'])->get();
             } else{ 
-                $operation = InformasiPenting::where('is_active',1)->get();
+                $operation = InformasiPenting::all();
             }
             return $this->response($operation);
         } catch (\Exception $e) {
@@ -37,8 +37,7 @@ class InformasiPentingController extends Controller
             $data = $request->post();
             $operation = InformasiPenting::create([
                 'isi_informasi' => $data['isi_informasi'],
-                'tgl_informasi' => date('Y-m-d'),
-                'is_active' => 1
+                'tgl_informasi' => date('Y-m-d')
             ]);
             return $this->responseCreate($operation);
         } catch (\Exception $e) {
@@ -64,8 +63,7 @@ class InformasiPentingController extends Controller
         
         try {            
             $data = $request->all();
-            $data['is_active'] = 0;
-            $operation = InformasiPenting::find($data['id'])->update($data);
+            $operation = InformasiPenting::find($data['id'])->delete();
 
             return $this->responseDelete($operation);
         } catch (\Exception $e) {

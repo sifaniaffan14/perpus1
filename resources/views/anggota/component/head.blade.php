@@ -27,4 +27,6 @@
 	<link href="assets-anggota/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 	<link href="assets-anggota/css/style.bundle.css" rel="stylesheet" type="text/css" />
 	<!--end::Global Stylesheets Bundle-->
+	<!-- Material Icon -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
 </head>

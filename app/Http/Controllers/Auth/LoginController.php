@@ -40,10 +40,10 @@ class LoginController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-            if ($user && $user->isAdmin(Auth::id())) {
-                return redirect('/dashboard'); 
+            if ($user->isAdmin(Auth::id())) {
+                return redirect('/admin-dashboard'); 
             } else {
-                return redirect('/'); 
+                return redirect('/dashboard'); 
             }
         }
         return view('auth.login');
@@ -77,7 +77,9 @@ class LoginController extends Controller
                 return redirect()->route('admin-dashboard');
             }
         }else{
-            return "gagal";
+            return back()->withErrors([
+                'login' => 'Username or password invalid!',
+            ]);
         }
           
     }

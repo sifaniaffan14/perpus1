@@ -45,7 +45,6 @@
                     "url": urlPath.select,
                     "type": "GET",
                     "dataSrc": function (response) {
-                        console.log(response)
                         var data = processData(response);
                         return data;
                     }

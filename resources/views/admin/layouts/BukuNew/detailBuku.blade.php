@@ -273,7 +273,6 @@
                         },
                         dataType: 'json',
                         success: function(res) {
-                            console.log(res)
                             Swal.fire({
                                 title: 'success',
                                 text: 'Data Telah Dihapus',
@@ -362,7 +361,6 @@
     }
 
     function editEksemplar(id, KodeBuku, status, kondisi, buku_id) {
-        console.log(id)
         showModal()
         $('#exampleModalLabel').html('Edit Eksemplar Buku')
         $("#Eksmplar_id").val(id);
@@ -384,7 +382,6 @@
                 buku_id: buku_id,
             },
             success: function(res) {
-                console.log(res)
                 $('#isiTable').empty()
                 $.each(res.listEksemplar, function(key, value) {
                     $('#isiTable').append(`<tr>
@@ -410,7 +407,6 @@
             type: "GET",
             url: "{{ url('listEksemplar') }}" + '/' + buku_id,
             success: function(res) {
-                console.log(res)
             }
         });
     }

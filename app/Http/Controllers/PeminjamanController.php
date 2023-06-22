@@ -241,7 +241,7 @@ class PeminjamanController extends Controller
             $operation['fileName'] = $fileName;
             return $this->response($operation);
         } catch (\Exception $e) {
-            return $this->responseCreate($e->getMessage(),true);
+            return $this->responseCreate('Data yang dipilih kosong!',true);
         }
         
     }
