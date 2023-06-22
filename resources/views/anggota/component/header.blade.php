@@ -1,7 +1,7 @@
 <div id="kt_app_header" class="app-header">
 				<!--begin::Header container-->
 				<div class="app-container container-fluid d-flex align-items-stretch h-200px"
-					style="background-image: url('assets-anggota/media/logos/background1.png');"
+					style="background-image: url('assets-anggota/media/logos/background1.png'); background-repeat: no-repeat; background-size: cover"
 					id="kt_app_header_container">
 					<!--begin::sidebar mobile toggle-->
 					<div class="d-flex align-items-start mt-4 d-lg-none ms-n2 me-2" title="Show sidebar menu">
