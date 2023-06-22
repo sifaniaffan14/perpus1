@@ -44,7 +44,7 @@
                                 <!--begin::Stats-->
                                 <div class="m-0">
                                     <!--begin::Number-->
-                                    <span class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">37</span>
+                                    <span id="getBuku" class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1"></span>
                                     <!--end::Number-->
                                     <!--begin::Desc-->
                                     <span class="text-gray-500 fw-semibold fs-6">Buku</span>
@@ -76,7 +76,7 @@
                                 <!--begin::Stats-->
                                 <div class="m-0">
                                     <!--begin::Number-->
-                                    <span class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">6</span>
+                                    <span id="getPeminjaman" class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1"></span>
                                     <!--end::Number-->
                                     <!--begin::Desc-->
                                     <span class="text-gray-500 fw-semibold fs-6">Buku Dipinjam</span>
@@ -108,7 +108,7 @@
                                 <!--begin::Stats-->
                                 <div class="m-0">
                                     <!--begin::Number-->
-                                    <span class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">4,7</span>
+                                    <span id="getAbsen" class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1"></span>
                                     <!--end::Number-->
                                     <!--begin::Desc-->
                                     <span class="text-gray-500 fw-semibold fs-6">Pengunjung</span>
@@ -142,7 +142,7 @@
                                 <!--begin::Stats-->
                                 <div class="m-0">
                                     <!--begin::Number-->
-                                    <span class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">822</span>
+                                    <span id="getAnggota" class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1"></span>
                                     <!--end::Number-->
                                     <!--begin::Desc-->
                                     <span class="text-gray-500 fw-semibold fs-6">Anggota Perpustakaan</span>
@@ -561,4 +561,8 @@
 </div>
 <!--end::Row-->
 
+@endsection
+
+@section('js')
+@include('admin.layouts.dashboard.javascript')
 @endsection

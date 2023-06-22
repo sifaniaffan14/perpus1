@@ -62,6 +62,13 @@ Route::middleware('protectedPage:1')->group(function () {
     // Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
     Route::get('/admin-dashboard',[DashboardController::class, 'admin'])->name('admin-dashboard');
 
+    Route::controller(DashboardController::class)->name('admin-dashboard.')->prefix('admin-dashboard')->group(function () {
+        $route = array('selectData');  
+        foreach ($route as $route) {
+            Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+        }
+    });
+
     Route::controller(BukuController::class)->name('buku.')->prefix('buku')->group(function () {
         $route = array('index', 'insert', 'update','select', 'delete', 'getData');  
         foreach ($route as $route) {
