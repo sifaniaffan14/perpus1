@@ -60,13 +60,6 @@ Auth::routes();
 Route::middleware('protectedPage:1')->group(function () {
     // Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
     Route::get('/admin-dashboard',[DashboardController::class, 'admin'])->name('admin-dashboard');
-    
-    Route::get('/bukumanagement',[App\Http\Controllers\BukuController::class, 'list'])->name('bukumanagement');
-    Route::get('/bukuForm',[App\Http\Controllers\BukuController::class, 'form'])->name('buku.form');
-    Route::post('/bukuForm',[App\Http\Controllers\BukuController::class, 'formEdit'])->name('buku.formedit');
-    Route::post('/bukuAdd',[App\Http\Controllers\BukuController::class, 'add'])->name('buku.add');
-    Route::post("deleteBuku/{id}",[App\Http\Controllers\BukuController::class, 'delete'])->name('buku.delete');
-    Route::post('/editBuku/{id}', [App\Http\Controllers\BukuController::class, 'update']);
 
     Route::controller(BukuController::class)->name('buku.')->prefix('buku')->group(function () {
         $route = array('index', 'insert', 'update','select', 'delete', 'getData');  

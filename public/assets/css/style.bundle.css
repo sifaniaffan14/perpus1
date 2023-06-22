@@ -32216,14 +32216,14 @@ fieldset:disabled .btn {
     --kt-gray-900-rgb: 24, 28, 50;
     --kt-white: #ffffff;
     --kt-light: #f5f8fa;
-    --kt-primary: #009ef7;
+    --kt-primary: #264A8A;
     --kt-secondary: #E4E6EF;
     --kt-success: #50cd89;
     --kt-info: #7239ea;
     --kt-warning: #ffc700;
     --kt-danger: #f1416c;
     --kt-dark: #181C32;
-    --kt-primary-active: #0095e8;
+    --kt-primary-active: #0e2c62;
     --kt-secondary-active: #B5B5C3;
     --kt-light-active: #eff2f5;
     --kt-success-active: #47be7d;
@@ -34009,8 +34009,21 @@ html:not([data-theme=dark]) .theme-light-bg-body {
     margin-left: 1rem
 }
 
+.app-sidebar .app-sidebar-wrapper .menu-column .menu-link.active{
+    transition:color .2s ease;
+    background-color:#0e2c62
+}
 .menu-sub-indention .menu-item .menu-item .menu-link.active {
-    margin-right: 1rem
+    margin-right: 1rem;
+    background-color: #0e2c62;
+}
+
+.app-sidebar-menu .app-sidebar-wrapper .menu-column .menu-item:hover{
+    background-color: #0e2c62;
+}
+
+.app-sidebar-menu .app-sidebar-wrapper .menu-column .menu-item:hover .menu-link.active{
+    background-color: #0e2c62;
 }
 
 .menu-inline {
@@ -59050,17 +59063,17 @@ html:not([data-theme=dark]) {
     --kt-app-header-base-bg-color-mobile: #1e1e2d;
     --kt-app-header-base-box-shadow: none;
     --kt-app-header-base-box-shadow-mobile: none;
-    --kt-app-header-base-menu-link-bg-color-active: #2A2A3C;
+    --kt-app-header-base-menu-link-bg-color-active: #0e2c62;
     --kt-app-header-light-separator-color: #2B2B40;
     --kt-app-sidebar-base-toggle-btn-box-shadow: none;
-    --kt-app-sidebar-base-toggle-btn-bg-color: #2A2A3C;
+    --kt-app-sidebar-base-toggle-btn-bg-color: #0e2c62;
     --kt-app-sidebar-light-bg-color: #1e1e2d;
     --kt-app-sidebar-light-box-shadow: none;
     --kt-app-sidebar-light-separator-color: #2B2B40;
     --kt-app-sidebar-light-scrollbar-color: #2B2B40;
     --kt-app-sidebar-light-scrollbar-color-hover: #2B2B40;
     --kt-app-sidebar-light-menu-heading-color: #565674;
-    --kt-app-sidebar-light-menu-link-bg-color-active: #2A2A3C;
+    --kt-app-sidebar-light-menu-link-bg-color-active: #0e2c62;
     --kt-app-sidebar-light-header-menu-link-bg-color-active: #1b1b29;
     --kt-app-toolbar-base-bg-color: #1a1a27;
     --kt-app-toolbar-base-bg-color-mobile: #1a1a27;
@@ -59413,7 +59426,7 @@ html:not([data-theme=dark]) {
 
 [data-kt-app-layout=dark-sidebar] .app-sidebar .menu .menu-item .menu-link.active {
     transition: color .2s ease;
-    background-color: #2a2a3c;
+    color: #0e2c62;
     color: var(--kt-primary-inverse)
 }
 
@@ -60037,7 +60050,7 @@ html:not([data-theme=dark]) {
     [data-kt-app-layout=dark-header] .app-header-menu .menu>.menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here),
     [data-kt-app-layout=dark-header] .app-header-menu .menu>.menu-item:not(.here)>.menu-link:hover:not(.disabled):not(.active):not(.here) {
         transition: color .2s ease;
-        background-color: #2a2a3c;
+        background-color: #0e2c62;
         color: var(--kt-primary-inverse)
     }
 
@@ -60116,7 +60129,7 @@ html:not([data-theme=dark]) {
 
     [data-kt-app-layout=dark-header] .app-header-menu .menu>.menu-item.here>.menu-link {
         transition: color .2s ease;
-        background-color: #2a2a3c;
+        background-color: #0e2c62;
         color: var(--kt-primary-inverse)
     }
 
@@ -60153,7 +60166,7 @@ html:not([data-theme=dark]) {
 
     [data-kt-app-layout=dark-header] .app-header-menu .menu>.menu-item>.menu-link.active {
         transition: color .2s ease;
-        background-color: #2a2a3c;
+        background-color: #0e2c62;
         color: var(--kt-primary-inverse)
     }
 
