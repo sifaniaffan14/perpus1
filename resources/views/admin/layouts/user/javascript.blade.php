@@ -47,7 +47,6 @@
         }
     });
     document.getElementById("removeProfile").addEventListener("click", function() {
-        console.log("removeProfile");
         if ($("#changeAvatar").hasClass("d-none")) {
             $('#changeAvatar').removeClass('d-none');
         }
@@ -146,7 +145,6 @@
             },
             success: function(response){
                 if(response.status == true){
-                    console.log('data user', response);
                     DisplayEdit();
                     $.each( response.data[0], function( k, v ){
                         if (k == 'password'){
@@ -209,7 +207,6 @@
                 success: function(response){
                     if(response.status == true){
                         var options = "";
-                        console.log(response.data)
                         $.each(response.data, function(index, value) {
                             options += "<option value='" + value.id + "'>" + value.nama_role + "</option>";
                         });

@@ -13,6 +13,5 @@ class InformasiPenting extends Model
     protected $fillable = [
         'isi_informasi',
         'tgl_informasi',
-        'is_active'
     ];
 }

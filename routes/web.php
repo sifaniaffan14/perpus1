@@ -21,6 +21,7 @@ use App\Http\Controllers\InformasiPentingController;
 use App\Http\Controllers\Anggota\PencarianBukuController;
 use App\Http\Controllers\Anggota\CekPinjamanController;
 use App\Http\Controllers\Anggota\AnggotaPerpanjanganController;
+use App\Http\Controllers\Anggota\DashboardController as DashboardAnggota;
 use App\Http\Middleware\loginCheck;
 use App\Models\PeminjamanDetail;
 use Illuminate\Support\Facades\Auth;
@@ -134,7 +135,7 @@ Route::middleware('protectedPage:1')->group(function () {
     });
 
     Route::controller(PerpanjanganController::class)->name('perpanjangan.')->prefix('perpanjangan')->group(function () {
-        $route = array('index', 'select', 'selectDetail', 'submitPerpanjangan', 'update', 'reset');  
+        $route = array('index', 'select', 'selectDetail', 'update');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
@@ -181,7 +182,13 @@ Route::middleware('protectedPage:1')->group(function () {
 });
 
 Route::middleware('protectedPage:2')->group(function () {
-    Route::get('/dashboard',[DashboardController::class, 'anggota'])->name('dashboard');
+    Route::get('/dashboard',[DashboardAnggota::class, 'index'])->name('dashboard');
+    Route::controller(DashboardAnggota::class)->name('dashboard.')->prefix('dashboard')->group(function () {
+        $route = array('selectAnggota', 'selectInformasi', 'selectCount', 'selectPeminjaman');  
+        foreach ($route as $route) {
+            Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+        }
+    });
 
     Route::controller(PencarianBukuController::class)->name('cariBuku.')->prefix('cariBuku')->group(function () {
         $route = array('index');  

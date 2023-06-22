@@ -2,17 +2,17 @@
     min-width: 75px;
 }
 .search__result {
-    height: 68vh;
+    height: 65vh;
     background-image: url('../media/bg3.png');
     background-size: cover;
     background-repeat: no-repeat;
 }
 
 .search__item {
-    width: auto;
+    width: 380px;
     display: flex;
     justify-content: start;
-    align-items: top;
+    align-items: center;
     gap: 20px;
     padding: 20px;
 }

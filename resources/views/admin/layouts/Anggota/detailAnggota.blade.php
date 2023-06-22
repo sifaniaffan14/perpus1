@@ -145,7 +145,6 @@ function kembali() {
                         },
                         dataType: 'json',
                         success: function(res) {
-                            console.log(res)
                             Swal.fire({
                                 title: 'success',
                                 text: 'Data Telah Dihapus',
