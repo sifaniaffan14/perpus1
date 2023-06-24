@@ -63,7 +63,7 @@ Route::middleware('protectedPage:1')->group(function () {
     Route::get('/admin-dashboard',[DashboardController::class, 'admin'])->name('admin-dashboard');
 
     Route::controller(DashboardController::class)->name('admin-dashboard.')->prefix('admin-dashboard')->group(function () {
-        $route = array('selectData','selectAbsensi');  
+        $route = array('selectData','selectAbsensi','selectPengajuanPerpanjangan');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }

@@ -7,12 +7,13 @@
 var urlPath ={
     selectData: "{{ route('admin-dashboard.selectData') }}",
     selectAbsensi: "{{ route('admin-dashboard.selectAbsensi') }}",
-        // select: "{{ route('kategoriBuku.select') }}",
+    selectPengajuanPerpanjangan: "{{ route('admin-dashboard.selectPengajuanPerpanjangan') }}",
         // delete: "{{ route('kategoriBuku.delete') }}",
     }
 
     getData()
     tableAbsensi()
+    tablePengajuanPerpanjangan()
 
 function getData(){
         $.ajax({
@@ -26,13 +27,14 @@ function getData(){
                 var getAbsen = response.getAbsen;
                 var getAbsenToday = response.getAbsenToday;
                 var getAnggota = response.getAnggota;
+                var getPengajuanPerpanjangan = response.getPengajuanPerpanjangan;
         // Menyisipkan nilai variabel ke dalam elemen HTML
                 $('#getBuku').text(getBuku);
                 $('#getPeminjaman').text(getPeminjaman);
                 $('#getAbsen').text(getAbsen);
                 $('#getAbsenToday').text(getAbsenToday);
                 $('#getAnggota').text(getAnggota);
-
+                $('#getPengajuanPerpanjangan').text(getPengajuanPerpanjangan);
     },
         })
 }
@@ -46,7 +48,6 @@ function tableAbsensi(){
                 if (response.status) {
                     if (response.total > 0) {
                         $.each(response.data, function(index, item) {
-                        console.log(response);
                             var row = $("<tr>").appendTo(tableBody);
                             // Kolom Identitas
                             var identityCell = $("<td>").appendTo(row);
@@ -67,6 +68,59 @@ function tableAbsensi(){
                 } else {
                     console.log(response.message);
                 }
+            }
+        });   
+    }
+
+    function tablePengajuanPerpanjangan(){
+    $.ajax({
+            url: urlPath.selectPengajuanPerpanjangan,
+            method: "GET",
+            success: function(response) {
+                var tableBody = $("#tablePengajuanPerpanjangan");
+                if (response.status) {
+                if (response.total > 0) {
+                    $.each(response.data, function(index, item) {
+                        console.log(response)
+                        var status = '';
+                        if (item.status_peminjaman == 5){
+                            status = `<span class="badge bg-danger">Tidak diperpanjang</span>`; 
+                        }
+                        if (item.status_peminjaman == 4){
+                            status = `<span class="badge bg-success">Diperpanjang</span>`; 
+                        }
+                        if (item.status_peminjaman == 3){
+                            status = `<span class="badge bg-warning">Belum direspon</span>`; 
+                        }
+                        var row = $("<tr>").appendTo(tableBody);
+
+                        // Kolom Authors
+                        var authorsCell = $("<td>").appendTo(row);
+                        var authorsDiv = $("<div>").addClass("d-flex align-items-center").appendTo(authorsCell);
+                        $("<div>").addClass("symbol symbol-45px me-5").html("<img src='" + item.avatar + "' alt=''>").appendTo(authorsDiv);
+                        var authorsContent = $("<div>").addClass("d-flex justify-content-start flex-column").appendTo(authorsDiv);
+                        $("<a>").attr("href", "item.picture").addClass("text-dark fw-bold text-hover-primary fs-6").text(item.nama_anggota).appendTo(authorsContent);
+                        $("<span>").addClass("text-muted fw-semibold text-muted d-block fs-7").text(item.no_induk).appendTo(authorsContent);
+
+                        // Kolom Jumlah Buku
+                        $("<td>").html("<span class='text-dark fw-semibold d-block fs-7'>" + item.belum_verif + "</span>").appendTo(row);
+
+                        // Kolom Tanggal Pinjam
+                        $("<td>").html("<span class='text-dark fw-semibold d-block fs-7'>" + item.tgl_pinjam + "</span>").appendTo(row);
+
+                        // Kolom Tanggal Kembali
+                        $("<td>").html("<span class='text-dark fw-semibold d-block fs-7'>" + item.tgl_kembali + "</span>").appendTo(row);
+
+                        // Kolom Status
+                        $("<td>").html(status).appendTo(row);
+                    });
+                } else {
+                    var emptyRow = $("<tr>").appendTo(tableBody);
+                    var emptyCell = $("<td>").attr("colspan", 5).addClass("text-center").text("No data available").appendTo(emptyRow);
+                }
+            } else {
+                console.log(response.message);
+            }
             }
         });   
     }

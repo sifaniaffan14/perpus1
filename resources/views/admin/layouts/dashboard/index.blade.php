@@ -255,10 +255,10 @@
     <div class="card-header border-0 pt-5">
         <h3 class="card-title align-items-start flex-column">
             <span class="card-label fw-bold fs-3 mb-1">Pengajuan Perpanjangan Buku</span>
-            <span class="text-muted mt-1 fw-semibold fs-7">150 Pengajuan Perpanjangan Buku Belum Direspon</span>
+            <span class="text-muted mt-1 fw-semibold fs-7"><span id="getPengajuanPerpanjangan"></span> Pengajuan Perpanjangan Buku Belum Direspon</span>
         </h3>
         <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" data-kt-initialized="1">
-            <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_invite_friends">
+            <a href="{{route('perpanjangan.index')}}" class="btn btn-sm btn-primary">
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
             <span class="svg-icon svg-icon-3">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -266,7 +266,7 @@
                     <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor"></rect>
                 </svg>
             </span>
-            <!--end::Svg Icon-->Cek Pengajuan</a>
+            Cek Pengajuan</a>
         </div>
     </div>
     <!--end::Header-->
@@ -288,142 +288,8 @@
                 </thead>
                 <!--end::Table head-->
                 <!--begin::Table body-->
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div class="symbol symbol-45px me-5">
-                                    <img src="assets/media/avatars/300-14.jpg" alt="">
-                                </div>
-                                <div class="d-flex justify-content-start flex-column">
-                                    <a href="#" class="text-dark fw-bold text-hover-primary fs-6">Sifani Affan</a>
-                                    <span class="text-muted fw-semibold text-muted d-block fs-7">201810370311130</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="text-dark fw-semibold d-block fs-7">8</span>
-                        </td>
-                        <td>
-                            <!-- <a href="#" class="text-dark fw-bold text-hover-primary d-block fs-6">Intertico</a> -->
-                            <span class="text-dark fw-semibold d-block fs-7">19/01/2022</span>
-                        </td>
-                        <td>
-                            <!-- <a href="#" class="text-dark fw-bold text-hover-primary d-block fs-6">Intertico</a> -->
-                            <span class="text-dark fw-semibold d-block fs-7">19/01/2022</span>
-                        </td>
-                        <td>
-                            <span class="badge badge-light-warning fs-7 fw-bold">Belum Direspon</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div class="symbol symbol-45px me-5">
-                                    <img src="assets/media/avatars/300-2.jpg" alt="">
-                                </div>
-                                <div class="d-flex justify-content-start flex-column">
-                                    <a href="#" class="text-dark fw-bold text-hover-primary fs-6">Sifani Affan</a>
-                                    <span class="text-muted fw-semibold text-muted d-block fs-7">201810370311130</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="text-dark fw-semibold d-block fs-7">8</span>
-                        </td>
-                        <td>
-                            <!-- <a href="#" class="text-dark fw-bold text-hover-primary d-block fs-6">Intertico</a> -->
-                            <span class="text-dark fw-semibold d-block fs-7">19/01/2022</span>
-                        </td>
-                        <td>
-                            <!-- <a href="#" class="text-dark fw-bold text-hover-primary d-block fs-6">Intertico</a> -->
-                            <span class="text-dark fw-semibold d-block fs-7">19/01/2022</span>
-                        </td>
-                        <td>
-                            <span class="badge badge-light-warning fs-7 fw-bold">Belum Direspon</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div class="symbol symbol-45px me-5">
-                                    <img src="assets/media/avatars/300-5.jpg" alt="">
-                                </div>
-                                <div class="d-flex justify-content-start flex-column">
-                                    <a href="#" class="text-dark fw-bold text-hover-primary fs-6">Sifani Affan</a>
-                                    <span class="text-muted fw-semibold text-muted d-block fs-7">201810370311130</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="text-dark fw-semibold d-block fs-7">8</span>
-                        </td>
-                        <td>
-                            <!-- <a href="#" class="text-dark fw-bold text-hover-primary d-block fs-6">Intertico</a> -->
-                            <span class="text-dark fw-semibold d-block fs-7">19/01/2022</span>
-                        </td>
-                        <td>
-                            <!-- <a href="#" class="text-dark fw-bold text-hover-primary d-block fs-6">Intertico</a> -->
-                            <span class="text-dark fw-semibold d-block fs-7">19/01/2022</span>
-                        </td>
-                        <td>
-                            <span class="badge badge-light-warning fs-7 fw-bold">Belum Direspon</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div class="symbol symbol-45px me-5">
-                                    <img src="assets/media/avatars/300-20.jpg" alt="">
-                                </div>
-                                <div class="d-flex justify-content-start flex-column">
-                                    <a href="#" class="text-dark fw-bold text-hover-primary fs-6">Sifani Affan</a>
-                                    <span class="text-muted fw-semibold text-muted d-block fs-7">201810370311130</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="text-dark fw-semibold d-block fs-7">8</span>
-                        </td>
-                        <td>
-                            <!-- <a href="#" class="text-dark fw-bold text-hover-primary d-block fs-6">Intertico</a> -->
-                            <span class="text-dark fw-semibold d-block fs-7">19/01/2022</span>
-                        </td>
-                        <td>
-                            <!-- <a href="#" class="text-dark fw-bold text-hover-primary d-block fs-6">Intertico</a> -->
-                            <span class="text-dark fw-semibold d-block fs-7">19/01/2022</span>
-                        </td>
-                        <td>
-                            <span class="badge badge-light-warning fs-7 fw-bold">Belum Direspon</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div class="symbol symbol-45px me-5">
-                                    <img src="assets/media/avatars/300-23.jpg" alt="">
-                                </div>
-                                <div class="d-flex justify-content-start flex-column">
-                                    <a href="#" class="text-dark fw-bold text-hover-primary fs-6">Sifani Affan</a>
-                                    <span class="text-muted fw-semibold text-muted d-block fs-7">201810370311130</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="text-dark fw-semibold d-block fs-7">8</span>
-                        </td>
-                        <td>
-                            <!-- <a href="#" class="text-dark fw-bold text-hover-primary d-block fs-6">Intertico</a> -->
-                            <span class="text-dark fw-semibold d-block fs-7">19/01/2022</span>
-                        </td>
-                        <td>
-                            <!-- <a href="#" class="text-dark fw-bold text-hover-primary d-block fs-6">Intertico</a> -->
-                            <span class="text-dark fw-semibold d-block fs-7">19/01/2022</span>
-                        </td>
-                        <td>
-                            <span class="badge badge-light-warning fs-7 fw-bold">Belum Direspon</span>
-                        </td>
-                    </tr>
+                <tbody id="tablePengajuanPerpanjangan">
+                    
                 </tbody>
                 <!--end::Table body-->
             </table>
