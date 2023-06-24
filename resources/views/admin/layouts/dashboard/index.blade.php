@@ -172,12 +172,12 @@
                 <!--begin::Title-->
                 <h3 class="card-title align-items-start flex-column">
                     <span class="card-label fw-bold text-gray-800">Laporan Pengunjung</span>
-                    <span class="text-gray-400 mt-1 fw-semibold fs-6">160 Pengunjung Hari Ini</span>
+                    <span class="text-gray-400 mt-1 fw-semibold fs-6"><span id="getAbsenToday"></span> Pengunjung Hari Ini</span>
                 </h3>
                 <!--end::Title-->
                 <!--begin::Toolbar-->
                 <div class="card-toolbar">
-                    <a href="../../demo1/dist/apps/ecommerce/catalog/add-product.html" class="btn btn-sm btn-primary">Detail</a>
+                    <a href="{{route('pengunjung.index')}}" class="btn btn-sm btn-primary">Detail</a>
                 </div>
                 <!--end::Toolbar-->
             </div>
@@ -202,105 +202,8 @@
                                 </thead>
                                 <!--end::Table head-->
                                 <!--begin::Table body-->
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="symbol symbol-50px me-3">
-                                                    <img src="assets/media/avatars/300-3.jpg" class="" alt="">
-                                                </div>
-                                                <div class="d-flex justify-content-start flex-column">
-                                                    <a href="../../demo1/dist/pages/user-profile/overview.html" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">Affan</a>
-                                                    <span class="text-gray-400 fw-semibold d-block fs-7">201810370311130</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="text-gray-600 fw-bold fs-6">Siswa</span>
-                                        </td>
-                                        <td>
-                                            <span class="text-gray-600 fw-bold fs-6">14:00</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="symbol symbol-50px me-3">
-                                                    <img src="assets/media/avatars/300-2.jpg" class="" alt="">
-                                                </div>
-                                                <div class="d-flex justify-content-start flex-column">
-                                                    <a href="../../demo1/dist/pages/user-profile/overview.html" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">Affan</a>
-                                                    <span class="text-gray-400 fw-semibold d-block fs-7">201810370311130</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="pe-13">
-                                            <span class="text-gray-600 fw-bold fs-6">Siswa</span>
-                                        </td>
-                                        <td class="pe-0">
-                                            <span class="text-gray-600 fw-bold fs-6">14:00</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="symbol symbol-50px me-3">
-                                                    <img src="assets/media/avatars/300-9.jpg" class="" alt="">
-                                                </div>
-                                                <div class="d-flex justify-content-start flex-column">
-                                                    <a href="../../demo1/dist/pages/user-profile/overview.html" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">Affan</a>
-                                                    <span class="text-gray-400 fw-semibold d-block fs-7">201810370311130</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="pe-13">
-                                            <span class="text-gray-600 fw-bold fs-6">Siswa</span>
-                                        </td>
-                                        <td class="pe-0">
-                                            <span class="text-gray-600 fw-bold fs-6">14:00</span>
-                                        </td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="symbol symbol-50px me-3">
-                                                    <img src="assets/media/avatars/300-7.jpg" class="" alt="">
-                                                </div>
-                                                <div class="d-flex justify-content-start flex-column">
-                                                    <a href="../../demo1/dist/pages/user-profile/overview.html" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">Affan</a>
-                                                    <span class="text-gray-400 fw-semibold d-block fs-7">201810370311130</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="pe-13">
-                                            <span class="text-gray-600 fw-bold fs-6">Siswa</span>
-                                        </td>
-                                        <td class="pe-0">
-                                            <span class="text-gray-600 fw-bold fs-6">14:00</span>
-                                        </td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="symbol symbol-50px me-3">
-                                                    <img src="assets/media/avatars/300-7.jpg" class="" alt="">
-                                                </div>
-                                                <div class="d-flex justify-content-start flex-column">
-                                                    <a href="../../demo1/dist/pages/user-profile/overview.html" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">Affan</a>
-                                                    <span class="text-gray-400 fw-semibold d-block fs-7">201810370311130</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="pe-13">
-                                            <span class="text-gray-600 fw-bold fs-6">Siswa</span>
-                                        </td>
-                                        <td class="pe-0">
-                                            <span class="text-gray-600 fw-bold fs-6">14:00</span>
-                                        </td>
-                                       
-                                    </tr>
+                                <tbody id="tableAbsensi">
+                                   
                                 </tbody>
                                 <!--end::Table body-->
                             </table>
