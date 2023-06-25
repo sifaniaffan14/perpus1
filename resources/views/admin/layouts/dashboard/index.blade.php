@@ -191,7 +191,7 @@
                         <!--begin::Table container-->
                         <div class="table-responsive">
                             <!--begin::Table-->
-                            <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
+                            <table class="table table-row-dashed align-middle gs-0 gy-3 my-0" id="tableAbsensi">
                                 <!--begin::Table head-->
                                 <thead>
                                     <tr class="fs-7 fw-bold text-gray-400 border-bottom-0">
@@ -202,40 +202,14 @@
                                 </thead>
                                 <!--end::Table head-->
                                 <!--begin::Table body-->
-                                <tbody id="tableAbsensi">
+                                <tbody id="listAbsensi">
                                    
                                 </tbody>
                                 <!--end::Table body-->
                             </table>
                             <!--end::Table-->
                         </div>
-                        <div class="row py-5">
-                            <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
-                            <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
-                                <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">
-                                    <ul class="pagination">
-                                        <li class="paginate_button page-item previous disabled" id="kt_table_users_previous">
-                                            <a href="#" aria-controls="kt_table_users" data-dt-idx="0" tabindex="0" class="page-link">
-                                                <i class="previous"></i>
-                                            </a>
-                                        </li>
-                                        <li class="paginate_button page-item active">
-                                            <a href="#" aria-controls="kt_table_users" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-                                        </li>
-                                        <li class="paginate_button page-item ">
-                                            <a href="#" aria-controls="kt_table_users" data-dt-idx="2" tabindex="0" class="page-link">2</a>
-                                        </li>
-                                        <li class="paginate_button page-item ">
-                                            <a href="#" aria-controls="kt_table_users" data-dt-idx="3" tabindex="0" class="page-link">3</a>
-                                        </li>
-                                        <li class="paginate_button page-item next" id="kt_table_users_next">
-                                            <a href="#" aria-controls="kt_table_users" data-dt-idx="4" tabindex="0" class="page-link">
-                                                <i class="next"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <!--end::Table container-->
                     </div>
                    
@@ -275,7 +249,7 @@
         <!--begin::Table container-->
         <div class="table-responsive">
             <!--begin::Table-->
-            <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+            <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4" id="tablePengajuanPerpanjangan">
                 <!--begin::Table head-->
                 <thead>
                     <tr class="fw-bold text-muted">
@@ -288,7 +262,7 @@
                 </thead>
                 <!--end::Table head-->
                 <!--begin::Table body-->
-                <tbody id="tablePengajuanPerpanjangan">
+                <tbody id="listPengajuanPerpanjangan">
                     
                 </tbody>
                 <!--end::Table body-->
@@ -296,35 +270,6 @@
             <!--end::Table-->
         </div>
         <!--end::Table container-->
-         <!--begin::pagination-->
-        <div class="row py-5">
-            <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
-            <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
-                <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">
-                    <ul class="pagination">
-                        <li class="paginate_button page-item previous disabled" id="kt_table_users_previous">
-                            <a href="#" aria-controls="kt_table_users" data-dt-idx="0" tabindex="0" class="page-link">
-                                <i class="previous"></i>
-                            </a>
-                        </li>
-                        <li class="paginate_button page-item active">
-                            <a href="#" aria-controls="kt_table_users" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                            <a href="#" aria-controls="kt_table_users" data-dt-idx="2" tabindex="0" class="page-link">2</a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                            <a href="#" aria-controls="kt_table_users" data-dt-idx="3" tabindex="0" class="page-link">3</a>
-                        </li>
-                        <li class="paginate_button page-item next" id="kt_table_users_next">
-                            <a href="#" aria-controls="kt_table_users" data-dt-idx="4" tabindex="0" class="page-link">
-                                <i class="next"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-         <!--end::Pagination-->
     </div>
     <!--begin::Body-->
 </div>

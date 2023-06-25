@@ -15,6 +15,7 @@ var urlPath ={
     tableAbsensi()
     tablePengajuanPerpanjangan()
 
+
 function getData(){
         $.ajax({
             url: urlPath.selectData,
@@ -44,7 +45,7 @@ function tableAbsensi(){
             url: urlPath.selectAbsensi,
             method: "GET",
             success: function(response) {
-                var tableBody = $("#tableAbsensi");
+                var tableBody = $("#listAbsensi");
                 if (response.status) {
                     if (response.total > 0) {
                         $.each(response.data, function(index, item) {
@@ -60,6 +61,11 @@ function tableAbsensi(){
                             $("<td>").html("<span class='text-gray-600 fw-bold fs-6'>" + item.jenis_anggota + "</span>").appendTo(row);
                             // Kolom Jam
                             $("<td>").html("<span class='text-gray-600 fw-bold fs-6'>" + item.waktu.substring(10,16) + "</span>").appendTo(row);
+                        });
+                        $('#tableAbsensi').DataTable({
+                            searching: true,
+                            lengthChange: false,
+                            pageLength: 5, // Menampilkan 5 data per halaman
                         });
                     } else {
                         var emptyRow = $("<tr>").appendTo(tableBody);
@@ -77,11 +83,10 @@ function tableAbsensi(){
             url: urlPath.selectPengajuanPerpanjangan,
             method: "GET",
             success: function(response) {
-                var tableBody = $("#tablePengajuanPerpanjangan");
+                var tableBody = $("#listPengajuanPerpanjangan");
                 if (response.status) {
                 if (response.total > 0) {
                     $.each(response.data, function(index, item) {
-                        console.log(response)
                         var status = '';
                         if (item.status_peminjaman == 5){
                             status = `<span class="badge bg-danger">Tidak diperpanjang</span>`; 
@@ -114,9 +119,14 @@ function tableAbsensi(){
                         // Kolom Status
                         $("<td>").html(status).appendTo(row);
                     });
+                    $('#tablePengajuanPerpanjangan').DataTable({
+                            lengthChange: false,
+                            pageLength: 5, // Menampilkan 5 data per halaman
+                        });
                 } else {
                     var emptyRow = $("<tr>").appendTo(tableBody);
                     var emptyCell = $("<td>").attr("colspan", 5).addClass("text-center").text("No data available").appendTo(emptyRow);
+                    $("#paginationPerpanjangan").empty();
                 }
             } else {
                 console.log(response.message);
