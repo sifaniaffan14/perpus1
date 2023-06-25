@@ -204,7 +204,7 @@ Route::middleware('protectedPage:2')->group(function () {
         }
     });
     Route::controller(CekPinjamanController::class)->name('cekPinjaman.')->prefix('cekPinjaman')->group(function () {
-        $route = array('index');  
+        $route = array('index', 'selectAnggota', 'selectPeminjaman', 'selectRiwayatPeminjaman');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
