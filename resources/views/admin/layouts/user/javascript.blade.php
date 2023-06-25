@@ -38,9 +38,10 @@
         if ($("#changeAvatar").hasClass("d-none")) {
             $('#changeAvatar').removeClass('d-none');
         }
+        var urlPhoto = window.location.origin + '/storage/user/account_box.png';
         if (url == ''){
             $("#photoPreview").removeAttr("style");
-            document.getElementById("photoPreview").setAttribute("style", "background-image: url(http://127.0.0.1:8000/storage/user/account_box.png)");
+            document.getElementById("photoPreview").setAttribute("style", "background-image: url("+urlPhoto+")");
         } else {
             $("#photoPreview").removeAttr("style");
             document.getElementById("photoPreview").setAttribute("style", "background-image: url("+url+")");
@@ -50,7 +51,8 @@
         if ($("#changeAvatar").hasClass("d-none")) {
             $('#changeAvatar').removeClass('d-none');
         }
-        document.getElementById("photoPreview").setAttribute("style", "background-image: url(http://127.0.0.1:8000/storage/user/account_box.png)");
+        var urlPhoto = window.location.origin + '/storage/user/account_box.png';
+        document.getElementById("photoPreview").setAttribute("style", "background-image: url("+urlPhoto+")");
     });
 
     function onSave(){
@@ -75,7 +77,8 @@
                     type: 'POST',
                     success: function(response){
                         if(response.status == true){
-                            document.getElementById("photoPreview").setAttribute("style", "background-image: url(http://127.0.0.1:8000/storage/user/account_box.png)");
+                            var urlPhoto = window.location.origin + '/storage/user/account_box.png';
+                            document.getElementById("photoPreview").setAttribute("style", "background-image: url("+urlPhoto+")");
                             swal("Success !", response.message, "success");
                             onRefresh()
                         } else{
@@ -146,6 +149,7 @@
             success: function(response){
                 if(response.status == true){
                     DisplayEdit();
+                    var baseUrl = window.location.origin + '/storage/user/';
                     $.each( response.data[0], function( k, v ){
                         if (k == 'password'){
                         } else {
@@ -154,11 +158,12 @@
                         if (k == 'picture'){
                             if (v == null){
                                 foto = false;
-                                document.getElementById("photoPreview").setAttribute("style", "background-image: url(http://127.0.0.1:8000/storage/user/account_box.png)");
+                                urlPhoto = baseUrl + "account_box.png";
+                                document.getElementById("photoPreview").setAttribute("style", "background-image: url("+ urlPhoto +")");
                                 // $("#removeProfile").addClass("d-none");
                             } else {
                                 foto = true;
-                                url = "http://127.0.0.1:8000/storage/user/"+v;
+                                url = baseUrl + v;
                                 document.getElementById("photoPreview").setAttribute("style", "background-image: url("+url+")");
                                 document.getElementsByName("photo").value = url;
                             }

@@ -74,9 +74,10 @@
                 if (checkedValues.length != 0){
                     value = checkedValues.join(',');
                     if (value == 'checked_all'){
-                        document.getElementById("pdfBarcode").setAttribute('href', "http://127.0.0.1:8000/PDFBarcode/"+id_buku);
+                        var baseUrl = window.location.origin;
+                        document.getElementById("pdfBarcode").setAttribute('href', baseUrl+"/PDFBarcode/"+id_buku);
                     } else {
-                        document.getElementById("pdfBarcode").setAttribute('href', "http://127.0.0.1:8000/PDFBarcode/"+id_buku+"?checkedValues="+value);
+                        document.getElementById("pdfBarcode").setAttribute('href', baseUrl+"/PDFBarcode/"+id_buku+"?checkedValues="+value);
                     }
                     i2 = 1;
                 }
@@ -228,6 +229,7 @@
                     onDisplayDetail()
                     tableEksemplar(id);
                     id_buku = id;
+                    var baseUrl = window.location.origin + '/storage/buku/';
                     // document.getElementById("pdfBarcode").setAttribute('href', "http://127.0.0.1:8000/PDFBarcode/"+id);
                     $.each(response.data[0], function( k, v ){
                         $('#detail_'+k).html(v)
@@ -235,7 +237,7 @@
                             $('#buku_'+k).val(v)
                         }
                         if(k=='image'){
-                            document.getElementById("img").setAttribute('src', 'http://127.0.0.1:8000/storage/buku/'+v);
+                            document.getElementById("img").setAttribute('src', baseUrl+v);
                         }
                     });
                 } 
