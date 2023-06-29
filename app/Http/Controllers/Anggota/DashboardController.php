@@ -13,7 +13,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('anggota/layouts/dashboard');
+        return view('anggota/layouts/dashboard/index');
     }
     
     public function selectAnggota()

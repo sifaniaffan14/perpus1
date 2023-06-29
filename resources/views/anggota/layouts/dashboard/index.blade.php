@@ -1,4 +1,4 @@
-{{-- @extends('anggota.master.app')
+@extends('anggota.master.app')
 
 @section('content2')
 
@@ -42,7 +42,7 @@
 			</div>
 			<div class="row mt-8 w-75">
 				<div class="col-5">
-					<div class="container rounded-4 p-6" style="background-color:#264A8A">
+					<div class="container rounded-4 p-6" style="background-color:#5F5CF1">
 						<span class="text-light svg-icon svg-icon-1">
 							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
@@ -112,7 +112,7 @@
 					<h3 class="pt-3">Data Peminjaman</h3>
 				</div>
 				<div class="col text-end">
-					<button class="btn text-light" style="background-color:#1BC5BD"> <i class="fa fa-users text-light"></i> Cek Peminjaman</button>
+					<a class="btn text-light" style="background-color:#264A8A" href="{{route('cekPinjaman.index')}}"> <i class="fa fa-users text-light"></i> Cek Peminjaman</a>
 				</div>
 				<table class="table mt-5">
 					<thead>
@@ -131,89 +131,8 @@
 		</div>
 	</div>
 </div>
+@endsection
 
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-<script>
-	getAnggota()
-	getInformasi()
-	getCount()
-	getPeminjaman()
-	function getAnggota() {
-        $.ajax({
-            url: "{{ route('dashboard.selectAnggota') }}",
-            type: 'GET',
-            success: function(response) {
-                if (response.status == true) {
-                    $('#nama_anggota').html(response.data[0]['nama_anggota'])
-					$('#no_induk').html(response.data[0]['no_induk'])
-					if (response.data[0]['picture'] == null || response.data[0]['picture'] == ''){
-                        document.getElementById("photo_anggota").setAttribute("src", window.location.origin+"/storage/user/account_box.png")
-                    } else {
-                        document.getElementById("photo_anggota").setAttribute("src", window.location.origin+"/storage/user/"+response.data[0]['picture'])
-                    }
-                }
-            }
-        })
-    }
-
-	function getInformasi() {
-        $.ajax({
-            url: "{{ route('dashboard.selectInformasi') }}",
-            type: 'GET',
-            success: function(response) {
-                if (response.status == true) {
-                    $('#informasi').html(response.data[0]['isi_informasi'])
-                }
-            }
-        })
-    }
-
-	function getCount() {
-        $.ajax({
-            url: "{{ route('dashboard.selectCount') }}",
-            type: 'GET',
-            success: function(response) {
-                if (response.status == true) {
-                    $('#countPeminjaman').html(response.data['countPeminjaman']);
-					$('#countKunjungan').html(response.data['countKunjungan']);
-                }
-            }
-        })
-    }
-
-	function getPeminjaman() {
-        $.ajax({
-            url: "{{ route('dashboard.selectPeminjaman') }}",
-            type: 'GET',
-            success: function(response) {
-                if (response.status == true) {
-                    $('#list_peminjaman').html('')
-					$.each(response.data, function(k, v){
-						let peminjaman_status = '';
-						if (v.status_peminjaman == 1){
-							peminjaman_status = '<span class="badge badge-danger">Belum Kembali</span>';
-						} else if (v.status_peminjaman == 3){
-							peminjaman_status = '<span class="badge badge-warning">Proses Perpanjangan</span>';
-						} else if (v.status_peminjaman == 4){
-							peminjaman_status = '<span class="badge badge-warning">Diperpanjang</span>';
-						} else if (v.status_peminjaman == 5){
-							peminjaman_status = '<span class="badge badge-danger">Ditolak Perpanjangan</span>';
-						}
-
-						$('#list_peminjaman').append(`
-							<tr>
-								<td class="text-center">${k + 1}</td>
-								<td class="text-center">${v.judul}</td>
-								<td class="text-center">${moment(v.tgl_pinjam).format('DD-MM-YYYY')}</td>
-								<td class="text-center">${moment(v.tgl_kembali).format('DD-MM-YYYY')}</td>
-								<td class="text-center">${peminjaman_status}</td>
-							</tr>
-						`)
-					})
-                }
-            }
-        })
-    }
-</script>
-@endsection --}}
+@section('jsAnggota')
+@include('anggota.layouts.dashboard.javascript')
+@endsection
