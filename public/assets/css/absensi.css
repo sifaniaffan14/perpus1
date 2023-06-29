@@ -15,11 +15,11 @@ body {
 
 a {
     text-decoration: none !important;
-    color: #306484;
+    color: #202F4E;
 }
 
 .judul {
-    color: #306484;
+    color: #202F4E;
     font-weight: bolder;
 }
 
@@ -29,7 +29,7 @@ a {
 }
 
 .submit {
-    background-color: #306484;
+    background-color: #202F4E;
 }
 
 .icon__ {
@@ -38,29 +38,31 @@ a {
     width: 20px;
 }
 
-.form div input{
+.form div input {
     padding-top: 12px;
     padding-bottom: 12px;
 }
 
 .user {
-    padding: 14px;
-    background-color:#B8B8B8
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    transform: translate(40%, 40%);
+    width: 25px;
+    height: 25px;
 }
 
-.user img{
-    width:25px;
-}
 
 .detail-card img {
-    width:40%;
+    width: 40%;
     padding-right: 30px;
 }
+
 footer {
     position: fixed;
     bottom: 0;
     padding: 5px;
-    background-color: #306484;
+    background-color: #202F4E;
     color: #eeeeee;
     text-align: center;
     width: 100%;

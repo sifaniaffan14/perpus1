@@ -153,7 +153,7 @@
                         "Belum Kembali": v.peminjaman_belum_kembali,
                         "Sudah Kembali": v.peminjaman_sudah_kembali,
                         "Status": peminjaman_status,
-                        "Detail": `<button onclick=onDetail('${encode}') class="btn btn-primary btn-detail p-1 ps-2" name="btn-detail" id="btn-detail"><i class="bi bi-arrow-right fs-2"></i></button>`
+                        "Detail": `<span onclick=onDetail('${encode}') class="btn p-1 ps-2 material-icons" style="color: rgb(38, 74, 138);" name="btn-detail" id="btn-detail">description</span>`
                     };
                     data.push(row);
                 })
@@ -845,7 +845,7 @@
                         "Belum Kembali": v.peminjaman_belum_kembali,
                         "Sudah Kembali": v.peminjaman_sudah_kembali,
                         "Status": peminjaman_status,
-                        "Detail": `<button onclick=onDetail('${encode}') class="btn btn-primary btn-detail p-1 ps-2" name="btn-detail" id="btn-detail"><i class="bi bi-arrow-right fs-2"></i></button>`
+                        "Detail": `<span onclick=onDetail('${encode}') class="btn p-1 ps-2 material-icons" style="color: rgb(38, 74, 138);" name="btn-detail" id="btn-detail">description</span>`
                     };
                     data.push(row);
                 })

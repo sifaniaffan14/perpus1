@@ -40,7 +40,7 @@
                         "No Induk": v.no_induk,
                         "Nama Anggota": v.nama_anggota,
                         "Jenis Anggota": v.jenis_anggota,
-                        "Detail": `<button onclick=onEdit('${v.id}') class="btn btn-primary btn-detail p-1 ps-2" name="btn-detail" id="btn-detail"><i class="bi bi-arrow-right fs-2"></i></button>`
+                        "Detail": `<span onclick=onEdit('${v.id}') class="btn p-1 ps-2 material-icons" style="color: rgb(38, 74, 138);" name="btn-detail" id="btn-detail">description</i></span>`
                     };
                     data.push(row);
                 })

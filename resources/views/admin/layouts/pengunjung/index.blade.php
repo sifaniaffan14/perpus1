@@ -12,38 +12,43 @@ border-radius: 10px;">
                         <span class="material-icons" style="color:#264A8A"> filter_alt </span> Filter
                     </h2>
                 </div>
-                <div class="d-flex flex-column flex-lg-row flex-stack py-5 mt-5 mx-auto"
-                    style="border-bottom: 1px solid #eff2f5; width:90%">
-                    <div class="d-flex">
-                        <div class="d-flex align-items-center me-5">
-                            <p class="m-0 me-4 fw-bolder">Tahun : </p>
-                            <select class="rounded p-2 ps-1" name="tahun" id="tahun" style="width:120px;">
+                <div class="card-body">
+                    <!-- <div class="d-flex flex-column flex-lg-row flex-stack  mx-auto"
+                    style="border-bottom: 1px solid #eff2f5; width:90%"> -->
+                    <div class="row">
+                        <div class="col-lg-3 col-12 d-flex flex-center gap-3 mb-3 mb-lg-0">
+                            <label class="form-label fw-bolder min-w-70px">Tahun : </label>
+                            <select class="form-control" name="tahun" id="tahun" style="">
                                 <option value="#" selected disabled hidden>Pilih tahun</option>
                             </select>
                         </div>
-                        <div class="d-flex align-items-center ps-5 ms-5 me-5">
-                            <p class="m-0 me-4 fw-bolder">Bulan : </p>
-                            <select class="rounded p-2 ps-1" name="bulan" id="bulan" style="width:120px;" disabled>
+                        <div class="col-lg-3 col-12 d-flex flex-center gap-3 m-lg-0 my-3">
+                            <label class="form-label fw-bolder min-w-70px">Bulan : </label>
+                            <select class="form-control" name="bulan" id="bulan" disabled>
                                 <option value="#" selected disabled hidden>Pilih bulan</option>
                             </select>
                         </div>
-                        <div class="d-flex align-items-center ps-5 ms-5 me-5">
-                            <p class="m-0 me-4 fw-bolder">Tanggal : </p>
-                            <select class="rounded p-2 ps-1" name="tanggal" id="tanggal" style="width:120px;" disabled>
+                        <div class="col-lg-3 col-12 d-flex flex-center gap-3 m-lg-0 my-3">
+                            <label class="form-label fw-bolder min-w-70px">Tanggal : </label>
+                            <select class="form-control" name="tanggal" id="tanggal" disabled>
                                 <option value="#" selected disabled hidden>Pilih tanggal</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="d-flex w-25 text-end">
-                        <button type="button" class="btn m-0 d-flex flex-center gap-2 text-light"
-                                style="background-color:#264A8A; width:35%; height:5vh"
-                                onclick="onFilter()">
-                                <span class="material-icons fs-2"> search </span> Cari </button>
-                        <button type="button" class="btn m-0 d-flex flex-center gap-2 text-light ms-5"
-                                style="background-color:#03BE43; width:35%; height:5vh"
-                                onclick="loadForm()">
-                                <span class="material-icons fs-2"> print </span> Cetak </button>
-                    </div>
+                        <div class="col-lg-3 d-flex flex-center gap-4">
+                            <button type="button" class="btn btn-sm text-light w-50"
+                                    style="background-color:#264A8A;"
+                                    onclick="onFilter()">
+                                    <span class="material-icons fs-6 pt-2">search</span> 
+                                    <span class="fs-6">Cari</span>
+                                </button>
+                            <button type="button" class="btn btn-sm text-light w-50"
+                                    style="background-color:#03BE43;"
+                                    onclick="loadForm()">
+                                    <span class="material-icons fs-6 pt-2"> print </span>
+                                    <span class="fs-6">Cetak</span>
+                                </button>
+                        </div>
+                </div>
                 </div>  
             </div>
             <div class="data-card card pb-6 mb-5 mb-xl-8" style="box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

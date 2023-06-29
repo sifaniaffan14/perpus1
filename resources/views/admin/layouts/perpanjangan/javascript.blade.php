@@ -80,7 +80,7 @@
                         "Jumlah Buku": name == 'belum_verif' ? v.belum_verif : v.sudah_verif,
                         "Tgl Pinjam": moment(v.tgl_pinjam).format('DD/MM/YYYY'),
                         "Tgl Kembali": moment(v.tgl_kembali).format('DD/MM/YYYY'),
-                        "Detail": `<button onclick="onDetail('${v.peminjaman_id}')" class="btn btn-primary btn-detail p-1 ps-2" name="btn-detail" id="btn-detail"><i class="bi bi-arrow-right fs-2"></i></button>`
+                        "Detail": `<span onclick="onDetail('${v.peminjaman_id}')" class="btn p-1 ps-2 material-icons" style="color: rgb(38, 74, 138);" name="btn-detail" id="btn-detail">description</span>`
                     };
                     data.push(row);
                 })

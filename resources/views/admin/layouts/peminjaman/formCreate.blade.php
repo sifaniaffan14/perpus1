@@ -103,7 +103,7 @@
                             <table class="table" id="tablePinjaman">
                                 <thead>
                                     <tr>
-                                        <th class="fw-bolder text-center" style="max-width: 20px"> No </th>
+                                        <th class="fw-bolder text-center" style="width: 20px"> No </th>
                                         <th class="fw-bolder text-center">Kode Eksemplar</th>
                                         <th class="fw-bolder text-center">Judul Buku</th>
                                         <th class="fw-bolder text-center">Action</th>
