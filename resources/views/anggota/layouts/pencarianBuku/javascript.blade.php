@@ -6,6 +6,8 @@
 <script>
     var urlPath = {
         selectBuku: "{{ route('cariBuku.selectBuku') }}",
+        selectDetail: "{{ route('cariBuku.selectDetail') }}",
+        selectEksemplar: "{{ route('cariBuku.selectEksemplar') }}",
     }
     var resultArray = '';
     var data = '';
@@ -13,6 +15,15 @@
     var next = 2;
     var previous = 1;
     selectBuku()
+
+    $(document).ready(function() {
+        $('#search').keypress(function(event) {
+            if (event.keyCode === 13) { // keycode untuk tombol enter adalah 13
+                event.preventDefault(); // menghindari submit form
+                onSearch();
+            }
+        });
+    });
 
     function selectBuku() {
         $.ajax({
@@ -76,6 +87,77 @@
         });       
     }
 
+    function onDetail(id) {
+        $.ajax({
+            url: urlPath.selectDetail,
+            type: 'GET',
+            data: {
+                id: id
+            },
+            success: function(response) {
+                if (response.status == true) {
+                    // console.log(response.data[0])
+                    var baseUrl = window.location.origin + '/storage/buku/';
+
+                    $('#page-main').addClass('d-none')
+                    $('#page-detail').removeClass('d-none')
+
+                    if (response.data[0]['image'] == '' || response.data[0]['image'] == null) {
+                        response.data[0]['image'] = 'default-cover.jpeg';
+                    }
+                    document.getElementById('img_detail').setAttribute('src', baseUrl + response.data[0]['image']);
+                    $('#kode_buku').html(response.data[0]['kode_buku']);
+                    $('#no_isbn').html(response.data[0]['no_isbn']);
+                    $('#judul').html(response.data[0]['judul']);
+                    $('#pengarang').html(response.data[0]['pengarang']);
+                    $('#penerbit').html(response.data[0]['penerbit']);
+                    $('#halaman').html(response.data[0]['halaman']);
+                    $('#nama_kategori').html(response.data[0]['nama_kategori']);
+
+                    tableEksemplar(response.data[0]['id']);
+                }
+            }
+        })
+    }
+
+    function tableEksemplar(id) {
+        $.ajax({
+            url: urlPath.selectEksemplar,
+            type: 'GET',
+            data: {
+                id: id
+            },
+            success: function(response) {
+
+                if (response.status == true) {
+                    $('#list_table').html('')
+                    var num = 1;
+                    $.each(response.data, function(k, v) {
+                        if (v.status_peminjaman != 2) {
+                            var tgl_pinjam = '-';
+                            var tgl_kembali = '-';
+                            if (v.tgl_pinjam) {
+                                tgl_pinjam = moment(v.tgl_pinjam).format('DD/MM/YYYY');
+                                tgl_kembali = moment(v.tgl_kembali).format('DD/MM/YYYY');
+                            }
+                            $('#list_table').append(`
+                                <tr>
+                                    <td class="p-2 fs-5 border">${num}</td>
+                                    <td class="p-2 fs-5 border">${v.no_panggil}</td>
+                                    <td class="p-2 fs-5 border">${v.status}</td>
+                                    <td class="p-2 fs-5 border">${v.kondisi}</td>
+                                    <td class="p-2 fs-5 border">${tgl_pinjam}</td>
+                                    <td class="p-2 fs-5 border">${tgl_kembali}</td>
+                                </tr>
+                            `)
+                            num++;
+                        }
+                    });
+                }
+            }
+        })
+    }
+
     function showPagination(totalPages, indexPage) {
         $('#pagination').html(`
             <li class="page-item">
@@ -135,5 +217,10 @@
         $("#search").val('')
         data = resultArray;
         onSearchResults(1)
+    }
+
+    function onDisplayMain(){
+        $('#page-main').removeClass('d-none')
+        $('#page-detail').addClass('d-none')
     }
 </script>
