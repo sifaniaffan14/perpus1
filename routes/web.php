@@ -22,6 +22,7 @@ use App\Http\Controllers\Anggota\PencarianBukuController;
 use App\Http\Controllers\Anggota\CekPinjamanController;
 use App\Http\Controllers\Anggota\AnggotaPerpanjanganController;
 use App\Http\Controllers\Anggota\DashboardController as DashboardAnggota;
+use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\loginCheck;
 use App\Models\PeminjamanDetail;
 use Illuminate\Support\Facades\Auth;
@@ -182,6 +183,13 @@ Route::middleware('protectedPage:1')->group(function () {
 
     Route::controller(PengembalianController::class)->name('pengembalian.')->prefix('pengembalian')->group(function () {
         $route = array('index', 'update','select','select_eksemplar', 'selectDataAnggota');  
+        foreach ($route as $route) {
+            Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+        }
+    });
+
+    Route::controller(ProfileController::class)->name('profile.')->prefix('profile')->group(function () {
+        $route = array('index', 'update','select');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
