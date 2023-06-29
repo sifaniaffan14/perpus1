@@ -130,7 +130,10 @@
                 },
                 success: function(response){
                 if(response.status == true){
-                    $('.text-header').removeClass('d-none');
+                    if (response.data.length == 0){
+                        swal("Warning", "Anggota belum memiliki peminjaman!", "warning");
+                    } else {
+                        $('.text-header').removeClass('d-none');
                     $('.header-eksemplar').removeClass('d-none');
                     $('.card-body').removeClass('d-none');
 
@@ -198,7 +201,9 @@
                         $("#select_anggota_id").html(options);
                         document.getElementById('select_anggota_id').selectedIndex = 1;
                         $('#anggota_id').val(data.anggota['id']);
-                } 
+                        } 
+                    }
+                    
         }
         })
     }

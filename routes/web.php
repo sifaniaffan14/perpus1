@@ -198,19 +198,19 @@ Route::middleware('protectedPage:2')->group(function () {
     });
 
     Route::controller(PencarianBukuController::class)->name('cariBuku.')->prefix('cariBuku')->group(function () {
-        $route = array('index');  
+        $route = array('index', 'selectBuku', 'selectDetail', 'selectEksemplar');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
     });
     Route::controller(CekPinjamanController::class)->name('cekPinjaman.')->prefix('cekPinjaman')->group(function () {
-        $route = array('index');  
+        $route = array('index', 'selectAnggota', 'selectPeminjaman', 'selectRiwayatPeminjaman');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
     });
     Route::controller(AnggotaPerpanjanganController::class)->name('perpanjanganBuku.')->prefix('perpanjanganBuku')->group(function () {
-        $route = array('index');  
+        $route = array('index', 'insert','selectAnggota', 'selectPeminjaman');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }

@@ -8,7 +8,7 @@
 		<!--begin::Col-->
 		<div class="col-md-2 col-lg-2 col-xl-2 col-xxl-2">
 			<div class="container bg-white rounded p-4 text-center">
-				<img src="https://cdn.kibrispdr.org/data/329/gambar-foto-orang-8.jpg" height="103px" width="116px" style="box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 10px;">
+				<img src="" id="photo_anggota" height="103px" width="116px" style="box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 10px;">
 			</div>
 		</div>
 		<!--end::Col-->
@@ -147,6 +147,11 @@
                 if (response.status == true) {
                     $('#nama_anggota').html(response.data[0]['nama_anggota'])
 					$('#no_induk').html(response.data[0]['no_induk'])
+					if (response.data[0]['picture'] == null || response.data[0]['picture'] == ''){
+                        document.getElementById("photo_anggota").setAttribute("src", window.location.origin+"/storage/user/account_box.png")
+                    } else {
+                        document.getElementById("photo_anggota").setAttribute("src", window.location.origin+"/storage/user/"+response.data[0]['picture'])
+                    }
                 }
             }
         })

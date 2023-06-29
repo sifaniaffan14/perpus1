@@ -265,7 +265,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-6 d-flex justify-content-center h-auto pb-lg-5 pb-0" style="min-height: 300px">
-                    <img id="img_detail" class="mt-4" alt="" style="width:20vh; height:24vh">
+                    <img id="img_detail" class="mt-4" alt="" style="width:26vh; height:30vh">
                 </div>
                 <div class="col-lg-6 col-12 d-flex flex-column justify-content-center p-lg-2 p-5">
                     <table class="border-0 text__custom fw-semibold align-bottom ">

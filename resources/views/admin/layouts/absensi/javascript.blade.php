@@ -57,7 +57,8 @@
                                 if (v == '' || v == null){
                                     document.getElementById("img").setAttribute("src", "images/User(2).png")
                                 } else {
-                                    var path = "http://127.0.0.1:8000/storage/user/"+v
+                                    var baseUrl = window.location.origin + '/storage/user/';
+                                    var path = baseUrl+v
                                     document.getElementById("img").setAttribute("src", path)
                                 }
                             }

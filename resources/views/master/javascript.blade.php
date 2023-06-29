@@ -166,7 +166,7 @@
                     <div onclick="onDetail('` + v.id + `')" style="cursor:pointer;"
                     class="w-100 text-dark search__item text-decoration-none fw-semibold">
                         <img src="` + baseUrl + v.image + `" style="width:15vh; height:18vh" alt="img">
-                        <div class="w-75">
+                        <div class="w-75 mb-auto">
                             <div class="d-flex">
                                 <div class="d-flex justify-content-between" style="width: 80px"><span>Judul</span>
                                     <span>:</span>
@@ -267,8 +267,6 @@
                 }
             }
         }
-
-        
     }
 
     function switchPage(i) {

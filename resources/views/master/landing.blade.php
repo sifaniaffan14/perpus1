@@ -90,7 +90,29 @@ License: For each use you must have a valid license purchased only from above li
 								<!--begin::Page title-->
 								<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 									<!--begin::Title-->
-									<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">{{ucfirst(str_replace('/','',$_SERVER["REQUEST_URI"]))}}</h1>
+									<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+										<?php 
+										if (str_replace('/','',$_SERVER["REQUEST_URI"]) == 'admin-dashboard'){
+											echo('Dashboard');
+										} elseif (str_replace('/','',$_SERVER["REQUEST_URI"]) == 'buku'){
+											echo('Data Buku');
+										} elseif (str_replace('/','',$_SERVER["REQUEST_URI"]) == 'createPeminjaman'){
+											echo('Peminjaman Buku');
+										} elseif (str_replace('/','',$_SERVER["REQUEST_URI"]) == 'pengembalian'){
+											echo('Pengembalian Buku');
+										} elseif (str_replace('/','',$_SERVER["REQUEST_URI"]) == 'perpanjangan'){
+											echo('Perpanjangan Buku');
+										} elseif (str_replace('/','',$_SERVER["REQUEST_URI"]) == 'peminjaman'){
+											echo('Data Peminjaman');
+										} elseif (str_replace('/','',$_SERVER["REQUEST_URI"]) == 'dataAnggota'){
+											echo('Data Anggota');
+										} elseif (str_replace('/','',$_SERVER["REQUEST_URI"]) == 'pengunjung'){
+											echo('Data Kunjungan');
+										} else {
+											echo(str_replace('/','',$_SERVER["REQUEST_URI"]));
+										}
+										?>
+									</h1>
 									<!--end::Title-->
 									<!--begin::Breadcrumb-->
 									<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -105,7 +127,29 @@ License: For each use you must have a valid license purchased only from above li
 										</li>
 										<!--end::Item-->
 										<!--begin::Item-->
-										<li class="breadcrumb-item text-muted">Dashboards</li>
+										<li class="breadcrumb-item text-muted">
+											<?php 
+											if (str_replace('/','',$_SERVER["REQUEST_URI"]) == 'admin-dashboard'){
+												echo('Dashboard');
+											} elseif (str_replace('/','',$_SERVER["REQUEST_URI"]) == 'buku'){
+												echo('Data Buku');
+											} elseif (str_replace('/','',$_SERVER["REQUEST_URI"]) == 'createPeminjaman'){
+												echo('Peminjaman Buku');
+											} elseif (str_replace('/','',$_SERVER["REQUEST_URI"]) == 'pengembalian'){
+												echo('Pengembalian Buku');
+											} elseif (str_replace('/','',$_SERVER["REQUEST_URI"]) == 'perpanjangan'){
+												echo('Perpanjangan Buku');
+											} elseif (str_replace('/','',$_SERVER["REQUEST_URI"]) == 'peminjaman'){
+												echo('Data Peminjaman');
+											} elseif (str_replace('/','',$_SERVER["REQUEST_URI"]) == 'dataAnggota'){
+												echo('Data Anggota');
+											} elseif (str_replace('/','',$_SERVER["REQUEST_URI"]) == 'pengunjung'){
+												echo('Data Kunjungan');
+											} else {
+												echo(str_replace('/','',$_SERVER["REQUEST_URI"]));
+											}
+											?>
+										</li>
 										<!--end::Item-->
 									</ul>
 									<!--end::Breadcrumb-->

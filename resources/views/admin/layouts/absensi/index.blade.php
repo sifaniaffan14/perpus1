@@ -25,7 +25,7 @@
                     autocomplete="off" placeholder="No. Induk">
                 </div>
                 <div class="d-flex justify-content-center  mt-3">
-                    <button onclick="onSave(event)" class="btn w-50 min-w-100px text-white my-3 fs-5 border-0 rounded-pill w-25 submit" style="background-color: #306484;" type="submit">
+                    <button onclick="onSave(event)" class="btn w-50 min-w-100px text-white my-3 fs-5 border-0 rounded-pill w-25 submit" style="background-color: #202f4e;" type="submit">
                         Submit
                     </button>
                 </div>
