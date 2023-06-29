@@ -24,9 +24,9 @@ class PengembalianController extends Controller
                 $condition = ['anggota_id',$_GET['anggota_id']];
                 array_push($where,$condition);
             } 
-
+            // dd($where);
             $operation = Peminjaman::with('peminjaman_detail.detail_buku.buku','anggota')->where($where)->get();
- 
+            // dd($operation);
             return $this->response($operation);
         } catch (\Exception $e) {
             return $this->response($e->getMessage(), true);

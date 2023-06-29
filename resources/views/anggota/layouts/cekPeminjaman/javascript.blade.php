@@ -21,7 +21,11 @@
                 if (response.status == true) {
                     $('#nama_anggota').html(response.data[0]['nama_anggota'])
 					$('#no_induk').html(response.data[0]['no_induk'])
-                    document.getElementById("photo_anggota").setAttribute("src", window.location.origin+"/storage/user/"+response.data[0]['picture'])
+                    if (response.data[0]['picture'] == null || response.data[0]['picture'] == ''){
+                        document.getElementById("photo_anggota").setAttribute("src", window.location.origin+"/storage/user/account_box.png")
+                    } else {
+                        document.getElementById("photo_anggota").setAttribute("src", window.location.origin+"/storage/user/"+response.data[0]['picture'])
+                    }
                 }
             }
         })

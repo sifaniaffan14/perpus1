@@ -53,7 +53,12 @@ function tableAbsensi(){
                             // Kolom Identitas
                             var identityCell = $("<td>").appendTo(row);
                             var identityDiv = $("<div>").addClass("d-flex align-items-center").appendTo(identityCell);
-                            $("<div>").addClass("symbol symbol-50px me-3").html("<img src='assets/media/avatars/300-3.jpg' class='' alt=''>").appendTo(identityDiv);
+                            if (item.picture == null || item.picture == ''){
+                                urlPhoto = window.location.origin + '/storage/user/account_box.png'
+                            } else {
+                                urlPhoto = window.location.origin + '/storage/user/' + item.picture;
+                            }
+                            $("<div>").addClass("symbol symbol-50px me-3").html("<img src='"+ urlPhoto +"' class='' alt=''>").appendTo(identityDiv);
                             var identityContent = $("<div>").addClass("d-flex justify-content-start flex-column").appendTo(identityDiv);
                             $("<a>").attr("href", item.picture).addClass("text-gray-800 fw-bold text-hover-primary mb-1 fs-6").text(item.nama_anggota).appendTo(identityContent);
                             $("<span>").addClass("text-gray-400 fw-semibold d-block fs-7").text(item.no_induk).appendTo(identityContent);
@@ -102,7 +107,13 @@ function tableAbsensi(){
                         // Kolom Authors
                         var authorsCell = $("<td>").appendTo(row);
                         var authorsDiv = $("<div>").addClass("d-flex align-items-center").appendTo(authorsCell);
-                        $("<div>").addClass("symbol symbol-45px me-5").html("<img src='" + item.avatar + "' alt=''>").appendTo(authorsDiv);
+                        var urlPhoto = '';
+                        if (item.picture == null || item.picture == ''){
+                            urlPhoto = window.location.origin + '/storage/user/account_box.png'
+                        } else {
+                            urlPhoto = window.location.origin + '/storage/user/' + item.picture;
+                        } 
+                        $("<div>").addClass("symbol symbol-45px me-5").html("<img src='" + urlPhoto + "' alt=''>").appendTo(authorsDiv);
                         var authorsContent = $("<div>").addClass("d-flex justify-content-start flex-column").appendTo(authorsDiv);
                         $("<a>").attr("href", "item.picture").addClass("text-dark fw-bold text-hover-primary fs-6").text(item.nama_anggota).appendTo(authorsContent);
                         $("<span>").addClass("text-muted fw-semibold text-muted d-block fs-7").text(item.no_induk).appendTo(authorsContent);
