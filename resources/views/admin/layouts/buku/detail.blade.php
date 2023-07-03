@@ -14,12 +14,12 @@
                 </h2>
             </div>
             <div class="col-8 d-flex">
-                <div class="col-lg-5" style="padding: 10vh; margin-left:45px">
+                <div class="col-lg-7" style="padding: 10vh; margin-left:45px">
                     <img src="" id="img" alt="" style="width:28vh; height:34vh">
                 </div>
                 <svg id="barcode"></svg>
 
-                <div class="col-lg-7" style="padding: 10vh;">
+                <div class="col-lg-10" style="padding: 10vh;">
                     <p id="detail_id" style="display:none;"></p>
                     <table style="width: 100%">
                         <tbody style="color: #000000;">
@@ -108,7 +108,7 @@
                     </table>
                 </div>
             </div>
-            <div class="bottom" style=" margin-left:8vh; margin-top:-30px; margin-bottom:6vh">
+            <div class="bottom" style=" margin-left:8vh; margin-top:-80px; margin-bottom:6vh">
                     <button type="button" onclick="closeDisplayDetail()" class="btn fw-bolder text-light" style="background-color:#264A8A"><i class="bi bi-arrow-left fs-4"></i> Kembali</button>
                     <button type="button" onclick="onEdit(this)" class="btn btn-warning ms-3"><i class="bi bi-pencil-square"></i> Edit</button>
                     <button onclick="onDelete(this)" class="btn btn-danger ms-3"><i class="bi bi-trash"></i> Hapus</button>
@@ -123,7 +123,7 @@
                 <button type="button" style="float:right; background-color:#264A8A" class="btn me-3 text-light" onclick="showModal()">+ Create New</a></button>
             </div>
             <div class="card-body">
-                <table class="table mx-auto text-center" onclick="check()" style="width:90%" id="tableEksemplar">
+                <table class="table mx-auto text-center" onclick="check()" style="width:95%" id="tableEksemplar">
                     <thead>
                         <tr>
                             <th class="fw-bolder" style="width: 4%"> No </th>
@@ -139,7 +139,7 @@
                                     <input type="checkbox" id="allCheckbox" name="pilih[]" value="checked_all">
                                 </div>
                             </th>
-                            <th class="fw-bolder">Action</th>
+                            <th class="fw-bolder" style="width: 15%">Action</th>
                         </tr>
                     </thead>
                     <tbody id="listTable"></tbody>
