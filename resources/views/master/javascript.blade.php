@@ -3,6 +3,8 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 <script src="assets/OwlCarousel2-2.3.4/dist/owl.carousel.min.js "></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
 <script>
     getCategory()
     var urlPath = {
@@ -331,9 +333,27 @@
         if (!$('.page-search').hasClass('d-none')) {
             $('.page-search').addClass('d-none')
         }
+        if (!$('.page-about').hasClass('d-none')) {
+            $('.page-about').addClass('d-none')
+        }
+        if (!$('.page-regulation').hasClass('d-none')) {
+            $('.page-regulation').addClass('d-none')
+        }
         if ($('.page-landing').hasClass('d-none')) {
             $('.page-landing').removeClass('d-none')
             $('#val_search').val('')
         }
+    }
+
+    function onDisplayAbout() {
+        $('.page-about').removeClass('d-none')
+        $('.page-landing').addClass('d-none')
+        $('.page-regulation').addClass('d-none')
+    }
+
+    function onDisplayRegulation() {
+        $('.page-about').addClass('d-none')
+        $('.page-landing').addClass('d-none')
+        $('.page-regulation').removeClass('d-none')
     }
 </script>

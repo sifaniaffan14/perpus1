@@ -99,6 +99,10 @@
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery.js"></script>
     <script src="assets/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Questrial' rel='stylesheet'>
     <title>Perpustakaan SMP Al-Falah Ketintang Surabaya</title>
 </head>
 
@@ -115,36 +119,30 @@
                     <li class="nav-item">
                         <p class="nav-link active m-0" onclick="onDisplayLanding()" style="cursor:pointer;" aria-current="page">Beranda</p>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" onclick="showCategory2()" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                            Tentang Kami
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" role="button" onclick="onDisplayAbout()" aria-expanded="false">
+                            About Us
                         </a>
-                        <ul class="dropdown-menu" id="about_us">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Koleksi Terbaru</a>
+                        <a class="nav-link" href="#" role="button" onclick="onDisplayRegulation()">Regulation</a>
                     </li>
                     @if (Auth::check())
                         @if (Auth::user()->isAdmin(Auth::id()))
                         <li class="nav-item">
                             <a href="{{ route('admin-dashboard') }}"
-                            class="nav-link btn btn-sm btn-warning rounded-pill border-0 btn__login" style="width: 110px;">Dashboard</a>
+                            class="nav-link btn btn-sm rounded-pill border-0 btn__login" style="width: 110px;">Dashboard</a>
                         </li>
                         @else
                         <li class="nav-item">
                             <a href="{{ route('dashboard') }}"
-                            class="nav-link btn btn-sm btn-warning rounded-pill border-0 btn__login" style="width: 110px;">Dashboard</a>
+                            class="nav-link btn btn-sm rounded-pill border-0 btn__login" style="width: 110px;">Dashboard</a>
                         </li>
                         @endif
                     @else
                     <li class="nav-item">
                         <a href="{{ route('login') }}"
-                        class="nav-link btn btn-sm btn-warning rounded-pill border-0 btn__login" style="width: 100px;">Login</a>
+                        class="nav-link btn btn-sm rounded-pill border-0 btn__login" style="width: 100px;">Login</a>
                     </li>
                     @endif
                 </ul>
@@ -163,14 +161,14 @@
                         @csrf
                         <div class="d-flex justify-content-center" style="height:7.8vh">
                             <div class="dropdown category__">
-                                <button class="btn btn-light rounded-pill dropdown-toggle h-100 fw-semibold" onclick="showCategory()" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="width:140px; color:#202F4E">
+                                <button class="btn btn-light rounded-pill dropdown-toggle h-100 fw-semibold" onclick="showCategory()" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Category
                                 </button>
                                 <ul class="dropdown-menu" id="category" aria-labelledby="dropdownCategory">
                                 </ul>
                             </div>
-                            <input type="text" class="form-control form-control-lg rounded-pill search__input w-100" name="val_search" id="val_search" style="padding-left: 5vh;"
-                            placeholder="Ketik satu atau lebih kata kunci berupa Judul, Pengarang atau Subyek" />
+                            <input type="text" class="form-control form-control-lg rounded-pill search__input" name="val_search" id="val_search" style="padding-left: 8vh;"
+                            placeholder="Ketik satu atau lebih kata kunci berupa Judul atau Pengarang" />
                             <button class="btn btn-lg btn-warning btn__search text-white rounded-circle">
                                 <i class="bi bi-search"></i>
                             </button>
@@ -227,109 +225,14 @@
             </div>
         </section>
     </div>
-    <div class="page-search d-none">
-        <section id="search__bar" class="container-fluid">
-            <div class="row">
-                <div class="col-lg-7 col-12 d-flex align-items-center gap-3 my-5">
-                    <label class="w-75 ps-lg-5">
-                        <input type="text" class="form-control rounded-pill px-4" id="search2" placeholder="Search"/>
-                    </label>
-                    <button onclick="onSearch2()" class="btn btn-warning rounded-pill text-white button__ fw-semibold">Search</button>
-                    <button onclick="onReset()" class="btn btn-warning rounded-pill text-white button__ fw-semibold">Clear</button>
-                </div>
-            </div>
-        </section>
-        <section id="search__result" class="container-fluid search__result rounded rounded-top rounded-3 overflow-auto">
-            <div class="row">
-                <div class="col-12 p-4">
-                    <h3 class="fw-bold text__custom">Hasil Pencarian</h3>
-                </div>
-            </div>
-            <div class="row d-flex justify-content-center align-items-top gap-3 h-75 w-100" id="result_buku">
-            </div>
-        </section>
-    </div>
-    <div class="page-detail d-none">
-        <section id="search__bar" class="container">
-            <div class="row">
-                <div class="col-2 d-flex align-items-center gap-3 my-5">
-                    <p onclick="onDisplaySearch()" class="btn btn-warning m-0 rounded-pill text-light w-75" style="min-width: 100px">Back</p>
-                </div>
-            </div>
-        </section>
-        <section id="search__result" class="container card rounded rounded-4 overflow-auto">
-            <div class="row">
-                <div class="col-12 p-4">
-                    <h3 class="fw-bold text__custom text-center">Details</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 d-flex justify-content-center h-auto pb-lg-5 pb-0" style="min-height: 300px">
-                    <img id="img_detail" class="mt-4" alt="" style="width:26vh; height:30vh">
-                </div>
-                <div class="col-lg-6 col-12 d-flex flex-column justify-content-center p-lg-2 p-5">
-                    <table class="border-0 text__custom fw-semibold align-bottom ">
-                        <tr class="pb-2">
-                            <td class="align-baseline w-lg-25 w-50">Kode Buku</td>
-                            <td class="align-baseline text-center">:</td>
-                            <td class="align-baseline" id="kode_buku"></td>
-                        </tr>
-                        <tr class="pb-2">
-                            <td class="align-baseline w-25">Judul Buku</td>
-                            <td class="align-baseline text-center">:</td>
-                            <td class="align-baseline" id="judul"></td>
-                        </tr>
-                        <tr class="pb-2">
-                            <td class="align-baseline w-25">Pengarang</td>
-                            <td class="align-baseline text-center">:</td>
-                            <td class="align-baseline" id="pengarang"></td>
-                        </tr>
-                        <tr class="pb-2">
-                            <td class="align-baseline w-25">Penerbit</td>
-                            <td class="align-baseline text-center">:</td>
-                            <td class="align-baseline" id="penerbit"></td>
-                        </tr>
-                        <tr class="pb-2">
-                            <td class="align-baseline w-25">No. ISBN</td>
-                            <td class="align-baseline text-center">:</td>
-                            <td class="align-baseline" id="no_isbn"></td>
-                        </tr>
-                        <tr class="pb-2">
-                            <td class="align-baseline w-25">Jumlah Halaman</td>
-                            <td class="align-baseline text-center">:</td>
-                            <td class="align-baseline" id="halaman"></td>
-                        </tr>
-                        <tr class="pb-2">
-                            <td class="align-baseline w-25">Kategori</td>
-                            <td class="align-baseline text-center">:</td>
-                            <td class="align-baseline" id="nama_kategori"></td>
-                        </tr>
-                    </table>
-                    <div class="mt-4 table__detail">
-                        <table class="table table-bordered table-sm mw-100" style="width:90%">
-                            <thead class="bg__custom text-dark">
-                                <tr>
-                                    <td>No.</td>
-                                    <td>Kode Eksemplar</td>
-                                    <td>Status</td>
-                                    <td>Kondisi</td>
-                                    <td>Tanggal Pinjam</td>
-                                    <td>Tanggal Kembali</td>
-                                </tr>
-                            </thead>
-                            <tbody id="list_table">
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-    </div>
-    <footer>
+    @include('master.pencarian')
+    @include('master.detailPencarian')
+    @include('master.aboutUs')
+    @include('master.regulasi')
+    @include('master.footer')
+    <!-- <footer>
         <h6 class="text-white text-center">Copyright 2023 © SMP Al Falah Ketintang Surabaya</h6>
-    </footer>
+    </footer> -->
 </body>
 @include('master.javascript')
 
