@@ -4,9 +4,9 @@
                 <img src="images/logo.svg" alt="">
             </div>
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">Beranda</a></li>
-                <li class="list-inline-item"><a href="#">About Us</a></li>
-                <li class="list-inline-item"><a href="#">Regulation</a></li>
+                <li class="list-inline-item"><a href="#" onclick="onDisplayLanding()">Beranda</a></li>
+                <li class="list-inline-item"><a href="#" onclick="onDisplayAbout()">About Us</a></li>
+                <li class="list-inline-item"><a href="#" onclick="onDisplayRegulation()">Regulation</a></li>
             </ul>
             <div class="social">
                 <a href="#">
