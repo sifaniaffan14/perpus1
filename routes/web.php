@@ -43,7 +43,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [ViewController::class, 'home']);
 Route::controller(ViewController::class)->name('landing.')->prefix('landing')->group(function () {
-    $route = array('search', 'selectCategory', 'selectDetail', 'selectEksemplar');  
+    $route = array('search', 'selectCategory', 'selectDetail', 'selectEksemplar', 'selectKoleksi');  
     foreach ($route as $route) {
         Route::any($route=='index'?'':'/'.$route, $route)->name($route);
     }
@@ -191,7 +191,7 @@ Route::middleware('protectedPage:1')->group(function () {
 Route::middleware('protectedPage:2')->group(function () {
     Route::get('/dashboard',[DashboardAnggota::class, 'index'])->name('dashboard');
     Route::controller(DashboardAnggota::class)->name('dashboard.')->prefix('dashboard')->group(function () {
-        $route = array('selectAnggota', 'selectInformasi', 'selectCount', 'selectPeminjaman');  
+        $route = array('selectAnggota', 'selectInformasi', 'selectCount', 'selectPeminjaman', 'selectKoleksi', 'selectDetail', 'selectEksemplar');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }

@@ -185,42 +185,7 @@
                     <h3 class="fw-bold text-center p-2 mb-4" style="color: #202F4E;">Koleksi Terbaru</h3>
                     <!-- Set up your HTML -->
                     <div class="container__carousel">
-                        <div class="owl-carousel owl-theme">
-                            <div class="item">
-                                <a href="">
-                                    <img src="assets/media/book.svg" class="book__" alt="" />
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="">
-                                    <img src="assets/media/book.svg" class="book__" alt="" />
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="">
-                                    <img src="assets/media/book.svg" class="book__" alt="" />
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="">
-                                    <img src="assets/media/book.svg" class="book__" alt="" />
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="">
-                                    <img src="assets/media/book.svg" class="book__" alt="" />
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="">
-                                    <img src="assets/media/book.svg" class="book__" alt="" />
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="">
-                                    <img src="assets/media/book.svg" class="book__" alt="" />
-                                </a>
-                            </div>
+                        <div class="owl-carousel owl-theme" id="koleksi_terbaru">
                         </div>
                     </div>
                 </div>
@@ -253,7 +218,7 @@
         <section id="search__bar" class="container">
             <div class="row">
                 <div class="col-2 d-flex align-items-center gap-3 my-5">
-                    <p onclick="onDisplaySearch()" class="btn btn-warning m-0 rounded-pill text-light w-75" style="min-width: 100px">Back</p>
+                    <p onclick="onDisplaySearch()" id="btnBack" class="btn btn-warning m-0 rounded-pill text-light w-75" style="min-width: 100px">Back</p>
                 </div>
             </div>
         </section>

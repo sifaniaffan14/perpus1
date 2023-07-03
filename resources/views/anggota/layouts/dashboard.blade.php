@@ -2,7 +2,7 @@
 
 @section('content2')
 
-<div id="kt_app_content_container" class="app-container container-fluid me-10">
+<div id="page-main" class="app-container container-fluid me-10">
 	<!--begin::Row-->
 	<div class="row g-5 g-xl-10 p-5">
 		<!--begin::Col-->
@@ -70,27 +70,9 @@
 			<div class="container rounded bg-white p-5 h-100">
 				<h4>Koleksi Terbaru</h4>
 				<div id="carouselExampleIndicators" class="carousel slide h-100" data-bs-ride="carousel">
-					<div class="carousel-indicators">
-						<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active bg-secondary" aria-current="true" aria-label="Slide 1"></button>
-						<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="bg-secondary" aria-label="Slide 2"></button>
-						<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="bg-secondary" aria-label="Slide 3"></button>
+					<div class="carousel-indicators" id="carouselIndicators">
 					</div>
-					<div class="carousel-inner h-100">
-						<div class="carousel-item h-100 active">
-							<div class="d-flex justify-content-center align-items-center h-100">
-								<img src="https://cdn.shopify.com/s/files/1/0603/1402/6208/products/ECW004_600x.png?v=1675320701" height="195px" class="d-block w-80" alt="...">
-							</div>
-						</div>
-						<div class="carousel-item h-100">
-							<div class="d-flex justify-content-center align-items-center h-100">
-								<img src="https://cdn.shopify.com/s/files/1/0603/1402/6208/products/ECW004_600x.png?v=1675320701" height="195px" class="d-block w-80" alt="...">
-							</div>
-						</div>
-						<div class="carousel-item h-100">
-							<div class="d-flex justify-content-center align-items-center h-100">
-								<img src="https://cdn.shopify.com/s/files/1/0603/1402/6208/products/ECW004_600x.png?v=1675320701" height="195px" class="d-block w-80" alt="...">
-							</div>
-						</div>
+					<div class="carousel-inner h-100" id="koleksi_terbaru">
 					</div>
 					<br>
 					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -132,6 +114,93 @@
 	</div>
 </div>
 
+<div id="page-detail" class="app-container container-fluid me-10 d-none">
+    <!--begin::Row-->
+    <div class="container-fluid">
+        <div class="ms-2 me-2 bg-white rounded mb-5 p-5">
+            <div class="row p-3">
+                <div class="col-1 ms-3">
+                    <button class="btn text-light" style="border-radius: 40px; background-color:#244785" onclick="onDisplayMain()">
+                        Back
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end::Row-->
+    <div class="container-fluid ps-5 pe-5">
+        <div class="bg-secondary rounded">
+            <div class="pt-6 p-5 rounded-bottom-0 rounded-4" style="background-color: #244785;">
+                <h2 class="text-white ms-5">Detail Buku</h2>
+            </div>
+            
+            <div class="bg-white p-5">
+            <div class="row mt-2">
+                    <div class="col-lg-5 d-flex justify-content-center h-auto pb-lg-5 pb-0 align-items-center" style="min-height: 300px">
+                        <img id="img_detail" class="mt-4" alt="" style="width:26vh; height:30vh">
+                    </div>
+                    <div class="col-lg-7 col-12 d-flex flex-column justify-content-center p-lg-2 p-5">
+                        <table class="border-0 text__custom fw-semibold align-bottom ">
+                            <tr class="pb-2">
+                                <td class="align-baseline w-lg-25 w-50 fs-5">Kode Buku</td>
+                                <td class="align-baseline text-center fs-5">:</td>
+                                <td class="align-baseline fs-5" id="kode_buku"></td>
+                            </tr>
+                            <tr class="pb-2">
+                                <td class="align-baseline w-25 fs-5">Judul Buku</td>
+                                <td class="align-baseline text-center fs-5">:</td>
+                                <td class="align-baseline fs-5" id="judul"></td>
+                            </tr>
+                            <tr class="pb-2">
+                                <td class="align-baseline w-25 fs-5">Pengarang</td>
+                                <td class="align-baseline text-center fs-5">:</td>
+                                <td class="align-baseline fs-5" id="pengarang"></td>
+                            </tr>
+                            <tr class="pb-2">
+                                <td class="align-baseline w-25 fs-5">Penerbit</td>
+                                <td class="align-baseline text-center fs-5">:</td>
+                                <td class="align-baseline fs-5" id="penerbit"></td>
+                            </tr>
+                            <tr class="pb-2">
+                                <td class="align-baseline w-25 fs-5">No. ISBN</td>
+                                <td class="align-baseline text-center fs-5">:</td>
+                                <td class="align-baseline fs-5" id="no_isbn"></td>
+                            </tr>
+                            <tr class="pb-2">
+                                <td class="align-baseline w-25 fs-5">Jumlah Halaman</td>
+                                <td class="align-baseline text-center fs-5">:</td>
+                                <td class="align-baseline fs-5" id="halaman"></td>
+                            </tr>
+                            <tr class="pb-2">
+                                <td class="align-baseline w-25 fs-5">Kategori</td>
+                                <td class="align-baseline text-center fs-5">:</td>
+                                <td class="align-baseline fs-5" id="nama_kategori"></td>
+                            </tr>
+                        </table>
+                        <div class="mt-7">
+                            <table class="table table-bordered table-sm mw-100" style="width:90%">
+                                <thead class="text-dark">
+                                    <tr>
+                                        <td class="bg-warning p-2 fs-5 border">No.</td>
+                                        <td class="bg-warning p-2 fs-5 border">Kode Eksemplar</td>
+                                        <td class="bg-warning p-2 fs-5 border">Status</td>
+                                        <td class="bg-warning p-2 fs-5 border">Kondisi</td>
+                                        <td class="bg-warning p-2 fs-5 border">Tanggal Pinjam</td>
+                                        <td class="bg-warning p-2 fs-5 border">Tanggal Kembali</td>
+                                    </tr>
+                                </thead>
+                                <tbody id="list_table">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 <script>
@@ -139,6 +208,7 @@
 	getInformasi()
 	getCount()
 	getPeminjaman()
+	getKoleksi()
 	function getAnggota() {
         $.ajax({
             url: "{{ route('dashboard.selectAnggota') }}",
@@ -214,6 +284,126 @@
                 }
             }
         })
+    }
+
+	function getKoleksi() {
+        $.ajax({
+            url: "{{ route('dashboard.selectKoleksi') }}",
+            type: 'GET',
+            success: function(response) {
+                if (response.status == true) {
+                    $('#koleksi_terbaru').html('')
+                    var baseUrl = window.location.origin + '/storage/buku/';
+                    $.each(response.data, function(k, v) {
+                        if (v.image == '' || v.image == null) {
+                            v.image = 'default-cover.jpeg'
+                        }
+                        var url = baseUrl + v.image
+                        if (k == 0){
+							$('#koleksi_terbaru').append(`
+								<div class="carousel-item h-100 active">
+									<div class="d-flex justify-content-center align-items-center h-100">
+										<img src="`+url+`" height="195px" width="150px" class="d-block" alt="..." onclick="onDetail('`+v.id+`')" style="cursor:pointer">
+									</div>
+								</div>
+							`)
+							$('#carouselIndicators').append(`
+								<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active bg-secondary" aria-current="true" aria-label="Slide 1"></button>
+							`)
+						} else{
+							$('#koleksi_terbaru').append(`
+								<div class="carousel-item h-100">
+									<div class="d-flex justify-content-center align-items-center h-100">
+										<img src="`+url+`" height="195px" width="150px" class="d-block" alt="..." onclick="onDetail('`+v.id+`')" style="cursor:pointer">
+									</div>
+								</div>
+							`)
+							$('#carouselIndicators').append(`
+								<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="`+k+`" class="bg-secondary" aria-label="Slide `+(k + 1)+`"></button>
+							`)
+						}
+                    });
+
+                    
+                }
+            }
+        })
+    }
+
+	function onDetail(id) {
+        $.ajax({
+            url: "{{ route('dashboard.selectDetail') }}",
+            type: 'GET',
+            data: {
+                id: id
+            },
+            success: function(response) {
+                if (response.status == true) {
+                    // console.log(response.data[0])
+                    var baseUrl = window.location.origin + '/storage/buku/';
+
+                    $('#page-main').addClass('d-none')
+                    $('#page-detail').removeClass('d-none')
+
+                    if (response.data[0]['image'] == '' || response.data[0]['image'] == null) {
+                        response.data[0]['image'] = 'default-cover.jpeg';
+                    }
+                    document.getElementById('img_detail').setAttribute('src', baseUrl + response.data[0]['image']);
+                    $('#kode_buku').html(response.data[0]['kode_buku']);
+                    $('#no_isbn').html(response.data[0]['no_isbn']);
+                    $('#judul').html(response.data[0]['judul']);
+                    $('#pengarang').html(response.data[0]['pengarang']);
+                    $('#penerbit').html(response.data[0]['penerbit']);
+                    $('#halaman').html(response.data[0]['halaman']);
+                    $('#nama_kategori').html(response.data[0]['nama_kategori']);
+
+                    tableEksemplar(response.data[0]['id']);
+                }
+            }
+        })
+    }
+
+    function tableEksemplar(id) {
+        $.ajax({
+            url: "{{ route('dashboard.selectEksemplar') }}",
+            type: 'GET',
+            data: {
+                id: id
+            },
+            success: function(response) {
+
+                if (response.status == true) {
+                    $('#list_table').html('')
+                    var num = 1;
+                    $.each(response.data, function(k, v) {
+                        if (v.status_peminjaman != 2) {
+                            var tgl_pinjam = '-';
+                            var tgl_kembali = '-';
+                            if (v.tgl_pinjam) {
+                                tgl_pinjam = moment(v.tgl_pinjam).format('DD/MM/YYYY');
+                                tgl_kembali = moment(v.tgl_kembali).format('DD/MM/YYYY');
+                            }
+                            $('#list_table').append(`
+                                <tr>
+                                    <td class="p-2 fs-5 border">${num}</td>
+                                    <td class="p-2 fs-5 border">${v.no_panggil}</td>
+                                    <td class="p-2 fs-5 border">${v.status}</td>
+                                    <td class="p-2 fs-5 border">${v.kondisi}</td>
+                                    <td class="p-2 fs-5 border">${tgl_pinjam}</td>
+                                    <td class="p-2 fs-5 border">${tgl_kembali}</td>
+                                </tr>
+                            `)
+                            num++;
+                        }
+                    });
+                }
+            }
+        })
+    }
+
+	function onDisplayMain(){
+        $('#page-main').removeClass('d-none')
+        $('#page-detail').addClass('d-none')
     }
 </script>
 @endsection

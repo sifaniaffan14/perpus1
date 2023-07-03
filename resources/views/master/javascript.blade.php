@@ -4,61 +4,24 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 <script src="assets/OwlCarousel2-2.3.4/dist/owl.carousel.min.js "></script>
 <script>
-    getCategory()
     var urlPath = {
         search: "{{ route('landing.search') }}",
         selectDetail: "{{ route('landing.selectDetail') }}",
+        selectCategory: "{{ route('landing.selectCategory') }}",
         selectEksemplar: "{{ route('landing.selectEksemplar') }}",
+        selectKoleksi: "{{ route('landing.selectKoleksi') }}",
     }
     var resultArray = '';
     var data = '';
     var totalPages = '';
     var next = 2;
     var previous = 1;
-
-    // owl carousel
-    $(".owl-carousel").owlCarousel({
-        loop: true,
-        margin: 10,
-        nav: true,
-        center: true,
-        autoplay: true,
-        autoplayTimeout: 1000,
-        autoplayHoverPause: true,
-        navText: [
-            " <button class='prev position-absolute rounded-circle' type='button'><i class='bi bi-chevron-left'></i></button>",
-            " <button class='next position-absolute rounded-circle' type='button'><i class='bi bi-chevron-right'></i></button>",
-        ],
-        responsive: {
-            0: {
-                items: 1,
-            },
-            600: {
-                items: 3,
-            },
-            1000: {
-                items: 5,
-            },
-        },
-    });
-
-    $(".next").click(function() {
-        owl.trigger("next.owl.carousel");
-    });
-    // Go to the previous item
-    $(".prev").click(function() {
-        // With optional speed parameter
-        // Parameters has to be in square bracket '[]'
-        owl.trigger("prev.owl.carousel", [300]);
-    });
-
-    $(document).ready(function() {
-        $('.owl-stage-outer').addClass('w-75 mx-auto');
-    })
+    getCategory()
+    getKoleksi()
 
     function getCategory() {
         $.ajax({
-            url: "{{ route('landing.selectCategory') }}",
+            url: urlPath.selectCategory,
             type: 'GET',
             success: function(response) {
                 if (response.status == true) {
@@ -67,6 +30,77 @@
                         options += '<li onclick="showCategory()" ><a class="dropdown-item" href="#' + value.id + '">' + value.nama_kategori + '</a></li>';
                     });
                     $("#category").append(options);
+                }
+            }
+        })
+    }
+
+    function onDetail2(id){
+        onDetail(id)
+        document.getElementById('btnBack').setAttribute('onclick','onDisplayLanding()')
+    }
+
+    function getKoleksi() {
+        $.ajax({
+            url: urlPath.selectKoleksi,
+            type: 'GET',
+            success: function(response) {
+                if (response.status == true) {
+                    $('#koleksi_terbaru').html('')
+                    var baseUrl = window.location.origin + '/storage/buku/';
+                    $.each(response.data, function(k, v) {
+                        if (v.image == '' || v.image == null) {
+                            v.image = 'default-cover.jpeg'
+                        }
+                        var url = baseUrl + v.image
+                        $('#koleksi_terbaru').append(`
+                            <div class="item">
+                                <p>
+                                    <img src="`+ url +`" class="book__" alt="" onclick="onDetail2('` + v.id + `')" style="cursor:pointer;"/>
+                                </p>
+                            </div>
+                        `)
+                    });
+
+                    // owl carousel
+                    $(".owl-carousel").owlCarousel({
+                        loop: true,
+                        margin: 10,
+                        nav: true,
+                        center: true,
+                        autoplay: true,
+                        autoplayTimeout: 1000,
+                        autoplayHoverPause: true,
+                        navText: [
+                            " <button class='prev position-absolute rounded-circle' type='button'><i class='bi bi-chevron-left'></i></button>",
+                            " <button class='next position-absolute rounded-circle' type='button'><i class='bi bi-chevron-right'></i></button>",
+                        ],
+                        responsive: {
+                            0: {
+                                items: 1,
+                            },
+                            600: {
+                                items: 3,
+                            },
+                            1000: {
+                                items: 5,
+                            },
+                        },
+                    });
+
+                    $(".next").click(function() {
+                        owl.trigger("next.owl.carousel");
+                    });
+                    // Go to the previous item
+                    $(".prev").click(function() {
+                        // With optional speed parameter
+                        // Parameters has to be in square bracket '[]'
+                        owl.trigger("prev.owl.carousel", [300]);
+                    });
+
+                    $(document).ready(function() {
+                        $('.owl-stage-outer').addClass('w-75 mx-auto');
+                    })
                 }
             }
         })
@@ -226,7 +260,12 @@
                     // console.log(response.data[0])
                     var baseUrl = window.location.origin + '/storage/buku/';
 
-                    $('.page-search').addClass('d-none');
+                    if (!$('.page-search').hasClass('d-none')){
+                        $('.page-search').addClass('d-none');
+                    }
+                    if (!$('.page-landing').hasClass('d-none')){
+                        $('.page-landing').addClass('d-none');
+                    }
                     $('.page-detail').removeClass('d-none');
 
                     if (response.data[0]['image'] == '' || response.data[0]['image'] == null) {
@@ -335,5 +374,7 @@
             $('.page-landing').removeClass('d-none')
             $('#val_search').val('')
         }
+
+        document.getElementById('btnBack').setAttribute('onclick','onDisplaySearch()')
     }
 </script>

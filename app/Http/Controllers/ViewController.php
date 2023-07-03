@@ -85,4 +85,18 @@ class ViewController extends Controller
             return $this->response($e->getMessage(), true);
         }
     }
+
+    public function selectKoleksi()
+    {
+        try {
+            $operation = buku::latest('created_at')
+                            ->take(8)
+                            ->where('bukus.is_active', '1')
+                            ->get();
+
+            return $this->response($operation);
+        } catch (\Exception $e){
+            return $this->response($e->getMessage(), true);
+        }
+    }
 }
