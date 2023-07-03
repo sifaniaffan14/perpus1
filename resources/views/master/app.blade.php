@@ -117,15 +117,15 @@
             <div class="collapse navbar-collapse pe-5" id="navbarNav">
                 <ul class="navbar-nav ms-auto gap-3 fw-semibold ">
                     <li class="nav-item">
-                        <p class="nav-link active m-0" onclick="onDisplayLanding()" style="cursor:pointer;" aria-current="page">Beranda</p>
+                        <a class="nav-link menu_nav m-0" role="button" onclick="onDisplayLanding()">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" role="button" onclick="onDisplayAbout()" aria-expanded="false">
+                        <a class="nav-link menu_nav" role="button" onclick="onDisplayAbout()" aria-expanded="false">
                             About Us
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" role="button" onclick="onDisplayRegulation()">Regulation</a>
+                        <a class="nav-link menu_nav" role="button" onclick="onDisplayRegulation()">Regulation</a>
                     </li>
                     @if (Auth::check())
                         @if (Auth::user()->isAdmin(Auth::id()))

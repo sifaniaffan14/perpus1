@@ -30,6 +30,16 @@ body {
     color: #eaeaea;
 }
 
+.menu_nav:hover {
+  color: #202F4E;
+  font-weight: bold;
+}
+
+.menu_nav:active {
+  background-color: #202F4E;
+  color: #ffffff;
+}
+
 .hero__1 {
     background: #202F4E;
     /* background: linear-gradient(90deg, rgba(48, 100, 132, 1) 0%, rgba(48, 137, 121, 1) 57%, rgba(32, 137, 121, 1) 100%); */
