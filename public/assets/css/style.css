@@ -40,9 +40,8 @@ body {
 .btn__search {
     background-color: #FFA600;
     color: #eaeaea;
-    aspect-ratio: 1/1 !important;
-    font-weight: 800 !important;
-    margin-left: -50px;
+    width: 90px;
+    margin-left: -45px;
 }
 
 .search__input {
@@ -89,7 +88,7 @@ body {
     overflow: hidden;
     background-position: center;
     object-fit: cover;
-    border-radius: 20px;
+    border-radius: 26px 26px 0px 0px;
 }
 
 .next {
@@ -99,8 +98,8 @@ body {
     background-color: white;
     color: black;
     border: none;
-    width: 75px;
-    height: 75px;
+    width: 40px;
+    height: 40px;
 }
 
 .prev {
@@ -110,8 +109,8 @@ body {
     background-color: white;
     color: black;
     border: none;
-    width: 75px;
-    height: 75px;
+    width: 40px;
+    height: 40px;
 }
 
 .bg__custom {

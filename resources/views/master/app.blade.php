@@ -169,7 +169,7 @@
                             </div>
                             <input type="text" class="form-control form-control-lg rounded-pill search__input" name="val_search" id="val_search" style="padding-left: 8vh;"
                             placeholder="Ketik satu atau lebih kata kunci berupa Judul atau Pengarang" />
-                            <button class="btn btn-lg btn-warning btn__search text-white rounded-circle">
+                            <button class="btn btn-lg btn-warning btn__search text-white rounded-pill">
                                 <i class="bi bi-search"></i>
                             </button>
                         </div>
