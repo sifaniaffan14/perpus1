@@ -1,4 +1,4 @@
-@extends('anggota.master.app')
+{{-- @extends('anggota.master.app')
 
 @section('content2')
 
@@ -42,7 +42,7 @@
 			</div>
 			<div class="row mt-8 w-75">
 				<div class="col-5">
-					<div class="container rounded-4 p-6" style="background-color:#5F5CF1">
+					<div class="container rounded-4 p-6" style="background-color:#264A8A">
 						<span class="text-light svg-icon svg-icon-1">
 							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
@@ -406,4 +406,4 @@
         $('#page-detail').addClass('d-none')
     }
 </script>
-@endsection
+@endsection --}}

@@ -99,6 +99,10 @@
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery.js"></script>
     <script src="assets/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Questrial' rel='stylesheet'>
     <title>Perpustakaan SMP Al-Falah Ketintang Surabaya</title>
 </head>
 
@@ -113,38 +117,32 @@
             <div class="collapse navbar-collapse pe-5" id="navbarNav">
                 <ul class="navbar-nav ms-auto gap-3 fw-semibold ">
                     <li class="nav-item">
-                        <p class="nav-link active m-0" onclick="onDisplayLanding()" style="cursor:pointer;" aria-current="page">Beranda</p>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" onclick="showCategory2()" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                            Tentang Kami
-                        </a>
-                        <ul class="dropdown-menu" id="about_us">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
+                        <a class="nav-link menu_nav m-0" role="button" onclick="onDisplayLanding()">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Koleksi Terbaru</a>
+                        <a class="nav-link menu_nav" role="button" onclick="onDisplayAbout()" aria-expanded="false">
+                            About Us
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu_nav" role="button" onclick="onDisplayRegulation()">Regulation</a>
                     </li>
                     @if (Auth::check())
                         @if (Auth::user()->isAdmin(Auth::id()))
                         <li class="nav-item">
                             <a href="{{ route('admin-dashboard') }}"
-                            class="nav-link btn btn-sm btn-warning rounded-pill border-0 btn__login" style="width: 110px;">Dashboard</a>
+                            class="nav-link btn btn-sm rounded-pill border-0 btn__login" style="width: 110px;">Dashboard</a>
                         </li>
                         @else
                         <li class="nav-item">
                             <a href="{{ route('dashboard') }}"
-                            class="nav-link btn btn-sm btn-warning rounded-pill border-0 btn__login" style="width: 110px;">Dashboard</a>
+                            class="nav-link btn btn-sm rounded-pill border-0 btn__login" style="width: 110px;">Dashboard</a>
                         </li>
                         @endif
                     @else
                     <li class="nav-item">
                         <a href="{{ route('login') }}"
-                        class="nav-link btn btn-sm btn-warning rounded-pill border-0 btn__login" style="width: 100px;">Login</a>
+                        class="nav-link btn btn-sm rounded-pill border-0 btn__login" style="width: 100px;">Login</a>
                     </li>
                     @endif
                 </ul>
@@ -163,15 +161,15 @@
                         @csrf
                         <div class="d-flex justify-content-center" style="height:7.8vh">
                             <div class="dropdown category__">
-                                <button class="btn btn-light rounded-pill dropdown-toggle h-100 fw-semibold" onclick="showCategory()" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="width:140px; color:#202F4E">
+                                <button class="btn btn-light rounded-pill dropdown-toggle h-100 fw-semibold" onclick="showCategory()" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Category
                                 </button>
                                 <ul class="dropdown-menu" id="category" aria-labelledby="dropdownCategory">
                                 </ul>
                             </div>
-                            <input type="text" class="form-control form-control-lg rounded-pill search__input w-100" name="val_search" id="val_search" style="padding-left: 5vh;"
-                            placeholder="Ketik satu atau lebih kata kunci berupa Judul, Pengarang atau Subyek" />
-                            <button class="btn btn-lg btn-warning btn__search text-white rounded-circle">
+                            <input type="text" class="form-control form-control-lg rounded-pill search__input" name="val_search" id="val_search" style="padding-left: 8vh;"
+                            placeholder="Ketik satu atau lebih kata kunci berupa Judul atau Pengarang" />
+                            <button class="btn btn-lg btn-warning btn__search text-white rounded-pill">
                                 <i class="bi bi-search"></i>
                             </button>
                         </div>
@@ -293,8 +291,14 @@
         </section>
     </div>
     <footer>
+    @include('master.pencarian')
+    @include('master.detailPencarian')
+    @include('master.aboutUs')
+    @include('master.regulasi')
+    @include('master.footer')
+    <!-- <footer>
         <h6 class="text-white text-center">Copyright 2023 © SMP Al Falah Ketintang Surabaya</h6>
-    </footer>
+    </footer> -->
 </body>
 @include('master.javascript')
 

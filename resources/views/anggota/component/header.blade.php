@@ -78,14 +78,6 @@
 												<a class="nav-link text-white opacity-75 opacity-state-100 pb-4"
 													data-bs-toggle="tab" href="#kt_topbar_notifications_1">Alerts</a>
 											</li>
-											<li class="nav-item">
-												<a class="nav-link text-white opacity-75 opacity-state-100 pb-4 active"
-													data-bs-toggle="tab" href="#kt_topbar_notifications_2">Updates</a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link text-white opacity-75 opacity-state-100 pb-4"
-													data-bs-toggle="tab" href="#kt_topbar_notifications_3">Logs</a>
-											</li>
 										</ul>
 										<!--end::Tabs-->
 									</div>
@@ -908,7 +900,7 @@
 									<!--end::Menu separator-->
 									<!--begin::Menu item-->
 									<div class="menu-item px-5">
-										<a href="../../demo1/dist/account/overview.html" class="menu-link px-5">My
+										<a href="{{ route('MyProfile.index') }}" class="menu-link px-5">My
 											Profile</a>
 									</div>
 									<!--end::Menu item-->

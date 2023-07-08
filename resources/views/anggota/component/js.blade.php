@@ -26,4 +26,7 @@
 	<script src="assets-anggota/js/custom/utilities/modals/create-app.js"></script>
 	<script src="assets-anggota/js/custom/utilities/modals/new-target.js"></script>
 	<script src="assets-anggota/js/custom/utilities/modals/users-search.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 	<!--end::Custom Javascript-->
+	@yield('jsAnggota')
