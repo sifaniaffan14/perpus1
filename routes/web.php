@@ -210,7 +210,7 @@ Route::middleware('protectedPage:2')->group(function () {
     });
 
     Route::controller(PencarianBukuController::class)->name('cariBuku.')->prefix('cariBuku')->group(function () {
-        $route = array('index', 'selectBuku', 'selectDetail', 'selectEksemplar');  
+        $route = array('index', 'search', 'selectDetail', 'selectEksemplar');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
