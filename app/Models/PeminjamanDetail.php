@@ -16,10 +16,9 @@ class PeminjamanDetail extends Model
         'peminjaman_detail_id',
         'peminjaman_detail_peminjaman_id',
         'detail_buku_id',
+        'status_peminjaman',
         'tgl_pinjam', 
         'tgl_kembali',
-        'status_peminjaman',
-        'alasan_perpanjangan'
     ];
 
     public function detail_buku()

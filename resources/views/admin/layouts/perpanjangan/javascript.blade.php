@@ -170,7 +170,7 @@
                                 <td class="text-center">${v.no_panggil}</td>
                                 <td class="text-center">${v.judul}</td>
                                 <td class="text-center">${moment(v.tgl_pinjam).format('DD/MM/YYYY')}</td>
-                                <td class="text-center">${moment(v.tgl_kembali).add(5, 'days').format('DD/MM/YYYY')}</td>
+                                <td class="text-center">${moment(v.tgl_kembali_baru).format('DD/MM/YYYY')}</td>
                                 <td class="text-center"> 
                                     <p class="text-dark text-decoration-underline" onclick="onModal('${v.alasan_perpanjangan}')" style="cursor:pointer">Lihat</p>
                                 </td>

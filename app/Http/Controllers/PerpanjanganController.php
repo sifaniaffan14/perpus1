@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\PeminjamanDetail;
+use App\Models\Perpanjangan;
 use Illuminate\Support\Collection;
 
 class PerpanjanganController extends Controller
@@ -32,7 +33,7 @@ class PerpanjanganController extends Controller
                             ->get();
 
                 $countBuku = DB::select("SELECT peminjaman_detail_peminjaman_id, MAX(tgl_pinjam) as tgl_pinjam, MAX(tgl_kembali) as tgl_kembali,
-                            SUM(CASE WHEN status_peminjaman = '1' OR status_peminjaman = '3' THEN 1 ELSE 0 END) AS belum_verif
+                            SUM(CASE WHEN status_peminjaman = '3' THEN 1 ELSE 0 END) AS belum_verif
                             FROM peminjaman_details
                             GROUP BY peminjaman_detail_peminjaman_id");
                             
@@ -86,10 +87,11 @@ class PerpanjanganController extends Controller
                 $operation = DB::table('peminjamen')
                             ->join('anggotas','peminjamen.anggota_id','=','anggotas.id')
                             ->join('peminjaman_details','peminjamen.peminjaman_id','=','peminjaman_details.peminjaman_detail_peminjaman_id')
+                            ->join('perpanjangans','peminjaman_details.peminjaman_detail_id','=','perpanjangans.peminjaman_detail_id')
                             ->join('detail_bukus','peminjaman_details.detail_buku_id','=','detail_bukus.eksemplar_id')
                             ->join('bukus','detail_bukus.buku_id','=','bukus.id')
                             ->where('peminjamen.peminjaman_id', $_GET['id'])
-                            ->whereIn('peminjaman_details.status_peminjaman',['1','3'])
+                            ->where('peminjaman_details.status_peminjaman','3')
                             ->select(
                                 'peminjamen.peminjaman_id',
                                 'peminjaman_details.peminjaman_detail_id',
@@ -98,7 +100,8 @@ class PerpanjanganController extends Controller
                                 'peminjaman_details.status_peminjaman',
                                 'peminjaman_details.tgl_pinjam',
                                 'peminjaman_details.tgl_kembali',
-                                'peminjaman_details.alasan_perpanjangan',
+                                'perpanjangans.alasan_perpanjangan',
+                                'perpanjangans.tgl_kembali_baru',
                                 'detail_bukus.no_panggil',
                                 'bukus.judul'
                             )
@@ -136,11 +139,11 @@ class PerpanjanganController extends Controller
         try {
             if ($_POST['dataSubmit'] != ''){
                 foreach ($_POST['dataSubmit'] as $id){
-                    $peminjamanDetail = PeminjamanDetail::where('peminjaman_detail_id',$id)->get()->toArray();
-                    $tgl_baru = date('Y-m-d', strtotime($peminjamanDetail[0]['tgl_kembali'] . ' + 5 days'));
+                    $perpanjangan = Perpanjangan::where('peminjaman_detail_id',$id)->first()->toArray();
                     PeminjamanDetail::where('peminjaman_detail_id',$id)->where('status_peminjaman','3')->update([
-                        'status_peminjaman' => '4', 'tgl_kembali' => $tgl_baru
+                        'status_peminjaman' => '4', 'tgl_kembali' => $perpanjangan['tgl_kembali_baru']
                     ]);
+                    Perpanjangan::where('peminjaman_detail_id', $id)->delete();
                 }
             }  
             if ($_POST['dataReject'] != ''){
@@ -148,9 +151,10 @@ class PerpanjanganController extends Controller
                     PeminjamanDetail::where('peminjaman_detail_id',$id)->where('status_peminjaman','3')->update([
                         'status_peminjaman' => '5'
                     ]);
+                    Perpanjangan::where('peminjaman_detail_id', $id)->delete();
                 }
             }  
-
+    
             $operation['success'] = true;
             return $this->response($operation);
         } catch (\Exception $e) {

@@ -74,7 +74,7 @@
                                                 </div>
                                                 <div>
                                                     <p class="fw-bolder fs-6 mb-3">Tanggal Kembali (Baru)</p>
-                                                    <input type="date" id="dateInput" class="ps-4 pe-2 p-1 rounded-1" style="border: 1.088px solid #000;" name="tgl_kembali_baru" id="tgl_kembali_baru">
+                                                    <input type="date" id="tgl_kembali_baru" class="ps-4 pe-2 p-1 rounded-1" style="border: 1.088px solid #000;" name="tgl_kembali_baru">
                                                 </div>
                                             </div>
                                             <p class="fw-bolder fs-6">Alasan Perpanjangan</p>
@@ -91,5 +91,8 @@
                                     </div>
                                 </div>
                             </div>
-                            @include('anggota.layouts.perpanjangan.javascript')
 @endsection      
+
+@section('jsAnggota')
+                            @include('anggota.layouts.perpanjangan.javascript')
+                            @endsection                       

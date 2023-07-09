@@ -21,7 +21,6 @@
 	<!--end::Fonts-->
 	<!--begin::Vendor Stylesheets(used for this page only)-->
 	<link href="assets-anggota/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
-	<link href="assets-anggota/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 	<!--end::Vendor Stylesheets-->
 	<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
 	<link href="assets-anggota/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
