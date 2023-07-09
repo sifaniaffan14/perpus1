@@ -28,7 +28,7 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link p-4 ps-10" href="{{ route('admin-dashboard')}}">
+                    <a class="rounded-0 menu-link p-4 ps-10" href="{{ route('admin-dashboard')}}">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
                                 <span class="material-icons"> dashboard </span>
@@ -46,7 +46,7 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link p-4 ps-10" href="{{route('buku.index')}}">
+                    <a class="rounded-0 menu-link p-4 ps-10" href="{{route('buku.index')}}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs014.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -62,7 +62,7 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link p-4 ps-10" href="{{route('createPeminjaman.index')}}">
+                    <a class="rounded-0 menu-link p-4 ps-10" href="{{route('createPeminjaman.index')}}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs014.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -78,7 +78,7 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link p-4 ps-10" href="{{route('pengembalian.index')}}">
+                    <a class="rounded-0 menu-link p-4 ps-10" href="{{route('pengembalian.index')}}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs014.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -94,7 +94,7 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link p-4 ps-10" href="{{route('perpanjangan.index')}}">
+                    <a class="rounded-0 menu-link p-4 ps-10" href="{{route('perpanjangan.index')}}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs014.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -110,7 +110,7 @@
                  <!--begin:Menu item-->
                  <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link p-4 ps-10" href="{{route('peminjaman.index')}}">
+                    <a class="rounded-0 menu-link p-4 ps-10" href="{{route('peminjaman.index')}}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs014.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -126,7 +126,7 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link p-4 ps-10" href="{{route('dataAnggota.index')}}">
+                    <a class="rounded-0 menu-link p-4 ps-10" href="{{route('dataAnggota.index')}}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs014.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -142,7 +142,7 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link p-4 ps-10" href="{{route('pengunjung.index')}}">
+                    <a class="rounded-0 menu-link p-4 ps-10" href="{{route('pengunjung.index')}}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs014.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -241,3 +241,28 @@
     <!--end::sidebar menu-->
 
 </div>
+
+<script>
+	$(document).ready(function() {
+		var currentUrl = window.location.href;
+		$('.menu-link').each(function() {
+			if ($(this).attr('href') === currentUrl) {
+				$(this).css('background-color', '#0e2c62');
+                $(this).find('.menu-title').addClass('text-light');
+                $(this).find('.menu-icon .svg-icon').addClass('text-light');
+				return false; 
+			}
+		});
+
+		$('.menu-link').on('click', function() {
+			$('.menu-link').css('background-color', '#264A8A');
+            $('.menu-link').css('color', '#9d9da6');
+            $('.menu-link .menu-title').removeClass('text-light');
+            $('.menu-link .menu-title .menu-icon .svg-icon').removeClass('text-light');
+			$(this).css('background-color', '#0e2c62');
+            $(this).css('color', '#fff');
+            $(this).find('.menu-title').addClass('text-light');
+            $(this).find('.menu-icon .svg-icon').addClass('text-light');
+		});
+	});
+</script>
