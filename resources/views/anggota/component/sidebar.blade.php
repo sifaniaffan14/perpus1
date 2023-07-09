@@ -127,18 +127,5 @@
 				return false; 
 			}
 		});
-
-		$('.menu-item').on('click', function() {
-			$('.menu-item .svg-icon').attr('style', ''); 
-			$('.menu-item .svg-icon').removeClass('text-light');
-			$('.menu-item .svg-icon rect').attr('fill', 'grey');
-			if (currentUrl == 'http://127.0.0.1:8000/dashboard'){
-				$(this).find('.svg-icon rect').attr('fill', 'white');
-				$(this).find('.svg-icon').css('background-color', '#015aaa');
-			} else {
-				$(this).find('.svg-icon').css('background-color', '#015aaa');
-				$(this).find('.svg-icon').addClass('text-light');
-			}
-		});
 	});
 </script>
