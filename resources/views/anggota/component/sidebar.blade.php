@@ -114,7 +114,6 @@
 
 <script>
 	$(document).ready(function() {
-		// Saat halaman dimuat, tambahkan kelas "active" ke menu yang sesuai
 		var currentUrl = window.location.href;
 		$('.menu-item').each(function() {
 			if ($(this).attr('href') === currentUrl) {
@@ -125,13 +124,12 @@
 					$(this).find('.svg-icon').css('background-color', '#015aaa');
 					$(this).find('.svg-icon').addClass('text-light');
 				}
-				return false; // Hentikan perulangan setelah menemukan menu yang aktif
+				return false; 
 			}
 		});
 
-		// Atur kelas "active" saat pengguna mengklik item menu
 		$('.menu-item').on('click', function() {
-			$('.menu-item .svg-icon').attr('style', ''); // Hapus kelas "active" dari semua item menu
+			$('.menu-item .svg-icon').attr('style', ''); 
 			$('.menu-item .svg-icon').removeClass('text-light');
 			$('.menu-item .svg-icon rect').attr('fill', 'grey');
 			if (currentUrl == 'http://127.0.0.1:8000/dashboard'){
