@@ -78,7 +78,7 @@
         const currentDate = new Date();
         const tglKembali = new Date(data[key]['tgl_kembali']);
 
-        if (tglKembali < currentDate) {
+        if (tglKembali <= currentDate) {
             swal("Warning", 'Tidak bisa melakukan perpanjangan, karena sudah melewati tgl kembali!', "warning")
         } else {
             $('#staticBackdrop').modal('show')
