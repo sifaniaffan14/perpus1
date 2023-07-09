@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Anggota;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Anggota;
 use App\Models\InformasiPenting;
 use App\Models\PeminjamanDetail;
 use App\Models\AbsenPengunjung;
+use App\Models\buku;
+use App\Models\DetailBuku;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -37,7 +40,7 @@ class DashboardController extends Controller
     public function selectInformasi()
     {
         try {
-            $operation = InformasiPenting::latest()->take(1)->get();
+            $operation = InformasiPenting::latest('created_at')->take(2)->get();
             return $this->response($operation);
         } catch (\Exception $e) {
             return $this->response($e->getMessage(), true);
@@ -77,6 +80,50 @@ class DashboardController extends Controller
                             "peminjaman_details.tgl_kembali",
                             "peminjaman_details.status_peminjaman"
                         )->get();
+            return $this->response($operation);
+        } catch (\Exception $e) {
+            return $this->response($e->getMessage(), true);
+        }
+    }
+
+    public function selectKoleksi()
+    {
+        try {
+            $operation = buku::latest('created_at')
+                            ->take(8)
+                            ->where('bukus.is_active', '1')
+                            ->get();
+
+            return $this->response($operation);
+        } catch (\Exception $e){
+            return $this->response($e->getMessage(), true);
+        }
+    }
+
+    public function selectDetail(Request $request){
+        try {
+            $value = $request->all();
+
+            $operation = buku::join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')
+                            ->where('bukus.id', $value['id'])
+                            ->select(
+                                'bukus.*',
+                                'kategori_bukus.nama_kategori'
+                            )->get()->toArray();
+            return $this->response($operation);
+        } catch(\Exception $e){
+            return $this->response($e->getMessage(), true);
+        }
+    }
+
+
+    public function selectEksemplar()
+    {
+        try {
+            $operation = DetailBuku::leftJoin('peminjaman_details','detail_bukus.eksemplar_id','=','peminjaman_details.detail_buku_id')
+                            ->where('is_active', 1)
+                            ->where('buku_id', $_GET['id'])
+                            ->get();
             return $this->response($operation);
         } catch (\Exception $e) {
             return $this->response($e->getMessage(), true);

@@ -1,7 +1,8 @@
-@include('component.js')
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-<script src="assets/OwlCarousel2-2.3.4/dist/owl.carousel.min.js "></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
 <script>
     var data = null;
     var urlPath = {
@@ -11,14 +12,10 @@
     }
     getAnggota()
     getPeminjaman()
-    inputDate()
 
-    function inputDate(){
+    function inputDate(currentDate){
         // Mendapatkan elemen input
-        const dateInput = document.getElementById('dateInput');
-
-        // Mendapatkan tanggal saat ini
-        const currentDate = new Date();
+        const dateInput = document.getElementById('tgl_kembali_baru');
 
         // Menghitung tanggal 7 hari ke depan
         const maxDate = new Date();
@@ -81,44 +78,55 @@
         const currentDate = new Date();
         const tglKembali = new Date(data[key]['tgl_kembali']);
 
-        // if (tglKembali < currentDate) {
-        //     alert('Tidak bisa melakukan perpanjangan, karena sudah melewati tgl kemballi')
-        // } else {
+        if (tglKembali < currentDate) {
+            swal("Warning", 'Tidak bisa melakukan perpanjangan, karena sudah melewati tgl kembali!', "warning")
+        } else {
             $('#staticBackdrop').modal('show')
             $.each(data[key], function(k, v){
                 $('#'+k).html(v)
                 if (k == 'tgl_pinjam'){
-                    $('#'+k).html(moment(v.tgl_pinjam).format('DD-MM-YYYY'))
+                    $('#'+k).html(moment(v).format('DD-MM-YYYY'))
                 }
                 if (k == 'peminjaman_detail_id'){
                     document.getElementById('btnSimpan').setAttribute('onclick','onSave("'+v+'")')
                 }
             })
-        // }
+            inputDate(new Date(moment(data[key]['tgl_kembali']).format('YYYY-MM-DD')))
+        }
     }
 
     function onSave(id){
-        if ($('#tgl_kembali_baru').val() == ''){
-            alert('Silahkan isi tgl kembali')
-        } else if($('#alasan_perpanjangan').val() == ''){
-            alert('Silahkan isi alasan perpanjagan')
-        } else {
-            $.ajax({
-            url: urlPath.insert,
-            type: 'GET',
-            data: {
-                id: id,
-                tgl_kembali_baru: $('#tgl_kembali_baru').val(),
-                alasan: $('#alasan_perpanjangan').val()
-            },
-            success: function(response) {
-                if (response.status == true) {
-                    // onReset()
-                    // getPeminjaman()
-                }
+            if ($('#tgl_kembali_baru').val() == ''){
+                swal("Warning", 'Silahkan isi tgl kembali!', "warning")
+            } else if($('#alasan_perpanjangan').val() == ''){
+                swal("Warning", 'Silahkan isi alasan perpanjagan!', "warning")
+            } else {
+                swal({
+                    title: "Peringatan",
+                    text: "Apakah Anda Yakin Untuk Perpanjangan Buku?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((response) => {
+                    $.ajax({
+                    url: urlPath.insert,
+                    type: 'GET',
+                    data: {
+                        id: id,
+                        tgl_kembali_baru: $('#tgl_kembali_baru').val(),
+                        alasan: $('#alasan_perpanjangan').val()
+                    },
+                    success: function(response) {
+                        if(response.status == true){
+                            swal("Success !", response.message, "success");
+                        } else{
+                            swal("Warning", response.message, "warning");
+                        }
+                    }
+                }); 
+            })
             }
-        })
-        }
     }
 
     function onReset(){

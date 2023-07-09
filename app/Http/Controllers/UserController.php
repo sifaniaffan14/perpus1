@@ -112,7 +112,7 @@ class UserController extends Controller
             } 
 
             if ($request->all()['isremoved'] == 1){
-                unlink("D:\\project\\project affan\\perpus1\\public\\storage\\user\\".$user->picture);
+                unlink(public_path('storage/user/'.$user->picture));
                 $user->picture = null;
             } else {
                 try {

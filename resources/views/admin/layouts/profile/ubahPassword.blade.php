@@ -1,4 +1,4 @@
-<form class="card card-xl-stretch mb-xl-8" action="javascript:onChangePassword()" method="post" id="formPassword" name="formPassword" autocomplete="off" enctype="multipart/form-data">
+<form class="card card-xl-stretch mb-xl-8" onsubmit="onChangePassword(event)" method="post" id="formPassword" name="formPassword" autocomplete="off" enctype="multipart/form-data">
     <div class="card-body">
         <h3>Ubah Password</h3>
         <div class="fv-row row mb-6">

@@ -24,6 +24,8 @@ use App\Http\Controllers\Anggota\AnggotaPerpanjanganController;
 use App\Http\Controllers\Anggota\AnggotaProfileController;
 use App\Http\Controllers\Anggota\DashboardController as DashboardAnggota;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\NavbarController;
+use App\Http\Controllers\Anggota\AnggotaNavbarController;
 use App\Http\Middleware\loginCheck;
 use App\Models\PeminjamanDetail;
 use Illuminate\Support\Facades\Auth;
@@ -45,7 +47,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [ViewController::class, 'home']);
 Route::controller(ViewController::class)->name('landing.')->prefix('landing')->group(function () {
-    $route = array('search', 'selectCategory', 'selectDetail', 'selectEksemplar');  
+    $route = array('search', 'selectCategory', 'selectDetail', 'selectEksemplar', 'selectKoleksi');  
     foreach ($route as $route) {
         Route::any($route=='index'?'':'/'.$route, $route)->name($route);
     }
@@ -63,6 +65,7 @@ Auth::routes();
 Route::middleware('protectedPage:1')->group(function () {
     // Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
     Route::get('/admin-dashboard',[DashboardController::class, 'admin'])->name('admin-dashboard');
+    Route::get('/navbar', [NavbarController::class, 'select'])->name('navbar.select');
 
     Route::controller(DashboardController::class)->name('admin-dashboard.')->prefix('admin-dashboard')->group(function () {
         $route = array('selectData','selectAbsensi','selectPengajuanPerpanjangan');  
@@ -190,7 +193,7 @@ Route::middleware('protectedPage:1')->group(function () {
     });
 
     Route::controller(ProfileController::class)->name('profile.')->prefix('profile')->group(function () {
-        $route = array('index', 'update','select');  
+        $route = array('index', 'selectUser', 'update', 'updatePassword');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
@@ -200,14 +203,14 @@ Route::middleware('protectedPage:1')->group(function () {
 Route::middleware('protectedPage:2')->group(function () {
     Route::get('/dashboard',[DashboardAnggota::class, 'index'])->name('dashboard');
     Route::controller(DashboardAnggota::class)->name('dashboard.')->prefix('dashboard')->group(function () {
-        $route = array('selectAnggota', 'selectInformasi', 'selectCount', 'selectPeminjaman');  
+        $route = array('selectAnggota', 'selectInformasi', 'selectCount', 'selectPeminjaman', 'selectKoleksi', 'selectDetail', 'selectEksemplar');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
     });
 
     Route::controller(PencarianBukuController::class)->name('cariBuku.')->prefix('cariBuku')->group(function () {
-        $route = array('index', 'selectBuku', 'selectDetail', 'selectEksemplar');  
+        $route = array('index', 'search', 'selectDetail', 'selectEksemplar');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }
@@ -225,7 +228,13 @@ Route::middleware('protectedPage:2')->group(function () {
         }
     });
     Route::controller(AnggotaProfileController::class)->name('MyProfile.')->prefix('MyProfile')->group(function () {
-        $route = array('index');  
+        $route = array('index', 'select', 'updateProfile', 'updateBiodata');  
+        foreach ($route as $route) {
+            Route::any($route=='index'?'':'/'.$route, $route)->name($route);
+        }
+    });
+    Route::controller(AnggotaNavbarController::class)->name('navbarAnggota.')->prefix('navbarAnggota')->group(function () {
+        $route = array('select');  
         foreach ($route as $route) {
             Route::any($route=='index'?'':'/'.$route, $route)->name($route);
         }

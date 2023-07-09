@@ -13,10 +13,14 @@ class PencarianBukuController extends Controller
     {
         return view('anggota.layouts.pencarianBuku.index');
     }
-    
-    public function selectBuku(){
+
+    public function search(Request $request){
         try {
+            $value = $request->all();
+            // dd($value);
             $operation = buku::join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')
+                            ->where('bukus.pengarang', 'LIKE', '%' . $value['val'] . '%')
+                            ->orWhere('bukus.judul', 'LIKE', '%' . $value['val'] . '%')
                             ->where('bukus.is_active', '1')
                             ->where('kategori_bukus.is_active', '1')
                             ->select(

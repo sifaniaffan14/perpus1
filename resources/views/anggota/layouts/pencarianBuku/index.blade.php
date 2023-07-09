@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="col-1 ms-3">
-                    <button class="btn text-light" style="border-radius: 40px; background-color:#244785" onclick="onSearch()">
+                    <button class="btn text-light" style="border-radius: 40px; background-color:#244785" onclick="onSearch(event)">
                         Search
                     </button>
                 </div>

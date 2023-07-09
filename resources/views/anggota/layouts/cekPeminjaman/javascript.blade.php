@@ -1,8 +1,7 @@
 @include('component.js')
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-<script src="assets/OwlCarousel2-2.3.4/dist/owl.carousel.min.js "></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
 <script>
     var tabelPeminjaman = null;
     var urlPath = {
@@ -10,8 +9,8 @@
         selectPeminjaman: "{{ route('cekPinjaman.selectPeminjaman') }}",
         selectRiwayatPeminjaman: "{{ route('cekPinjaman.selectRiwayatPeminjaman') }}",
     }
-    getAnggota()
     inittable(1)
+    getAnggota()
 
     function getAnggota() {
         $.ajax({

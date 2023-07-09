@@ -5,7 +5,7 @@
 <script src="assets/OwlCarousel2-2.3.4/dist/owl.carousel.min.js "></script>
 <script>
     var urlPath = {
-        selectBuku: "{{ route('cariBuku.selectBuku') }}",
+        search: "{{ route('cariBuku.search') }}",
         selectDetail: "{{ route('cariBuku.selectDetail') }}",
         selectEksemplar: "{{ route('cariBuku.selectEksemplar') }}",
     }
@@ -14,32 +14,39 @@
     var totalPages = '';
     var next = 2;
     var previous = 1;
-    selectBuku()
 
     $(document).ready(function() {
         $('#search').keypress(function(event) {
             if (event.keyCode === 13) { // keycode untuk tombol enter adalah 13
                 event.preventDefault(); // menghindari submit form
-                onSearch();
+                onSearch(event);
             }
         });
     });
 
-    function selectBuku() {
-        $.ajax({
-            url: urlPath.selectBuku,
-            contentType: false,
-            processData: false,
-            type: 'GET',
-            success: function(response) {
-                if (response.status == true) {
-                    resultArray = response.data;
-                    data = response.data;
-                    onSearchResults(1)
-                } 
-            }
-        })
-        
+    function onSearch(event) {
+        event.preventDefault()
+
+        if ($('#search').val() == '') {} else {
+            $.ajax({
+                url: urlPath.search,
+                data: {
+                    val: $('#search').val()
+                },
+                type: 'GET',
+                success: function(response) {
+                    if (response.status == true) {
+                        resultArray = response.data;
+                        data = response.data;
+                        $("#search").val('')
+
+                        onSearchResults(1)
+                    } else {
+                        swal("Warning", "Data Buku tidak ditemukan!", "warning");
+                    }
+                }
+            })
+        }
     }
 
     function onSearchResults(page) {
@@ -58,11 +65,11 @@
             $("#result_buku").append(`
                 <div class="col-4 mt-5">
                     <div class="row" onclick="onDetail('` + v.id + `')" style="cursor:pointer;">  
-                        <div class="col">
-                            <img src="` + baseUrl + v.image + `" height="200px" width="150px" alt="">
+                        <div class="col text-end">
+                            <img src="` + baseUrl + v.image + `" height="150px" width="113px" alt="">
                         </div>
                         <div class="col">
-                            <h3><b>${v.judul}</b></h3>
+                            <h4><b>${v.judul}</b></h4>
                             <h5><b>${v.penerbit}</b></h5>
                             <br>
                             <span class="svg-icon svg-icon-2">
@@ -202,21 +209,11 @@
         switchPage(previous)
     }
 
-    function onSearch() {
-        var searchString = $('#search').val();
-        var regex = new RegExp(searchString, 'i');
-        const searchResults = Object.values(resultArray).filter(obj => {
-            return regex.test(obj.judul) || regex.test(obj.pengarang);
-        });
-
-        data = searchResults;
-        onSearchResults(1);
-    }
-
     function onReset() {
         $("#search").val('')
-        data = resultArray;
-        onSearchResults(1)
+        data = '';
+        $("#result_buku").html("")
+        $('#pagination').html('')
     }
 
     function onDisplayMain(){

@@ -16,7 +16,6 @@
 	<script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
 	<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
 	<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
-	<script src="assets-anggota/plugins/custom/datatables/datatables.bundle.js"></script>
 	<!--end::Vendors Javascript-->
 	<!--begin::Custom Javascript(used for this page only)-->
 	<script src="assets-anggota/js/widgets.bundle.js"></script>
@@ -28,5 +27,7 @@
 	<script src="assets-anggota/js/custom/utilities/modals/users-search.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+	
+	<script src="assets-anggota/plugins/custom/datatables/datatables.bundle.js"></script>
 	<!--end::Custom Javascript-->
 	@yield('jsAnggota')
