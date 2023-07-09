@@ -253,16 +253,5 @@
 				return false; 
 			}
 		});
-
-		$('.menu-link').on('click', function() {
-			$('.menu-link').css('background-color', '#264A8A');
-            $('.menu-link').css('color', '#9d9da6');
-            $('.menu-link .menu-title').removeClass('text-light');
-            $('.menu-link .menu-title .menu-icon .svg-icon').removeClass('text-light');
-			$(this).css('background-color', '#0e2c62');
-            $(this).css('color', '#fff');
-            $(this).find('.menu-title').addClass('text-light');
-            $(this).find('.menu-icon .svg-icon').addClass('text-light');
-		});
 	});
 </script>
