@@ -40,7 +40,7 @@ class DashboardController extends Controller
     public function selectInformasi()
     {
         try {
-            $operation = InformasiPenting::latest()->take(1)->get();
+            $operation = InformasiPenting::latest('created_at')->take(2)->get();
             return $this->response($operation);
         } catch (\Exception $e) {
             return $this->response($e->getMessage(), true);
