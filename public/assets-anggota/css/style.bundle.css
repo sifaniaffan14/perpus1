@@ -60322,3 +60322,8 @@ html:not([data-theme=dark]) {
         color: #fff !important
     }
 }
+
+/* DataTable */
+  .active>.page-link, .page-link.active{
+    background-color: #264A8A;
+  }
