@@ -2,7 +2,8 @@
 
 @section('content2')
 
-<form action="">
+<form onsubmit="onSaveProfile(event)" class="dataForm" method="post" id="formProfile" name="formProfile" autocomplete="off" enctype="multipart/form-data">
+    @csrf
     <div class="row g-5 g-xl-10">
         <!--begin::Col-->
         <div class="col-md-4 col-xxl-4">
@@ -14,7 +15,7 @@
                         <!--begin::Image input-->
                         <div class="image-input image-input-outline image-input-circle mb-5" data-kt-image-input="true">
                             <!--begin::Preview existing avatar-->
-                            <div class="image-input-wrapper w-125px h-125px" style="background-image: url(assets/media/avatars/300-1.jpg)"></div>
+                            <div class="image-input-wrapper w-125px h-125px" style="" id="photoPreview"></div>
                             <!--end::Preview existing avatar-->
                              <!--begin::Remove-->
                              <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px shadow" style="background-color:#DC3545" data-kt-image-input-action="remove" data-bs-toggle="tooltip" aria-label="Remove avatar" data-kt-initialized="1">
@@ -41,10 +42,10 @@
                   
                     <!--end::Avatar-->
                     <!--begin::Name-->
-                    <a href="#" class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">Muhammad Sifani Affan</a>
+                    <a href="#" class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0" id="profil_nama_anggota"></a>
                     <!--end::Name-->
                     <!--begin::Position-->
-                    <div class="fw-semibold text-gray-400 mb-6">201810370311130</div>
+                    <div class="fw-semibold text-gray-400 mb-6" id="profil_no_induk"></div>
                     <!--end::Position-->
                     <!--begin::Info-->
                     
@@ -52,24 +53,24 @@
                     <h4>Profile Detail</h4>
                     <label class="col-form-label required">Username</label>
                     <div class="col-lg-12">
-                        <input type="text" name="username" class="form-control form-control-sm" placeholder="Username"
+                        <input type="text" name="username" id="username" class="form-control form-control-sm" placeholder="Username"
                             required />
                     </div>
                 </div>
 
                 <div class="fv-row row mb-6 px-6">
                     <h4>Ubah Password</h4>
-                    <label class="col-form-label required">Password Lama</label>
+                    <label class="col-form-label oldPass">Password Lama</label>
                     <div class="col-lg-12">
-                        <input type="password" name="oldPass" class="form-control form-control-sm" placeholder="Password Lama" required />
+                        <input type="password" name="oldPass" id="oldPass" onkeyup="changePassword()" class="form-control form-control-sm" placeholder="Password Lama" />
                     </div>
                     <div class="fv-row" data-kt-password-meter="true" id="kt_password_meter_control">
                         <div class="mb-1">
-                            <label class="col-form-label required">
+                            <label class="col-form-label newPass">
                                 Password Baru
                             </label>
                             <div class="position-relative mb-3">
-                                <input class="form-control form-control-sm" type="password" onkeyup="comparePass()" placeholder="" name="newPass" autocomplete="off" />
+                                <input class="form-control form-control-sm" type="password" onkeyup="comparePass()" placeholder="" name="newPass" id="newPass" autocomplete="off" />
                                 <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
                                     <i class="bi bi-eye-slash fs-2"></i>
         
@@ -91,9 +92,9 @@
                     </div>
                     <div class="fv-row">
                         <div class="input-group has-validation mb-5">
-                            <label class="col-form-label required">Tulis Ulang Password Baru</label>
+                            <label class="col-form-label renewPass">Tulis Ulang Password Baru</label>
                             <div class="col-lg-12">
-                                <input type="password" onkeyup="comparePass()" name="renewPass" class="form-control form-control-sm" placeholder="Tulis Ulang Password Baru" required />
+                                <input type="password" onkeyup="comparePass()" name="renewPass" id="renewPass" class="form-control form-control-sm" placeholder="Tulis Ulang Password Baru" />
                                 <div id="validationServerrenewPassFeedback" class="invalid-feedback">Password tidak cocok.</div>
                             </div>
                         </div>
@@ -102,7 +103,7 @@
                     <!--end::Info-->
                     <!--begin::Follow-->
                     <div class="col-lg-12 text-lg-end">
-                        <button type="button" id="btnSimpan" class="btn text-light fs-8" style="background-color:#264A8A">
+                        <button type="submit" id="btnSimpan" class="btn text-light fs-8" style="background-color:#264A8A">
                             <i class="fa-sharp fa-regular fa-floppy-disk text-light fs-3"></i> Simpan 
                         </button>
                     </div>
@@ -130,52 +131,53 @@
                     </div>
                 </div>
                 <!--begin::Form-->
-                <form class="form">
+                <form onsubmit="onSaveBiodata(event)" class="dataForm" method="post" id="formBiodata" name="formBiodata" autocomplete="off" enctype="multipart/form-data">
+                    @csrf
                     <div class="card-body">
                         <div class="form-group row pt-3">
                             <div class="col-lg-6">
-                                <label>Nama Lengkap:</label>
-                                <input type="text" class="form-control" placeholder="Masukkan Nama Lengkap">
+                                <label class="required">Nama Lengkap:</label>
+                                <input type="text" id="nama_anggota" name="nama_anggota" class="form-control" placeholder="Masukkan Nama Lengkap" required>
                                 {{-- <span class="form-text text-muted">Please enter your full name</span> --}}
                             </div>
                             <div class="col-lg-6">
-                                <label>Jenis Kelamin:</label>
-                                <select class="form-control" name="jenisKelamin">
-                                    <option value="">Pilih Jenis Kelamin</option>
-                                    <option value="Laki-Laki">Laki-Laki</option>
-                                    <option value="Perempuan">Perempuan</option>
+                                <label class="required">Jenis Kelamin:</label>
+                                <select class="form-control" name="jenis_kelamin" id="jenis_kelamin">
+                                    <option value="" disabled>Pilih Jenis Kelamin</option>
+                                    <option value="laki-laki" id="laki-laki">Laki-Laki</option>
+                                    <option value="perempuan" id="perempuan">Perempuan</option>
                                 </select>
                                 {{-- <span class="form-text text-muted">Please enter your full name</span> --}}
                             </div>
                         </div>
                         <div class="form-group row pt-6">
                             <div class="col-lg-6">
-                                <label>Tempat Lahir:</label>
-                                <input type="text" class="form-control" placeholder="Masukkan Tempat Lahir">
+                                <label class="required">Tempat Lahir:</label>
+                                <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" placeholder="Masukkan Tempat Lahir" required>
                                 {{-- <span class="form-text text-muted">Please enter your full name</span> --}}
                             </div>
                             <div class="col-lg-6">
-                                <label>Tanggal Lahir:</label>
-                                <input class="form-control" type="date" value="" id="tanggalLahir">
-                                {{-- <span class="form-text text-muted">Please enter your full name</span> --}}
-                            </div>
-                        </div>
-                        <div class="form-group row pt-6">
-                            <div class="col-lg-6">
-                                <label>Alamat:</label>
-                                <input type="text" class="form-control" placeholder="Masukkan Alamat">
-                                {{-- <span class="form-text text-muted">Please enter your full name</span> --}}
-                            </div>
-                            <div class="col-lg-6">
-                                <label>Email:</label>
-                                <input type="email" class="form-control" placeholder="Masukkan Email">
+                                <label class="required">Tanggal Lahir:</label>
+                                <input class="form-control" type="date" value="" id="tanggal_lahir" name="tanggal_lahir" required>
                                 {{-- <span class="form-text text-muted">Please enter your full name</span> --}}
                             </div>
                         </div>
                         <div class="form-group row pt-6">
                             <div class="col-lg-6">
-                                <label>Nomor Telepon:</label>
-                                <input type="text" class="form-control" placeholder="Masukkan Nomor Telepon">
+                                <label class="required">Alamat:</label>
+                                <input type="text" class="form-control" placeholder="Masukkan Alamat" id="alamat" name="alamat" required>
+                                {{-- <span class="form-text text-muted">Please enter your full name</span> --}}
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="required">Email:</label>
+                                <input type="email" class="form-control" placeholder="Masukkan Email" id="email" name="email" required>
+                                {{-- <span class="form-text text-muted">Please enter your full name</span> --}}
+                            </div>
+                        </div>
+                        <div class="form-group row pt-6">
+                            <div class="col-lg-6">
+                                <label class="required">Nomor Telepon:</label>
+                                <input type="text" class="form-control" placeholder="Masukkan Nomor Telepon" id="no_telp" name="no_telp" required>
                                 {{-- <span class="form-text text-muted">Please enter your full name</span> --}}
                             </div>
                         </div>
@@ -183,7 +185,7 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-lg-12 text-lg-end">
-                                <button type="button" id="" class="btn text-light fs-8" style="background-color:#264A8A">
+                                <button type="submit" id="" class="btn text-light fs-8" style="background-color:#264A8A" >
                                     <i class="fa-sharp fa-regular fa-floppy-disk text-light fs-3"></i> Simpan 
                                 </button>
                             </div>
