@@ -119,6 +119,7 @@
                     },
                     success: function(response) {
                         if(response.status == true){
+                            $('#staticBackdrop').modal('hide')
                             swal("Success !", response.message, "success");
                         } else{
                             swal("Warning", response.message, "warning");
