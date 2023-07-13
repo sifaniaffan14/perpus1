@@ -73,8 +73,8 @@
             if (i2 == 0){
                 if (checkedValues.length != 0){
                     value = checkedValues.join(',');
+                    var baseUrl = window.location.origin;
                     if (value == 'checked_all'){
-                        var baseUrl = window.location.origin;
                         document.getElementById("pdfBarcode").setAttribute('href', baseUrl+"/PDFBarcode/"+id_buku);
                     } else {
                         document.getElementById("pdfBarcode").setAttribute('href', baseUrl+"/PDFBarcode/"+id_buku+"?checkedValues="+value);
@@ -288,37 +288,35 @@
                     $('#listTable').html('')
                     var num = 1;
                     $.each(response.data, function( k, v ){
-                        if (v.status_peminjaman != 2){
-                            var img = $('<img>').attr('src', 'data:image/png;base64,' + v.eksemplar_id);
-                            var generatorPNG = "<?php new Picqer\Barcode\BarcodeGeneratorPNG(); ?>";
+                        var img = $('<img>').attr('src', 'data:image/png;base64,' + v.eksemplar_id);
+                        var generatorPNG = "<?php new Picqer\Barcode\BarcodeGeneratorPNG(); ?>";
 
-                            var tgl_pinjam = '-';
-                            var tgl_kembali = '-';
-                            if (v.tgl_pinjam){
-                                tgl_pinjam = moment(v.tgl_pinjam).format('DD/MM/YYYY');
-                                tgl_kembali = moment(v.tgl_kembali).format('DD/MM/YYYY');
-                            }
-                            $('#listTable').append(`
-                                <tr>
-                                    <td>${num}</td>
-                                    <td>${v.no_panggil}</td>
-                                    <td>${v.status}</td>
-                                    <td>${v.kondisi}</td>
-                                    <td>${tgl_pinjam}</td>
-                                    <td>${tgl_kembali}</td>
-                                    <td id="barcode_${v.eksemplar_id}"></td>
-                                    <td><input type="checkbox" id="myCheckbox" name="pilih[]" value="${v.no_panggil}"></td>
-                                    <td> 
-                                        <a onclick="editEksemplar('${v.eksemplar_id}')" class="btn btn-warning" style="padding:5px 4px 8px 9px"><i class="bi bi-pencil-square fs-4"></i></a>
-                                        <a onclick="hapusEksemplar('${v.eksemplar_id}')" methode="post" class="btn btn-danger ms-1" style="padding:5px 4px 8px 9px"><i class="bi bi-trash fs-4"></i></a>
-                                    </td>
-                                </tr>
-                            `)
+                        var tgl_pinjam = '-';
+                        var tgl_kembali = '-';
+                        if (v.tgl_pinjam){
+                            tgl_pinjam = moment(v.tgl_pinjam).format('DD/MM/YYYY');
+                            tgl_kembali = moment(v.tgl_kembali).format('DD/MM/YYYY');
+                        }
+                        $('#listTable').append(`
+                            <tr>
+                                <td>${num}</td>
+                                <td>${v.no_panggil}</td>
+                                <td>${v.status}</td>
+                                <td>${v.kondisi}</td>
+                                <td>${tgl_pinjam}</td>
+                                <td>${tgl_kembali}</td>
+                                <td id="barcode_${v.eksemplar_id}"></td>
+                                <td><input type="checkbox" id="myCheckbox" name="pilih[]" value="${v.no_panggil}"></td>
+                                <td> 
+                                    <a onclick="editEksemplar('${v.eksemplar_id}')" class="btn btn-warning" style="padding:5px 4px 8px 9px"><i class="bi bi-pencil-square fs-4"></i></a>
+                                    <a onclick="hapusEksemplar('${v.eksemplar_id}')" methode="post" class="btn btn-danger ms-1" style="padding:5px 4px 8px 9px"><i class="bi bi-trash fs-4"></i></a>
+                                </td>
+                            </tr>
+                        `)
 
-                            $("#barcode_"+v.eksemplar_id).barcode(v.no_panggil, "code128");  
-                            $(" .codeBarcode").html(v.eksemplar_id);
-                            num++;
-                        }  
+                        $("#barcode_"+v.eksemplar_id).barcode(v.no_panggil, "code128");  
+                        $(" .codeBarcode").html(v.eksemplar_id);
+                        num++;
                     });
                 } 
             }
