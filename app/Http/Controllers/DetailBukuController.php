@@ -22,10 +22,11 @@ class DetailBukuController extends Controller
                             ->where('detail_bukus.eksemplar_id', $_GET['eksemplar_id'])
                             ->where('detail_bukus.is_active', 1)
                             ->get();
+                
             } else {
                 $operation = DetailBuku::leftJoin('peminjaman_details','detail_bukus.eksemplar_id','=','peminjaman_details.detail_buku_id')
-                            ->where('is_active', 1)
-                            ->where('buku_id', $_GET['id'])
+                            ->where('detail_bukus.is_active', 1)
+                            ->where('detail_bukus.buku_id', $_GET['id'])
                             ->get();
             }
             // $generator = new BarcodeGeneratorPNG();
