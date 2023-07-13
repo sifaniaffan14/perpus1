@@ -110,8 +110,8 @@
                     type: 'POST',
                     success: function(response){
                         if(response.status == true){
-                            onRefresh()
                             swal("Success !", response.message, "success");
+                            location.reload()
                         } else{
                             swal("Warning", response.message, "warning");
                         }
@@ -370,6 +370,7 @@
                 if(response.status == true){
                     showModal();
                     onDisplayDetail();
+                    tableEksemplar(id_buku)
                     $.each(response.data[0], function( k, v ){
                         $('[name='+k+']').val(v)
                     });
@@ -400,6 +401,7 @@
                             swal("Success !", response.message, "success");
                             hideModal()
                             onDisplayDetail()
+                            tableEksemplar(id_buku)
                         } else{
                             swal("Warning", response.message, "warning");
                         }

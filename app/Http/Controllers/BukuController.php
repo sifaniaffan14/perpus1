@@ -107,28 +107,27 @@ class BukuController extends Controller
             ]);
             unset($data['_token']);
 
+            $buku = Buku::findOrFail($data['id']);
+
             $image = $request->file('image');
-            if (!empty($image)) {         
-                $buku = Buku::findOrFail($data['id']);
+            if (!empty($image)) {   
                 $current = public_path('storage/buku/' . $buku->image);
                 File::delete($current);   
                 $request->image = $request->judul . '-cover.' . $image->getClientOriginalExtension();
                 $image->move(public_path('storage/buku/') , $request->image);
-            }
+                $buku->image = $request->image;
+            } 
 
+            $buku->buku_kategori_id = $data['buku_kategori_id'];
+            $buku->kode_buku = $data['kode_buku'];
+            $buku->judul = $data['judul'];
+            $buku->penerbit = $data['penerbit'];
+            $buku->pengarang = $data['pengarang'];
+            $buku->halaman = $data['halaman'];
+            $buku->no_isbn = $data['no_isbn'];
+
+            $operation = $buku->save();
             
-            $operation = DB::table('bukus')
-            ->where('id', '=', $data['id'])
-            ->update([
-                'buku_kategori_id' => $data['buku_kategori_id'],
-                'kode_buku' => $data['kode_buku'],
-                'judul' => $data['judul'],
-                'penerbit' => $data['penerbit'],
-                'pengarang' => $data['pengarang'],
-                'halaman' => $data['halaman'],
-                'no_isbn' => $data['no_isbn'],
-                'image' => $request->image
-            ]);
             // $data = buku::find(request()->id);
             // $operation = $data->update($request->post());
             return $this->responseUpdate($operation);
