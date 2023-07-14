@@ -131,7 +131,7 @@
                 },
                 success: function(response){
                 if(response.status == true){
-                    if (response.data.length == 0){
+                    if (response.data.length == 0 ){
                         swal("Warning", "Anggota belum memiliki peminjaman!", "warning");
                     } else {
                         onClear()
@@ -204,6 +204,8 @@
                             document.getElementById('select_anggota_id').selectedIndex = 1;
                             $('#anggota_id').val(data.anggota['id']);
                         } 
+                    } else {
+                        swal("Warning", "Anggota belum memiliki peminjaman!", "warning");
                     }
                     
         }
