@@ -287,7 +287,6 @@
                 if(response.status == true){
                     $('#listTable').html('')
                     var num = 1;
-                    console.log('ss', response.data)
                     $.each(response.data, function( k, v ){
                         var img = $('<img>').attr('src', 'data:image/png;base64,' + v.eksemplar_id);
                         var generatorPNG = "<?php new Picqer\Barcode\BarcodeGeneratorPNG(); ?>";

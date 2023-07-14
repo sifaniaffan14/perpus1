@@ -22,20 +22,18 @@ class PengembalianController extends Controller
         try {
             $peminjaman = Peminjaman::where('anggota_id', $_GET['anggota_id'])->get()->toArray();
             foreach($peminjaman as $val){
-                $peminjamanDetail = PeminjamanDetail::where('peminjaman_detail_peminjaman_id', $val['peminjaman_id'])->where('status_peminjaman', '!=', 2)->get()->toArray();
-                if ($peminjamanDetail != []){
+                $operation = PeminjamanDetail::where('peminjaman_detail_peminjaman_id', $val['peminjaman_id'])->where('status_peminjaman', '!=', 2)->get()->toArray();
+                if ($operation != []){
                     $where = array();
                     if (isset($_GET['anggota_id'])) {
                         $condition = ['anggota_id',$_GET['anggota_id']];
                         array_push($where,$condition);
                     } 
-                    // dd($where);
                     $operation = Peminjaman::with('peminjaman_detail.detail_buku.buku','anggota')->where($where)
                     ->where('peminjamen.peminjaman_id', $val['peminjaman_id'])->get();
-                    // dd($operation);
-                    return $this->response($operation);
                 }
             }
+            return $this->response($operation);
         } catch (\Exception $e) {
             return $this->response($e->getMessage(), true);
         }
