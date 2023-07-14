@@ -287,36 +287,63 @@
                 if(response.status == true){
                     $('#listTable').html('')
                     var num = 1;
+                    console.log('ss', response.data)
                     $.each(response.data, function( k, v ){
                         var img = $('<img>').attr('src', 'data:image/png;base64,' + v.eksemplar_id);
                         var generatorPNG = "<?php new Picqer\Barcode\BarcodeGeneratorPNG(); ?>";
 
                         var tgl_pinjam = '-';
                         var tgl_kembali = '-';
-                        if (v.tgl_pinjam){
-                            tgl_pinjam = moment(v.tgl_pinjam).format('DD/MM/YYYY');
-                            tgl_kembali = moment(v.tgl_kembali).format('DD/MM/YYYY');
-                        }
-                        $('#listTable').append(`
-                            <tr>
-                                <td>${num}</td>
-                                <td>${v.no_panggil}</td>
-                                <td>${v.status}</td>
-                                <td>${v.kondisi}</td>
-                                <td>${tgl_pinjam}</td>
-                                <td>${tgl_kembali}</td>
-                                <td id="barcode_${v.eksemplar_id}"></td>
-                                <td><input type="checkbox" id="myCheckbox" name="pilih[]" value="${v.no_panggil}"></td>
-                                <td> 
-                                    <a onclick="editEksemplar('${v.eksemplar_id}')" class="btn btn-warning" style="padding:5px 4px 8px 9px"><i class="bi bi-pencil-square fs-4"></i></a>
-                                    <a onclick="hapusEksemplar('${v.eksemplar_id}')" methode="post" class="btn btn-danger ms-1" style="padding:5px 4px 8px 9px"><i class="bi bi-trash fs-4"></i></a>
-                                </td>
-                            </tr>
-                        `)
 
-                        $("#barcode_"+v.eksemplar_id).barcode(v.no_panggil, "code128");  
-                        $(" .codeBarcode").html(v.eksemplar_id);
-                        num++;
+                        var element = document.getElementById("row_"+v.eksemplar_id);
+                        if (element){
+                        } else {
+                            if (v.status == 'tersedia' || v.status_peminjaman == null || v.status_peminjaman == ''){
+                                $('#listTable').append(`
+                                    <tr id="row_${v.eksemplar_id}">
+                                        <td>${num}</td>
+                                        <td>${v.no_panggil}</td>
+                                        <td>${v.status}</td>
+                                        <td>${v.kondisi}</td>
+                                        <td>${tgl_pinjam}</td>
+                                        <td>${tgl_kembali}</td>
+                                        <td id="barcode_${v.eksemplar_id}"></td>
+                                        <td><input type="checkbox" id="myCheckbox" name="pilih[]" value="${v.no_panggil}"></td>
+                                        <td> 
+                                            <a onclick="editEksemplar('${v.eksemplar_id}')" class="btn btn-warning" style="padding:5px 4px 8px 9px"><i class="bi bi-pencil-square fs-4"></i></a>
+                                            <a onclick="hapusEksemplar('${v.eksemplar_id}')" methode="post" class="btn btn-danger ms-1" style="padding:5px 4px 8px 9px"><i class="bi bi-trash fs-4"></i></a>
+                                        </td>
+                                    </tr>
+                                `)
+                            } else {
+                                if (v.tgl_pinjam){
+                                    if (v.status_peminjaman != 2){
+                                        tgl_pinjam = moment(v.tgl_pinjam).format('DD/MM/YYYY');
+                                        tgl_kembali = moment(v.tgl_kembali).format('DD/MM/YYYY');
+                                    }
+                                }
+                                $('#listTable').append(`
+                                    <tr id="row_${v.eksemplar_id}">
+                                        <td>${num}</td>
+                                        <td>${v.no_panggil}</td>
+                                        <td>${v.status}</td>
+                                        <td>${v.kondisi}</td>
+                                        <td>${tgl_pinjam}</td>
+                                        <td>${tgl_kembali}</td>
+                                        <td id="barcode_${v.eksemplar_id}"></td>
+                                        <td><input type="checkbox" id="myCheckbox" name="pilih[]" value="${v.no_panggil}"></td>
+                                        <td> 
+                                            <a onclick="editEksemplar('${v.eksemplar_id}')" class="btn btn-warning" style="padding:5px 4px 8px 9px"><i class="bi bi-pencil-square fs-4"></i></a>
+                                            <a onclick="hapusEksemplar('${v.eksemplar_id}')" methode="post" class="btn btn-danger ms-1" style="padding:5px 4px 8px 9px"><i class="bi bi-trash fs-4"></i></a>
+                                        </td>
+                                    </tr>
+                                `)
+                            }
+
+                            $("#barcode_"+v.eksemplar_id).barcode(v.no_panggil, "code128");  
+                            $(" .codeBarcode").html(v.eksemplar_id);
+                            num++;
+                        }
                     });
                 } 
             }
