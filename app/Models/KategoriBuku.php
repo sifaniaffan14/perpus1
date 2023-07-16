@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class KategoriBuku extends Model
 {
     use HasFactory;
-    protected $fillable = ['nama','is_active'];
+    protected $guarded =['id'];
+    protected $table = 'kategori_bukus';
+    protected $fillable = [
+        'kode_kategori',
+        'nama_kategori',
+        'is_active'
+    ];
     // protected $guarded =['id'];
     // protected $table='kategori_buku';
 

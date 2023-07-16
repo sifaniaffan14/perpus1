@@ -1,198 +1,108 @@
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - youtube.com/codingnepal -->
-<html lang="en" dir="ltr">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Animated Login Form | CodingNepal</title>
     {!! ReCaptcha::htmlScriptTagJsApi() !!}
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Poppins:wght@400;500;600&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Poppins", sans-serif;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(120deg, #2980b9, #8e44ad);
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .center h3 {
-            text-align: center;
-            padding: 20px 0;
-            border-bottom: 1px solid silver;
-        }
-
-        .bottom {
-            text-align: center !important;
-            bottom: 8px;
-            padding-top: 85vh;
-        }
-
-        .bottom strong {
-            text-align: center;
-            color: #e9f4fb;
-            font-size: 100%
-        }
-
-        .bottom small {
-            text-align: center;
-            color: #e9f4fb;
-        }
-
-        .center form {
-            padding: 0 40px;
-            box-sizing: border-box;
-        }
-
-        form .txt_field {
-            position: relative;
-            border-bottom: 2px solid #adadad;
-            margin: 30px 0;
-        }
-
-        .txt_field input {
-            width: 100%;
-            padding: 0 5px;
-            height: 40px;
-            font-size: 16px;
-            border: none;
-            background: none;
-            outline: none;
-        }
-
-        .txt_field label {
-            position: absolute;
-            top: 50%;
-            left: 5px;
-            color: #adadad;
-            transform: translateY(-50%);
-            font-size: 16px;
-            pointer-events: none;
-            transition: .5s;
-        }
-
-        .txt_field span::before {
-            content: '';
-            position: absolute;
-            top: 40px;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: #2691d9;
-            transition: .5s;
-        }
-
-        .txt_field input:focus~label,
-        .txt_field input:valid~label {
-            top: -5px;
-            color: #2691d9;
-        }
-
-        .txt_field input:focus~span::before,
-        .txt_field input:valid~span::before {
-            width: 100%;
-        }
-
-        .pass {
-            margin: -5px 0 20px 5px;
-            color: #a6a6a6;
-            cursor: pointer;
-        }
-
-        .pass:hover {
-            text-decoration: underline;
-        }
-
-        input[type="submit"] {
-            width: 100%;
-            height: 50px;
-            border: 1px solid;
-            background: #2691d9;
-            border-radius: 25px;
-            font-size: 18px;
-            color: #e9f4fb;
-            font-weight: 700;
-            cursor: pointer;
-            outline: none;
-        }
-
-        input[type="submit"]:hover {
-            border-color: #2691d9;
-            transition: .5s;
-        }
-
-        .signup_link {
-            margin: 30px 0;
-            text-align: center;
-            font-size: 16px;
-            color: #666666;
-        }
-
-        .signup_link a {
-            color: #2691d9;
-            text-decoration: none;
-        }
-
-        .signup_link a:hover {
-            text-decoration: underline;
-        }
-    </style>
-
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/login.css">
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <title>Login - Anggota Perpustakaan</title>
+    <!-- Wajib untuk jquery -->
+    <script src="assets/js/jquery.js"></script>
+    <!-- Wajib untuk icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </head>
 
 <body>
-    <div class="center">
-        <h3>Login Anggota Perpustakaan <br> SMP AL-Falah Ketintang</h3>
-        <form method="POST" action="{{ route('login') }}">
-        @csrf
-            <div class="txt_field">
-                <input id="username" type="text" class="form-control @error('email') is-invalid @enderror" name="username" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                <span></span>
-                <label>Username</label>
+    <h1 class="judul">LIBRARY</h1>
+    <h3 class="judul fw-semibold">SMP Al Falah Ketintang Surabaya</h3>
+    <div class="py-4 card d-flex justify-content-center align-items-center my-4 shadow-lg card__form">
+        <h2>LOGIN</h2>
+        <h5>Anggota</h5>
+        <form action="{{ route('login') }}" method="POST" autocomplete="off" id="formLogin" class="w-75">
+            @csrf
+            <div class="w-100 p-0 position-relative">
+                <span class="material-symbols-outlined position-absolute icon__">
+                    person
+                </span>
+                <input id="username" type="text" class="form-control form-control-lg bg-light w-100 username__login d-block my-3 @error('email') is-invalid @enderror" name="username" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Username">
             </div>
-            <div class="txt_field">
-                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                <span></span>
-                <label>Password</label>
+            <div class="w-100 position-relative">
+                <span class="material-symbols-outlined position-absolute icon__">
+                    key
+                </span>
+                <input id="password" type="password" class="form-control form-control-lg bg-light w-100 password__login my-3 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
+                <button type="button" class="btn p-0 position-absolute see__pass">
+                    <span class="material-symbols-outlined" onclick="showPassword()">
+                        visibility
+                    </span>
+                </button>
             </div>
-            <div class="pass">
-            {!! htmlFormSnippet() !!}
+            <div class="m-0 mb-3 w-100 position-relative">
+                {!! htmlFormSnippet() !!}
             </div>
-            <input type="submit" value="Login">
-        <div class="signup_link">
-
+            <div class="w-100 position-relative text-center">
+                <button class="btn btn-warning text-white my-3 border-0 rounded-pill w-25 submit mx-auto" type="submit" value="Login">
+                    Login
+                </button>
+            </div>
+        </form>
+        <!-- <a href="./absensi.html">Login sebagai anggota?</a> -->
     </div>
-    </form>
-    </div>
-    <div class="bottom">
-        <br>
-        <strong>PERPUSTAKAAN SMP AL FALAH KETINTANG SURABAYA</strong>
-        <br>
-        <small>Jl. Ketintang Madya No.81, Ketintang, Kec. Gayungan, Kota SBY, Jawa Timur 60231, Indonesia</small>
-        <br>
-        <small>Phone: +62 812-3411-1792 - E-Mail : infopus[at]umm.ac.id</small>
-    </div>
+    <footer>
+        Copyright <span id="currenYear"></span> 2023 © SMP Al Falah Ketintang Surabaya
+    </footer>
+    @error('login')
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                swal("Warning", "{{ $message }}", "warning");
+            });
+        </script>
+    @enderror
 </body>
+<script type="text/javascript">
+    const showPassword = () => {
+        if ($("#password").attr("type") == "password") {
+            $("#password").attr("type", "text");
+            $(".far.fa-eye").removeClass("fa-eye").addClass("fa-eye-slash");
+        } else {
+            $(".far.fa-eye-slash").removeClass("fa-eye-slash").addClass("fa-eye");
+            $("#password").attr("type", "password");
+        }
+    };
+
+    // function onLogin(event){
+    //     event.preventDefault()
+    //     const formElement = $('#formSearch')[0];
+    //     const form = new FormData(formElement);
+
+    //     $.ajax({
+    //             url: '',
+    //             data: form,
+    //             contentType: false,
+    //             processData: false,
+    //             type: 'POST',
+    //             success: function(response) {
+    //                 if (response.status == true) {
+    //                     resultArray = response.data;
+    //                     data = response.data;
+    //                     $("#search2").val('')
+    //                     $(".page-landing").addClass("d-none");
+    //                     $(".page-search").removeClass("d-none");
+
+    //                     onSearchResults(1)
+    //                 } else {
+    //                     swal("Warning", "Data Buku tidak ditemukan!", "warning");
+    //                 }
+    //             }
+    //         })
+    // }
+</script>
 
 </html>
 <script src='https://www.google.com/recaptcha/api.js'></script>

@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('absen_pengunjungs', function (Blueprint $table) {
             $table->id();
-            $table->string('waktu')->nullable();
+            $table->foreignId('anggota_id')->references('id')->on('anggotas')->nullable();
+            $table->datetime('waktu')->nullable();
             $table->timestamps();
         });
     }

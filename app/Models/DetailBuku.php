@@ -7,15 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetailBuku extends Model
 {
-    protected $fillable = ['buku_id','KodeBuku', 'status', 'kondisi'];
+    protected $table = 'detail_bukus';
+    protected $primaryKey = 'eksemplar_id';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
-    public function Buku()
+    protected $fillable = [
+        'eksemplar_id',
+        'buku_id',
+        'no_panggil', 
+        'status', 
+        'kondisi',
+        'barcode',
+    ];
+
+    public function buku()
     {
-    	return $this->belongsTo(Buku::class, 'buku_id');
+    	return $this->belongsTo(Buku::class,'buku_id')->select(['id', 'judul']);
     }
 
-    public function PeminjamanDetail()
+    public function peminjaman_detail()
     {
-    	return $this->hasMany(PeminjamanDetail::class);
+    	return $this->hasMany(PeminjamanDetail::class,'detail_buku_id');
     }
 }

@@ -8,16 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Anggota extends Model
 {
     use HasFactory;
-    
-    protected $fillable = ['user_id','no_induk', 'nama', 'jenis_kelamin', 'TTL', 'jenis_anggota', 'alamat', 'email', 'no_telp'];
-    
-    public function User()
-    {
-    	return $this->belongsTo(User::class);
-    }
+    protected $table        = 'anggotas';
 
-    public function Peminjaman()
-    {
-    	return $this->hashMany(Peminjaman::class);
-    }
+    protected $fillable = [
+        'id',
+        'user_id',
+        'no_induk', 
+        'nama_anggota', 
+        'jenis_kelamin', 
+        'tempat_lahir', 
+        'tanggal_lahir',
+        'jenis_anggota', 
+        'alamat', 
+        'email', 
+        'no_telp',
+        'is_active',
+    ];
+    
 }
