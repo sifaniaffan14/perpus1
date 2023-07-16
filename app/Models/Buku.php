@@ -24,6 +24,7 @@ class buku extends Model
         'judul', 
         'penerbit', 
         'pengarang', 
+        'no_isbn',
         'halaman', 
         'image', 
         'is_active', 

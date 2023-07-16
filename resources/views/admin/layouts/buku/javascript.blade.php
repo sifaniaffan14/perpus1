@@ -86,6 +86,12 @@
         });
     }
 
+    function checkBarcode(){
+        if (checkedValues.length == 0){
+            swal("Warning", 'Pilih buku yang akan dicetak!', "warning");
+        }
+    }
+
     function onSave(event){
         event.preventDefault()
         swal({

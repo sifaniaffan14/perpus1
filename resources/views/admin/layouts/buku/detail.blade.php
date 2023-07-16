@@ -116,7 +116,7 @@
             <hr style="width: 100%; margin-top:3vh;text-align: center;  border-top: 1px solid ">
             <div class="header-eksemplar" style="padding:4vh; padding-bottom:0vh">
                 <h2 class="mb-5" style="text-align: center; font-weight:bold;">Detail Eksemplar</h2>
-                <a id="pdfBarcode">
+                <a id="pdfBarcode" onclick="checkBarcode()">
                     <button style="float:right" class="btn btn-warning"><img src="{{ asset('images/barcode_scanner.png')}}" alt=""> Cetak Barcode</button>
                 </a>
                 <!-- <button type="button" id="btnSelectedRows" style="float:right" class="btn btn-warning"><img src="{{ asset('images/barcode_scanner.png')}}" alt=""> Cetak Barcode</button> -->
