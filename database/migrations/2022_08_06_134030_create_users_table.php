@@ -18,7 +18,8 @@ return new class extends Migration
             $table->foreignId('role_id')->references('id')->on('roles');
             $table->string('username')->unique();
             $table->string('password');
-            $table->boolean('is_active')->default('1');
+            $table->string('picture')->nullable();
+            $table->integer('is_active')->default('1');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -30,7 +30,8 @@ Route::get("/listBuku",[BukuController::class,'list']);
 Route::post("/updateBuku",[BukuController::class,'update']);
 Route::delete("/deleteBuku/{id}",[BukuController::class,'delete']);
 //anggota
-Route::post("/addAnggota",[AnggotaController::class,'add']);
+Route::post("/addAnggota",[AnggotaController::class,'insert']);
+Route::get("/viewAnggota",[AnggotaController::class,'select']);
 //user
 Route::get("/listUser",[UserController::class,'list']);
 Route::post("/addUser",[UserController::class,'add']);
@@ -55,3 +56,5 @@ Route::post("/addRoles",[RoleController::class,'add']);
 Route::get("/listRoles",[RoleController::class,'list']);
 Route::post("/updateRoles",[RoleController::class,'update']);
 Route::delete("/deleteRoles/{id}",[RoleController::class,'delete']);
+
+?>

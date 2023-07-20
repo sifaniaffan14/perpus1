@@ -14,11 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('detail_bukus', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('buku_id')->references('id')->on('bukus');
-            $table->string('KodeBuku')->nullable()->unique();
+            $table->string('eksemplar_id',16)->primary();
+            $table->string('buku_id',32)->nullable();
+            $table->foreign('buku_id')->references('id')->on('bukus');
+            $table->string('no_panggil')->nullable()->unique();
             $table->string('status')->nullable();
             $table->string('kondisi')->nullable();
+            $table->string('barcode')->nullable();
+            $table->integer('is_active')->default('1');
             $table->timestamps();
         });
     }
