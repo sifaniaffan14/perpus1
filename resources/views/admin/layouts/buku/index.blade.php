@@ -1,4 +1,4 @@
-@extends('master.Landing')
+@extends('master.landing')
 
 @section('content')
 
