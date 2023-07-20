@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\buku;
+use App\Models\Buku;
 use Illuminate\Database\Eloquent\Collection;
 use App\Models\DetailBuku;
 use App\Models\KategoriBuku;

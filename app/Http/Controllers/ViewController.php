@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\buku;
+use App\Models\Buku;
 use App\Models\KategoriBuku;
 use App\Models\DetailBuku;
 
@@ -18,7 +18,7 @@ class ViewController extends Controller
             $value = $request->all();
             // dd($value);
             if ($value['kategori_id'] == 'all'){
-                $operation = buku::join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')
+                $operation = Buku::join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')
                             ->where('bukus.pengarang', 'LIKE', '%' . $value['val_search'] . '%')
                             ->orWhere('bukus.judul', 'LIKE', '%' . $value['val_search'] . '%')
                             ->where('bukus.is_active', '1')
@@ -29,7 +29,7 @@ class ViewController extends Controller
                             )
                             ->get()->toArray();
             } else {
-                $operation = buku::join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')
+                $operation = Buku::join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')
                             ->where('bukus.pengarang', 'LIKE', '%' . $value['val_search'] . '%')
                             ->orWhere('bukus.judul', 'LIKE', '%' . $value['val_search'] . '%')
                             ->where('kategori_bukus.id', $value['kategori_id'])
@@ -61,7 +61,7 @@ class ViewController extends Controller
         try {
             $value = $request->all();
 
-            $operation = buku::join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')
+            $operation = Buku::join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')
                             ->where('bukus.id', $value['id'])
                             ->select(
                                 'bukus.*',
@@ -89,7 +89,7 @@ class ViewController extends Controller
     public function selectKoleksi()
     {
         try {
-            $operation = buku::latest('created_at')
+            $operation = Buku::latest('created_at')
                             ->take(8)
                             ->where('bukus.is_active', '1')
                             ->get();

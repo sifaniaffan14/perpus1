@@ -8,7 +8,7 @@ use App\Models\Anggota;
 use App\Models\InformasiPenting;
 use App\Models\PeminjamanDetail;
 use App\Models\AbsenPengunjung;
-use App\Models\buku;
+use App\Models\Buku;
 use App\Models\DetailBuku;
 use Illuminate\Support\Facades\Auth;
 
@@ -89,7 +89,7 @@ class DashboardController extends Controller
     public function selectKoleksi()
     {
         try {
-            $operation = buku::latest('created_at')
+            $operation = Buku::latest('created_at')
                             ->take(8)
                             ->where('bukus.is_active', '1')
                             ->get();
@@ -104,7 +104,7 @@ class DashboardController extends Controller
         try {
             $value = $request->all();
 
-            $operation = buku::join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')
+            $operation = Buku::join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')
                             ->where('bukus.id', $value['id'])
                             ->select(
                                 'bukus.*',

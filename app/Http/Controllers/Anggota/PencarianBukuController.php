@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Anggota;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\buku;
+use App\Models\Buku;
 use App\Models\DetailBuku;
 
 class PencarianBukuController extends Controller
@@ -18,7 +18,7 @@ class PencarianBukuController extends Controller
         try {
             $value = $request->all();
             // dd($value);
-            $operation = buku::join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')
+            $operation = Buku::join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')
                             ->where('bukus.pengarang', 'LIKE', '%' . $value['val'] . '%')
                             ->orWhere('bukus.judul', 'LIKE', '%' . $value['val'] . '%')
                             ->where('bukus.is_active', '1')
@@ -39,7 +39,7 @@ class PencarianBukuController extends Controller
         try {
             $value = $request->all();
 
-            $operation = buku::join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')
+            $operation = Buku::join('kategori_bukus','bukus.buku_kategori_id','=','kategori_bukus.id')
                             ->where('bukus.id', $value['id'])
                             ->select(
                                 'bukus.*',
