@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Anggota;
 use App\Models\User;
-use App\Models\Roles;
+use App\Models\roles;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 
@@ -57,7 +57,7 @@ class AnggotaController extends Controller
             ]);
 
             DB::transaction(function () use ($data) {
-                $role = Roles::where('nama_role', '=', 'Anggota')->first();
+                $role = roles::where('nama_role', '=', 'Anggota')->first();
                 $add = User::create([
                     'role_id' => $role['id'],
                     'username' => $data['no_induk'],
