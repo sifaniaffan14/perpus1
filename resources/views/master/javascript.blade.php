@@ -58,7 +58,7 @@
                         $('#koleksi_terbaru').append(`
                             <div class="item">
                                 <p>
-                                    <img src="`+ url +`" class="book__" alt="" onclick="onDetail2('` + v.id + `')" style="cursor:pointer;"/>
+                                    <img src="`+ url +`" class="book__" alt="" onclick="onDetail2('` + v.id + `')" style="cursor:pointer;width: 60% !important;height: 191px !important;border-radius: 10px;"/>
                                 </p>
                             </div>
                         `)
