@@ -45,9 +45,6 @@ class DataAnggotaController extends Controller
                 'tempat_lahir' => 'required',
                 'tanggal_lahir' => 'required',
                 'jenis_anggota' => 'required',
-                'alamat' => 'required',
-                'email' => 'required',
-                'no_telp' => 'required',
             ]);
 
             DB::transaction(function () use ($data) {
@@ -81,9 +78,6 @@ class DataAnggotaController extends Controller
                 'tempat_lahir' => 'required',
                 'tanggal_lahir' => 'required',
                 'jenis_anggota' => 'required',
-                'alamat' => 'required',
-                'email' => 'required',
-                'no_telp' => 'required',
             ]);
             unset($data['_token']);
             
