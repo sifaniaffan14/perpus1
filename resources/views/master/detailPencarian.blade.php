@@ -2,11 +2,11 @@
         <section id="search__bar" class="container">
             <div class="row">
                 <div class="col-2 d-flex align-items-center gap-3 my-5">
-                    <p onclick="onDisplaySearch()" class="btn btn-warning m-0 rounded-pill text-light w-75" style="min-width: 100px">Back</p>
+                    <p onclick="onDisplaySearch()" id="btnBack" class="btn btn-warning m-0 rounded-pill text-light w-75" style="min-width: 100px">Back</p>
                 </div>
             </div>
         </section>
-        <section id="search__result" class="container card rounded rounded-4 overflow-auto mb-5">
+        <section id="search__result" class="container card rounded rounded-4 overflow-auto">
             <div class="row">
                 <div class="col-12 p-4">
                     <h3 class="fw-bold text__custom text-center">Details</h3>
@@ -55,8 +55,8 @@
                         </tr>
                     </table>
                     <div class="mt-4 table__detail">
-                        <table class="table table-bordered table-sm mw-100" style="width:90%">
-                            <thead class="bg__custom">
+                        <table class="table table-bordered table-md mw-100" style="width:100%">
+                            <thead class="bg__custom text-light">
                                 <tr>
                                     <td>No.</td>
                                     <td>Kode Eksemplar</td>

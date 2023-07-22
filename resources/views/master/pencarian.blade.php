@@ -5,8 +5,8 @@
                     <label class="w-75 ps-lg-5">
                         <input type="text" class="form-control rounded-pill px-4" id="search2" placeholder="Search"/>
                     </label>
-                    <button onclick="onSearch2()" class="btn btn-warning rounded-pill text-white button__ btn_cari fw-semibold">Search</button>
-                    <button onclick="onReset()" class="btn rounded-pill text-white button__ btn_reset fw-semibold"  style="background-color: #DC3545;">Clear</button>
+                    <button onclick="onSearch2()" class="btn rounded-pill text-white button__ fw-semibold" style="background-color: #FFA600;">Search</button>
+                    <button onclick="onReset()" class="btn rounded-pill text-white button__ fw-semibold "style="background-color: #DC3545;" >Clear</button>
                 </div>
             </div>
         </section>
@@ -19,4 +19,4 @@
             <div class="row d-flex justify-content-center align-items-top gap-3 h-75 w-100" id="result_buku">
             </div>
         </section>
-</div>
+    </div>

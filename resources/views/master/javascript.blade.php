@@ -201,21 +201,25 @@
                 <div class=" col-xxl-3 col-xl-3 col-lg-4 col-12">
                     <div onclick="onDetail('` + v.id + `')" style="cursor:pointer;"
                     class="w-100 text-dark search__item text-decoration-none fw-semibold">
-                        <img src="` + baseUrl + v.image + `" style="width:15vh; height:18vh" alt="img">
+                        <img src="` + baseUrl + v.image + `" style="width:15vh; height:20vh" alt="img">
                         <div class="w-75 mb-auto">
-                            <div class="d-flex">
-                                <div class="d-flex justify-content-between" style="width: 80px"><span>Judul</span>
-                                    <span>:</span>
-                                </div>
-                                <div class="text-start ps-1">` + v.judul + `</div>
+                            <div class="d-flex fw-bold pb-2">
+                               
+                                <div class="text-start">` + v.judul + `</div>
                             </div>
-                            <div class="d-flex">
+                            <div class="d-flex pb-1">
                                 <div class="d-flex justify-content-between" style="width: 80px"><span>Penerbit</span>
                                     <span>:</span>
                                 </div>
                                 <div class="text-start ps-1">` + v.penerbit + `</div>
                             </div>
-                            <div class="fw-semibold"><img src="images/category 6.png" alt="" style="width:2.5vh"></img> ` + v.nama_kategori + `</div>
+                            <div class="d-flex">
+                                <div class="d-flex justify-content-between" style="width: 80px"><span>No ISBN</span>
+                                    <span>:</span>
+                                </div>
+                                <div class="text-start ps-1">` + v.no_isbn + `</div>
+                            </div>
+                            <div class="fw-semibold pt-2"><img src="images/category 6.png" alt="" style="width:2.5vh"></img> ` + v.nama_kategori + `</div>
                         </div>
                     </div>
                 </div>
