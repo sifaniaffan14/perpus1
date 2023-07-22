@@ -5,8 +5,8 @@
                     <label class="w-75 ps-lg-5">
                         <input type="text" class="form-control rounded-pill px-4" id="search2" placeholder="Search"/>
                     </label>
-                    <button onclick="onSearch2()" class="btn rounded-pill text-white button__ fw-semibold" style="background-color: #FFA600;">Search</button>
-                    <button onclick="onReset()" class="btn rounded-pill text-white button__ fw-semibold "style="background-color: #DC3545;" >Clear</button>
+                    <button onclick="onSearch2()" class="btn rounded-pill text-white button__ fw-semibold" style="background-color: #FFA600;width:90px;">Search</button>
+                    <button onclick="onReset()" class="btn rounded-pill text-white button__ fw-semibold "style="background-color: #DC3545;width:90px;" >Clear</button>
                 </div>
             </div>
         </section>
