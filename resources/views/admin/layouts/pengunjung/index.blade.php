@@ -40,13 +40,7 @@ border-radius: 10px;">
                                     onclick="onFilter()">
                                     <span class="material-icons fs-6 pt-2">search</span> 
                                     <span class="fs-6">Cari</span>
-                                </button>
-                            <button type="button" class="btn btn-sm text-light w-50"
-                                    style="background-color:#03BE43;"
-                                    onclick="loadForm()">
-                                    <span class="material-icons fs-6 pt-2"> print </span>
-                                    <span class="fs-6">Cetak</span>
-                                </button>
+                            </button>
                         </div>
                 </div>
                 </div>  
