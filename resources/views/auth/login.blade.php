@@ -43,7 +43,7 @@
                 </button>
             </div>
             <div class="m-0 mb-3 w-100 position-relative">
-                {!! htmlFormSnippet(['sitekey' => '6LcjRr4jAAAAAAeTTzck5oHv6JD1RgXQprfcPOc3', 'action' => 'perpus.harishidayatulloh.my.id']) !!}
+                {!! htmlFormSnippet(['sitekey' => '6Leh2k0nAAAAAG9BFHV4loUcS4JATlDOfGNTwhGE', 'action' => 'perpus.harishidayatulloh.my.id']) !!}
             </div>
             <div class="w-100 position-relative text-center">
                 <button class="btn btn-warning text-white my-3 border-0 rounded-pill w-25 submit mx-auto" type="submit" value="Login">
