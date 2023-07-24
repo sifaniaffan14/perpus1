@@ -140,21 +140,21 @@ class BukuController extends Controller
         try {
             $data = $request->all();
             
-            // $buku = DB::table("bukus")->where("id", $data['id'])->get()->all();
-            // $url = "D:\\project\\project affan\\perpus1\\public\\storage\\buku\\";
-            // unlink($url.$buku[0]->image);
-
-            $operation = DB::table('bukus')
-                ->where('id', '=', $data['id'])
-                ->update([
-                    'is_active' => '0'
-                ]);
-
-            $operation = DB::table('detail_bukus')
-                ->where('buku_id', '=', $data['id'])
-                ->update([
-                    'is_active' => '0'
-                ]);
+            DB::transaction(function () use ($data) {
+                $buku = DB::table('bukus')
+                    ->where('id', '=', $data['id'])
+                    ->update([
+                        'is_active' => '0'
+                    ]);
+                
+                $getbuku = DB::table('bukus')->where('id', '=', $data['id'])->first();
+                $eksemplar = DB::table('detail_bukus')
+                    ->where('buku_id', $getbuku->id)
+                    ->update([
+                        'is_active' => '0'
+                    ]);
+            });
+            $operation['success'] = true;
             return $this->responseDelete($operation);
         } catch (\Exception $e) {
             return $this->responseDelete($e->getMessage());
