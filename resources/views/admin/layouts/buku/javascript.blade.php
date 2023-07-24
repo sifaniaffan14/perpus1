@@ -506,6 +506,7 @@
     function onRefresh(){
         $('.main_data').removeClass('d-none');
         $('.form_data').addClass('d-none');
+        $('.datail_data').addClass('d-none');
         $('#tabelBuku').DataTable().destroy();
         inittable()
         onClear()
