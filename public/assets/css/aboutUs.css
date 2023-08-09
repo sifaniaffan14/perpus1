@@ -31,7 +31,7 @@
     border-radius: .25rem;
 }
 
-.header_content > p{
+.header_about > p{
     color: #202F4E;
     font-size: 25px;
     font-weight:900;
@@ -39,11 +39,11 @@
     letter-spacing: 10px;
 }
 
-.isi_content > p{
+.isi_about > p{
     color: #202F4E;
-    font-size: 18px;
+    font-size: 16px;
     font-family: Questrial;
-    /* letter-spacing: 25px; */
+    line-height: 1.8;
 }
 
 @media screen and (max-width: 768px) {
