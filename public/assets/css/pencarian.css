@@ -18,7 +18,7 @@
 }
 
 .search__item:hover {
-    background: white; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: white;
     transition: all 0.4s;
     border-radius: 8px;
     border: 1px ;
