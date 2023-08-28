@@ -76,10 +76,10 @@ class ViewController extends Controller
     public function selectEksemplar()
     {
         try {
-            $operation = DetailBuku::leftJoin('peminjaman_details','detail_bukus.eksemplar_id','=','peminjaman_details.detail_buku_id')
-                            ->where('is_active', 1)
-                            ->where('buku_id', $_GET['id'])
-                            ->get();
+            $operation =DetailBuku::leftJoin('peminjaman_details','detail_bukus.eksemplar_id','=','peminjaman_details.detail_buku_id')
+                        ->where('detail_bukus.is_active', 1)
+                        ->where('detail_bukus.buku_id', $_GET['id'])
+                        ->get();
             return $this->response($operation);
         } catch (\Exception $e) {
             return $this->response($e->getMessage(), true);

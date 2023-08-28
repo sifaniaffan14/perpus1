@@ -339,23 +339,46 @@
                     $('#list_table').html('')
                     var num = 1;
                     $.each(response.data, function(k, v) {
-                        if (v.status_peminjaman != 2) {
-                            var tgl_pinjam = '-';
-                            var tgl_kembali = '-';
-                            if (v.tgl_pinjam) {
-                                tgl_pinjam = moment(v.tgl_pinjam).format('DD/MM/YYYY');
-                                tgl_kembali = moment(v.tgl_kembali).format('DD/MM/YYYY');
+
+                        var tgl_pinjam = '-';
+                        var tgl_kembali = '-';
+
+                        var element = document.getElementById("row_"+v.eksemplar_id);
+                        if (element){
+                        } else {
+                            if (v.status == 'tersedia' || v.status_peminjaman == null || v.status_peminjaman == ''){
+                                $('#list_table').append(`
+                                    <tr id="row_${v.eksemplar_id}">
+                                        <td>${num}</td>
+                                        <td>${v.no_panggil}</td>
+                                        <td>${v.status}</td>
+                                        <td>${v.kondisi}</td>
+                                        <td>${tgl_pinjam}</td>
+                                        <td>${tgl_kembali}</td>
+                                    </tr>
+                                `)
+                            } else {
+                                if (v.tgl_pinjam){
+                                    if (v.status_peminjaman != 2){
+                                        tgl_pinjam = moment(v.tgl_pinjam).format('DD/MM/YYYY');
+                                        tgl_kembali = moment(v.tgl_kembali).format('DD/MM/YYYY');
+
+                                        tgl_pinjam = moment(v.tgl_pinjam).format('DD/MM/YYYY');
+                                        tgl_kembali = moment(v.tgl_kembali).format('DD/MM/YYYY');
+
+                                        $('#list_table').append(`
+                                            <tr id="row_${v.eksemplar_id}">
+                                                <td>${num}</td>
+                                                <td>${v.no_panggil}</td>
+                                                <td>${v.status}</td>
+                                                <td>${v.kondisi}</td>
+                                                <td>${tgl_pinjam}</td>
+                                                <td>${tgl_kembali}</td>
+                                            </tr>
+                                        `)
+                                    }
+                                }
                             }
-                            $('#list_table').append(`
-                                <tr>
-                                    <td>${num}</td>
-                                    <td>${v.no_panggil}</td>
-                                    <td>${v.status}</td>
-                                    <td>${v.kondisi}</td>
-                                    <td>${tgl_pinjam}</td>
-                                    <td>${tgl_kembali}</td>
-                                </tr>
-                            `)
                             num++;
                         }
                     });

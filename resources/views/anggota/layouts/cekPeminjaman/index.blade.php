@@ -86,7 +86,7 @@
                                     <th>Judul</th>
                                     <th>Tanggal Peminjaman</th>
                                     <th>Tanggal Kembali</th>
-                                    <th>Perpanjang</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
