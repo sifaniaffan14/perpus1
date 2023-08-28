@@ -26,7 +26,7 @@
 											$generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
 											@endphp
 											<div class="mt-4 mx-auto" style="width:125px; height:55px">
-												<img class="w-100 h-100" src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($val['eksemplar_id'], $generatorPNG::TYPE_CODE_128)) }}">
+												<img class="w-100 h-100" src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($val['no_panggil'], $generatorPNG::TYPE_CODE_128)) }}">
 											</div>
 											<p class="mb-0" style="font-size:11px">{{$val['no_panggil']}}</p>
 											<p class="mt-2" style="font-weight:bold; font-size:13px">{{$val['nama_kategori']}}</p>
@@ -55,7 +55,7 @@
 												$generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
 												@endphp
 												<div class="mt-4 mx-auto" style="width:125px; height:55px">
-													<img class="w-100 h-100" src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($val['eksemplar_id'], $generatorPNG::TYPE_CODE_128)) }}">
+													<img class="w-100 h-100" src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($val['no_panggil'], $generatorPNG::TYPE_CODE_128)) }}">
 												</div>
 												<p class="mb-0" style="font-size:11px">{{$val['no_panggil']}}</p>
 												<p class="mt-2" style="font-weight:bold; font-size:13px">{{$val['nama_kategori']}}</p>
@@ -80,7 +80,7 @@
 												$generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
 												@endphp
 												<div class="mt-4 mx-auto" style="width:125px; height:55px">
-													<img class="w-100 h-100" src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($val['eksemplar_id'], $generatorPNG::TYPE_CODE_128)) }}">
+													<img class="w-100 h-100" src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($val['no_panggil'], $generatorPNG::TYPE_CODE_128)) }}">
 												</div>
 												<p class="mb-0" style="font-size:11px">{{$val['no_panggil']}}</p>
 												<p class="mt-2" style="font-weight:bold; font-size:13px">{{$val['nama_kategori']}}</p>
