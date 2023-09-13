@@ -22,21 +22,21 @@
                 <div class="col-lg-12" style="padding: 10vh; padding-bottom:7vh; padding-top: 4vh;">
                     <h2 class="fw-bolder text-center">Data Peminjam</h2>
                     <p id="detail_peminjaman_id" style="display: none"></p>
-                    <table class="w-50 mx-auto mt-9">
+                    <table class="w-70 mx-auto mt-9">
                         <tbody style="color: #000000; font-weight:bold">
                             <tr>
-                                <td class="w-50 pt-6">
+                                <td class="w-50 pt-6 px-10">
                                     <h5 class="fw-bolder" id="detail_no_induk"></h5>
                                 </td>
-                                <td class="w-50 pt-6">
+                                <td class="w-50 pt-6 px-10">
                                     <h5 class="fw-bolder" id="detail_nama_anggota"></h5>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-50 pt-5">
+                                <td class="w-50 pt-5 px-10">
                                     <h5 class="fw-bolder" id="detail_jenis_anggota"></h5>
                                 </td>
-                                <td class="w-50 pt-5">
+                                <td class="w-50 pt-5 px-10">
                                     <h5 class="fw-bolder" id="detail_peminjaman_jumlah"></h5>
                                 </td>
                             </tr>
