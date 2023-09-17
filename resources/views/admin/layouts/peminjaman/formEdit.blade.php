@@ -10,7 +10,7 @@
                         <div class="form-action-wrapper d-flex gap-4 align-items-center mt-5 w-50 justify-content-end">
                             <button type="button"
                                 class="btn p-4 text-body m-0 fw-bolder w-25 actCreate" style="border:1px solid #264A8A"
-                                onclick="closeForm()"><span style="color:#264A8A"> Batal </span></button>
+                                onclick="onRefresh()"><span style="color:#264A8A"> Batal </span></button>
                             <button type="submit"
                                 class="btn p-4 m-0 d-flex flex-center gap-2 fs-5 fw-bolder w-25 text-light actCreate" style="background-color:#264A8A">
                                 <span class="material-icons-outlined fs-2">save</span> Simpan
@@ -36,14 +36,42 @@
                             <input type="hidden" name="peminjaman_id">
                             <div>
                                 <label for="anggota_id" class="fs-4 fw-bolder">No. Induk</label>
-                                <div class="mt-1">
-                                    <select name="anggota_id" id="anggota_id" class="form-control">
-                                        <option value="" selected disabled>Silahkan Pilih No. Induk</option>
+                                <div class="position-relative mt-1 w-lg-25" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    <select id="select_anggota_id" style="width: 100%" disabled>
+                                        <option value="#" selected disabled>Silahkan Pilih No. Induk</option>
                                     </select>
+                                    <input type="hidden" name="anggota_id" id="anggota_id" value="">
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade modalAnggota" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content p-5">
+                                        <div class="modal-body">
+                                            <div class="position-relative">
+                                                <input type="search" name="search_anggota" id="search_anggota"
+                                                    placeholder="Ketik untuk mencari" class="py-3 ps-12 pe-5 fs-6 w-100"
+                                                    style="background-color: #fafafa;border-radius: 6px; border-width:1.5px" />
+                                                <span class="material-icons position-absolute top-50 translate-middle-y text-light-gray"
+                                                    style="left: 10px"> search </span>
+                                            </div>
+                                            <table class="table" id="tabelAnggota" style="cursor:pointer">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="fw-bolder" style="max-width: 37px"> No </th>
+                                                        <th class="fw-bolder d-none">Id</th>
+                                                        <th class="fw-bolder">No. Induk</th>
+                                                        <th class="fw-bolder">Nama</th>
+                                                        <th class="fw-bolder">Jenis Anggota</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="text-content mx-auto" style="width:85%" id="identitas_peminjam">
+                        <div class="text-content mx-auto mt-6" style="width:85%" id="identitas_peminjam">
                         </div>
                         <hr style="width: 100%; margin:2.5vw 0;text-align: center;  border-top: 2px solid grey; ">
                         <div class="text-header" style="margin-top:-1.5vh">
@@ -51,7 +79,7 @@
                                 Data Buku
                             </h2>
                         </div>
-                        <div class="d-flex mt-8 pt-3">
+                        <!-- <div class="d-flex mt-8 pt-3">
                             <div class="w-50 d-flex">
                                 <div class="ms-auto d-flex align-items-center" style="width:100%">
                                     <label class="fw-bolder fs-4 w-25" for="start">Tgl Pinjam&nbsp;&nbsp;:</label>
@@ -66,7 +94,7 @@
                                     <input type="date" class="form-control" name="tgl_kembali" placeholder="dd-mm-yyyy" value="">
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row mt-9 mb-5">
                             <label class="fs-5 mb-2" for="kode_eksemplar">Kode Eksemplar</label>
                             <input type="text" class="form-control w-25" id="kode_eksemplar"
