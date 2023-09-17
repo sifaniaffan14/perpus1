@@ -97,8 +97,8 @@
             </div>
         </div>
     </div>
-    @include('admin.layouts.peminjaman.formEdit')
     @include('admin.layouts.peminjaman.detail')
+    @include('admin.layouts.peminjaman.formEdit')
 </div>
 
 @endsection

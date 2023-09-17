@@ -51,7 +51,6 @@ class PeminjamanController extends Controller
                     $query->where('status_peminjaman', '!=', '2');
                 }
             ])->with('anggota')->where($where)->get();
- 
             return $this->response($operation);
         } catch (\Exception $e) {
             return $this->response($e->getMessage(), true);
@@ -300,30 +299,38 @@ class PeminjamanController extends Controller
         try {
             $data = $request->all();
 
-            $request->validate([
-                'anggota_id'=> 'required',
-                'tgl_pinjam'=> 'required',
-                'tgl_kembali'=> 'required',
-                'eksemplar_id.*'=> 'required',
-            ]);
-           
             DB::transaction(function () use ($data) {
-                Peminjaman::where('peminjaman_id',$data['peminjaman_id'])->update([
-                    'anggota_id' => $data['anggota_id'],
-                ]);
+                try {
+                    $peminjaman_detail = DB::table('peminjaman_details')->where('peminjaman_detail_peminjaman_id', '=', $data['peminjaman_id'])->get()->toArray();
+                    $del_peminjaman_detail = DB::table('peminjaman_details')->where('peminjaman_detail_peminjaman_id', '=', $data['peminjaman_id'])->delete();
+                    
+                    foreach ($peminjaman_detail as $val){
+                        DetailBuku::where('eksemplar_id',$val->detail_buku_id)->update([
+                            'status' => 'tersedia',
+                        ]);
+                    }
 
-                $peminjaman_detail = PeminjamanDetail::where('peminjaman_detail_peminjaman_id',$data['peminjaman_id'])->delete();
-                
-                $detail['peminjaman_detail_peminjaman_id'] = $data['peminjaman_id'];
-                $detail['status_peminjaman'] = 1;
-                $detail['tgl_pinjam'] = $data['tgl_pinjam'];
-                $detail['tgl_kembali'] = $data['tgl_kembali'];
-                foreach ($data['eksemplar_id'] as $key => $value) {
-                    $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, Str::random());
-                    $data['peminjaman_detail_id'] = md5($uuid->toString());
-                    $detail['peminjaman_detail_id'] = $data['peminjaman_detail_id'];
-                    $detail['detail_buku_id'] = $value;
-                    PeminjamanDetail::create($detail);
+                    Peminjaman::where('peminjaman_id',$data['peminjaman_id'])->update([
+                        'anggota_id' => $data['anggota_id'],
+                    ]);
+
+                    $detail['peminjaman_detail_peminjaman_id'] = $data['peminjaman_id'];
+                    $detail['status_peminjaman'] = 1;
+                    $detail['tgl_pinjam'] = $peminjaman_detail['0']->tgl_pinjam;
+                    $detail['tgl_kembali'] = $peminjaman_detail['0']->tgl_kembali;
+                    foreach ($data['eksemplar_id'] as $key => $value) {
+                        $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, Str::random());
+                        $data['peminjaman_detail_id'] = md5($uuid->toString());
+                        $detail['peminjaman_detail_id'] = $data['peminjaman_detail_id'];
+                        $detail['detail_buku_id'] = $value;
+                        PeminjamanDetail::create($detail);
+
+                        DetailBuku::where('eksemplar_id',$value)->update([
+                            'status' => 'dipinjam',
+                        ]);
+                    }
+                } catch (\Exception $e){
+                    print_r($e->getMessage());exit;
                 }
             });
 
@@ -339,7 +346,15 @@ class PeminjamanController extends Controller
         try {
             $data = $request->all();
             DB::transaction(function () use ($data) {
+                $peminjaman_detail = DB::table('peminjaman_details')->where('peminjaman_detail_peminjaman_id', '=', $data['peminjaman_id'])->get()->toArray();
+                $del_peminjaman_detail = DB::table('peminjaman_details')->where('peminjaman_detail_peminjaman_id', '=', $data['peminjaman_id'])->delete();
                 Peminjaman::where('peminjaman_id',$data['peminjaman_id'])->delete();
+
+                foreach ($peminjaman_detail as $val){
+                    DetailBuku::where('eksemplar_id',$val->detail_buku_id)->update([
+                        'status' => 'tersedia',
+                    ]);
+                }
             });
             $operation['success'] = true;      
             return $this->responseDelete($operation);

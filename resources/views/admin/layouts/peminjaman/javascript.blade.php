@@ -16,6 +16,7 @@
     var val_select = null;
     var currentTime = new Date();
     var tabelAnggota = null;
+    var dataAnggota = null;
 
     var urlPath = {
         insert: "{{ route('peminjaman.insert') }}",
@@ -32,7 +33,6 @@
     }
     inittable()
     initTabelAnggota()
-    loadData()
     selectTahun()
 
     $(document).ready(function () {
@@ -173,9 +173,11 @@
     function onDetail(encode){
         let decode = atob(encode)
         let data = JSON.parse(decode);
+        num = 0;
         $('[name=peminjaman_id]').val(data.peminjaman_id)
         onDisplayDetail()
-        
+        $('#detail_peminjaman_id').html(data.peminjaman_id)
+        dataAnggota = data.anggota
         if (data.anggota['no_induk']){
             $('#detail_no_induk').html("No. Induk&nbsp;&nbsp;:&nbsp;&nbsp;"+data.anggota['no_induk'])
         }
@@ -189,11 +191,13 @@
             $('#detail_peminjaman_jumlah').html("Jumlah Peminjaman&nbsp;&nbsp;:&nbsp;&nbsp;"+data.peminjaman_detail.length)
         }
 
+        $('#list_detail').html('')
+        $('#list_pinjaman').html('')
         $.each(data.peminjaman_detail, function( k, v ){
             var eksemplar_id = v.detail_buku.eksemplar_id;
             let no_panggil = v.detail_buku.no_panggil;
             let judul = v.detail_buku.buku.judul
-            let html = `<a onclick="hapusEksemplar('list_buku_${eksemplar_id}')" methode="post" class="btn btn-danger"> <i class="bi bi-trash"></i></a>`
+            let html = `<a onclick="hapusEksemplar('list_buku_${eksemplar_id}')" methode="post" class="btn btn-danger" style="padding:5px 2.5px 6px 6px"> <i class="bi bi-trash fs-4"></i></a>`
            
             $('[name=tgl_pinjam]').val(moment(v.tgl_pinjam).format('DD-MM-YYYY'))
             $('[name=tgl_kembali]').val(moment(v.tgl_kembali).format('DD-MM-YYYY'))
@@ -220,6 +224,7 @@
     onDisplayDetail = () => {
         $('.datail_data').removeClass('d-none');
         $('.main_data').addClass('d-none');
+        $('.actEdit').removeClass('d-none');
 	}
 
     function tableBukuPinjaman(){
@@ -304,7 +309,7 @@
                                     <input type="text" name="peminjaman_detail_id[]" value="${v.detail_buku_id}">
                                 </td>
                                 <td> 
-                                    <button onclick="hapusEksemplar('${v.detail_buku_id}')" methode="post" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                                    <button onclick="hapusEksemplar('${v.detail_buku_id}')" methode="post" class="btn btn-danger" ><i class="bi bi-trash"></i></button>
                                 </td>
                             </tr>
                         `) 
@@ -474,8 +479,15 @@
 
     function onRefresh(){
         $('.main_data').removeClass('d-none');
-        $('.detail_data').addClass('d-none');
+        if(!$('.datail_data').hasClass('d-none')){
+            $('.datail_data').addClass('d-none');
+        }
+        if(!$('.form_data').hasClass('d-none')){
+            $('.form_data').addClass('d-none');
+        }
         $('#tablePeminjaman').DataTable().destroy();
+        $('.actEdit').addClass('d-none');
+        $('.actCreate').addClass('d-none');
         inittable()
     }
     // $(document).ready(function () {
@@ -588,21 +600,29 @@
     }
 
     function loadData() {
-        $.ajax({
-            url: urlPath.getAnggota,
-            type: 'GET',
-            placeholder: 'Search for a term',
-            success: function (response) {
-                if(response.status == true){
-                        var options = "";
-                        $.each(response.data, function(index, value) {
-                            options += "<option value='" + value.id + "'>" + value.no_induk + "</option>";
-                        });
-                        // $("#anggota_id").append(options);
-                        // var get = $("#anggota_id option:selected").val()
-                    }
-            },
-        });
+        var options = '<option value="#" selected disabled>Silahkan Pilih No. Induk</option>';
+        options += "<option value='" + dataAnggota['id'] + "'>" + dataAnggota['no_induk'] + "</option>";
+        $("#select_anggota_id").html(options);
+        document.getElementById('select_anggota_id').selectedIndex = 1;
+        $('#anggota_id').val(dataAnggota['id']);
+
+        document.getElementById("identitas_peminjam").innerHTML = "";
+            if (dataAnggota['nama_anggota']){
+                $(`#identitas_peminjam`).append(`
+                    <div class="d-flex mt-2">
+                        <p class="m-0 fs-5 fw-bolder" style="width:105px">Nama</p>
+                        <p class="m-0 fs-5 fw-bolder">&nbsp;&nbsp;:&nbsp;&nbsp;${dataAnggota['nama_anggota']}</p>
+                    </div>
+                `)
+            }
+            if (dataAnggota['jenis_anggota']){
+                $(`#identitas_peminjam`).append(`
+                    <div class="d-flex mt-2 mb-5">
+                        <p class="m-0 fs-5 fw-bolder">Jenis Anggota </p>
+                        <p class="m-0 fs-5 fw-bolder">&nbsp;&nbsp;:&nbsp;&nbsp;${dataAnggota['jenis_anggota']}</p>
+                    </div>
+                `)
+            }
     }
 
     $(document).ready(function() {
@@ -627,21 +647,35 @@
                             swal("Warning", 'Buku dalam proses peminjaman', "warning");
                         } else {
                             if($('#'+data.eksemplar_id).length != 1){
-                                index = index + 1;
-                                $("#kode_eksemplar").val('');
-                                $('#list_pinjaman').append(`
-                                    <tr id="${data.eksemplar_id}">
-                                        <td class="text-center">${index}</td>
-                                        <td class="text-center">${data.no_panggil}</td>
-                                        <td class="text-center">${data.judul}</td>
-                                        <td class="d-none">
-                                            <input type="hidden" name="eksemplar_id[]" value="${data.eksemplar_id}">
-                                        </td>
-                                        <td class="text-center">
-                                            <a onclick="hapusEksemplar('${data.eksemplar_id}')" methode="post" class="btn btn-danger" style="padding:5px 2.5px 6px 6px"> <i class="bi bi-trash fs-4"></i></a>
-                                        </td>
-                                    </tr>
-                                `)
+                                if ($('#list_buku_'+data.eksemplar_id).length != 1){
+                                    index = index + 1;
+                                    $("#kode_eksemplar").val('');
+                                    $('#list_pinjaman').append(`
+                                        <tr class="text-center" id="${data.eksemplar_id}">
+                                            <td>${index}</td>
+                                            <td>${data.no_panggil}</td>
+                                            <td>${data.judul}</td>
+                                            <td class="d-none">
+                                                <input type="hidden" name="eksemplar_id[]" value="${data.eksemplar_id}">
+                                            </td>
+                                            <td class="pe-2">
+                                                <a onclick="hapusEksemplar('${data.eksemplar_id}')" methode="post" class="btn btn-danger" style="padding:5px 2.5px 6px 6px"> <i class="bi bi-trash fs-4"></i></a>
+                                            </td>
+                                        </tr>
+                                    `)
+
+                                    // Mengatur ulang nomor kolom
+                                    var table = document.getElementById("tablePinjamanEdit");
+                                    var rows = Array.from(table.rows).slice(1); // Mengambil semua baris kecuali baris header
+                                    var rowIndex = 1;
+                                    rows.forEach(function (row) {
+                                        var cell = row.cells[0];
+                                        cell.textContent = rowIndex;
+                                        rowIndex++;
+                                    });
+                                } else{
+                                    swal("Warning", 'Data sudah ada', "warning");
+                                }
                             } else{
                                 swal("Warning", 'Data sudah ada', "warning");
                             }
@@ -663,6 +697,16 @@
 
     function hapusEksemplar(eksemplar_id){
         $('#'+eksemplar_id).remove();
+
+        // Mengatur ulang nomor kolom
+        var table = document.getElementById("tablePinjamanEdit");
+        var rows = Array.from(table.rows).slice(1); // Mengambil semua baris kecuali baris header
+        var rowIndex = 1;
+        rows.forEach(function (row) {
+            var cell = row.cells[0];
+            cell.textContent = rowIndex;
+            rowIndex++;
+        });
     }
 
     function onSave(){
