@@ -69,6 +69,7 @@ class BukuController extends Controller
                 'buku_kategori_id' => 'required',
                 'kode_buku' => 'required',
                 'judul' => 'required',
+                'penerbit' => 'required',
                 'pengarang' => 'required',
                 'halaman' => 'required',
                 'no_isbn' => 'required'
