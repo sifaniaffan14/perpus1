@@ -39,12 +39,15 @@ class DataAnggotaController extends Controller
         try {
             $data = $request->all();
             $request->validate([
-                'no_induk' => 'required',
-                'nama_anggota' => 'required',
-                'jenis_kelamin' => 'required',
-                'tempat_lahir' => 'required',
-                'tanggal_lahir' => 'required',
-                'jenis_anggota' => 'required',
+                'no_induk' => ['required', 'integer','digits_between:10,15','unique:anggotas,no_induk'],
+                'nama_anggota' => ['required'],
+                'jenis_kelamin' => ['required'],
+                'tempat_lahir' => ['required'],
+                'tanggal_lahir' => ['required'],
+                'jenis_anggota' => ['required'],
+                'alamat' => ['required'],
+                'email' => ['nullable','string', 'email', 'max:100', 'unique:anggotas,email'],
+                'no_telp' => ['nullable','integer','min:10,13'],
             ]);
 
             DB::transaction(function () use ($data) {

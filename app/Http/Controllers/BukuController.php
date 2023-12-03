@@ -66,13 +66,14 @@ class BukuController extends Controller
         try {
             $data = $request->all();
             $request->validate([
-                'buku_kategori_id' => 'required',
-                'kode_buku' => 'required',
-                'judul' => 'required',
-                'penerbit' => 'required',
-                'pengarang' => 'required',
-                'halaman' => 'required',
-                'no_isbn' => 'required'
+                'buku_kategori_id' => ['required'],
+                'kode_buku' => ['required', 'integer', 'unique:bukus,kode_buku'],
+                'judul' => ['required'],
+                'penerbit' => ['required'],
+                'pengarang' => ['required'],
+                'halaman' => ['required', 'integer'],
+                'no_isbn' => ['required', 'integer', 'digits_between:10,13'],
+                // 'image' => ['nullable', 'image|mimes:jpeg,png,jpg,gif|mimetypes:image/jpeg,image/png,image/jpg,image/gif|max:2048'],
             ]);
 
             $image = $request->file('image');

@@ -40,7 +40,7 @@
                     </tr>
                     <tr>
                         <td>email</td>
-                        <td><input type="text" name="email" id="email" value="<?= isset($anggota['email']) ? ($anggota['email']) : '' ?>"></td>
+                        <td><input type="email" name="email" id="email" value="<?= isset($anggota['email']) ? ($anggota['email']) : '' ?>"></td>
                     </tr>
                     <tr>
                         <td>No Telpon</td>
