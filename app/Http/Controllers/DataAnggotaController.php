@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\roles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class DataAnggotaController extends Controller
 {
@@ -44,10 +45,10 @@ class DataAnggotaController extends Controller
                 'jenis_kelamin' => ['required'],
                 'tempat_lahir' => ['required'],
                 'tanggal_lahir' => ['required'],
-                'jenis_anggota' => ['required'],
+                'jenis_anggota' => ['required','string', Rule::in(['siswa', 'guru'])],
                 'alamat' => ['required'],
                 'email' => ['nullable','string', 'email', 'max:100', 'unique:anggotas,email'],
-                'no_telp' => ['nullable','integer','min:10,13'],
+                'no_telp' => ['nullable','integer','digits_between:10,15'],
             ]);
 
             DB::transaction(function () use ($data) {

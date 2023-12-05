@@ -254,8 +254,8 @@ class PeminjamanController extends Controller
             $data = $request->all();
             $request->validate([
                 'anggota_id'=> 'required',
-                'tgl_pinjam'=> 'required',
-                'tgl_kembali'=> 'required',
+                'tgl_pinjam' => 'required|after_or_equal:'.now()->toDateString(),
+                'tgl_kembali'=> 'required|after_or_equal:'.now()->toDateString(),
                 'eksemplar_id.*'=> 'required',
             ]);
             DB::transaction(function () use ($data) {

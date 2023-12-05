@@ -27,8 +27,8 @@ class KategoriBukuController extends Controller
             $data = $request->all();
             // print_r($data);exit;
             $request->validate([
-                'kode_kategori'=> 'required',
-                'nama_kategori'=> 'required',
+                'kode_kategori'=> ['required','unique:kategori_bukus,kode_kategori'],
+                'nama_kategori'=> ['required','unique:kategori_bukus,nama_kategori'],
             ]);
             
             $data = $request->post();

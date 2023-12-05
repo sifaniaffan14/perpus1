@@ -65,6 +65,13 @@
                     </div>
                     <div class="d-flex flex-column gap-1 fill-2-grid-col-lg pe-5" style="width:49%">
                         <label for="jenis_anggota" class="fw-bolder">Jenis Anggota</label>
+                        {{-- <select name="jenis_anggota" id="jenis_anggota" class="py-4 ps-5 pe-12 border-0 text-gray w-100 fs-6 text-light-gray" style="
+                                    background-color: #fafafa;
+                                    border-radius: 6px;
+                                    " required>
+                            <option id="siswa" value="siswa">Siswa</option>
+                            <option id="guru" value="guru">Guru</option>
+                        </select> --}}
                         <input type="text" name="jenis_anggota" id="jenis_anggota" required placeholder="Masukkan Jenis Anggota" class="border-0 py-4 px-5" style="
                                     background-color: #fafafa;
                                     border-radius: 6px;
